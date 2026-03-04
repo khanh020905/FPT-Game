@@ -4,8 +4,11 @@ import { BUILDING_DATA } from "../data/buildingData";
 const IMGS = {
   "alpha-tower": [
     { url: "/fpt-alpha-building.png", cap: "Toà Alpha — FPT University Đà Nẵng" },
+    { url: "/alpha-luk-team.jpg", cap: "Sinh viên LUK Global — 21st Century Education" },
+    { url: "/alpha-luk-activity.jpg", cap: "Hoạt động tương tác LUK Global" },
+    { url: "/alpha-luk-music.jpg", cap: "Sinh viên biểu diễn âm nhạc tại LUK Global" },
+    { url: "/alpha-luk-foreign-teacher.jpg", cap: "Học tiếng Anh với giảng viên nước ngoài" },
     { url: "https://images2.thanhnien.vn/528068263637045248/2024/2/4/fptu-da-nang-02-1707012458234479740570.jpg", cap: "Kiến trúc đạt giải WA Award" },
-    { url: "https://images2.thanhnien.vn/528068263637045248/2024/2/4/fptu-da-nang-04-17070124605411957498498.jpg", cap: "Không gian học tập hiện đại" },
   ],
   "beta-tower": [
     { url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2023/03/Dai-hoc-FPT-Da-Nang.jpg", cap: "Khu Lab Beta Tower" },
