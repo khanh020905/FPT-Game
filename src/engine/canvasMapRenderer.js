@@ -445,6 +445,9 @@ function drawCementPlaza(g) {
   F(g, px, py + ph - 2, pw, 2);
   F(g, px, py, 2, ph);
   F(g, px + pw - 2, py, 2, ph);
+  // Labels
+  lbl(g, px + pw / 2, py + ph / 2 - 4, "SÂN SỰ KIỆN", 7);
+  lbl(g, px + pw / 2, py + ph / 2 + 10, "HỘI LÀNG & EVENTS", 5);
 }
 
 /* ── DORM A (where Cafe was, center-right) ─── */

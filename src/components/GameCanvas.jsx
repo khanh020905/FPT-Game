@@ -9,6 +9,7 @@ import {
 } from "../data/mapData";
 import { getMapCanvas } from "../engine/canvasMapRenderer";
 import FPTLandingPage from "./FPTLandingPage";
+import BuildingLandingPage from "./BuildingLandingPage";
 
 /**
  * GameCanvas — HTML5 Canvas component with:
@@ -35,6 +36,7 @@ export default function GameCanvas() {
   const { state, updatePlayerPos, canvasInteract, performAction } = useGame();
   const [gammaDialog, setGammaDialog] = useState(false);
   const [showLanding, setShowLanding] = useState(false);
+  const [showBuilding, setShowBuilding] = useState(null); // building ID or null
 
   const { nearInteraction, location } = state;
   const nearInteractionRef = useRef(nearInteraction);
@@ -48,6 +50,26 @@ export default function GameCanvas() {
     mapImgRef.current = getMapCanvas();
   }, []);
 
+  // ───── Load Gamma Tower floating image ─────
+  const gammaImgRef = useRef(null);
+  const gammaImgLoaded = useRef(false);
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => { gammaImgLoaded.current = true; };
+    img.src = "/fpt-gamma-building.png";
+    gammaImgRef.current = img;
+  }, []);
+
+  // ───── Load Alpha Tower floating image ─────
+  const alphaImgRef = useRef(null);
+  const alphaImgLoaded = useRef(false);
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => { alphaImgLoaded.current = true; };
+    img.src = "/fpt-alpha-building.png";
+    alphaImgRef.current = img;
+  }, []);
+
   // ───── Keyboard listeners ─────
   useEffect(() => {
     const onDown = (e) => {
@@ -57,10 +79,29 @@ export default function GameCanvas() {
       // E key — interact
       if (key === "e") {
         e.preventDefault();
-        // Show special dialog for Toà Gamma
         const curZone = nearInteractionRef.current;
-        if (curZone && curZone.id === "toa-gamma-door") {
+        if (!curZone) return;
+        // Show special dialog for Toà Gamma
+        if (curZone.id === "toa-gamma-door") {
           setGammaDialog(true);
+          return;
+        }
+        // Show building landing page for building zones
+        const buildingZones = {
+          "toa-alpha-door": "alpha-tower",
+          "building-b-door": "beta-tower",
+          "cantin-door": "canteen",
+          "dorm-a-door": "dorm-a",
+          "dorm-b-door": "dorm-b",
+          "dorm-door": "dorm-b",
+          "main-gate-zone": "main-gate",
+          "sports-door": "canteen",
+          "fpt-sign-zone": "main-gate",
+          "event-plaza-zone": "alpha-tower",
+        };
+        if (buildingZones[curZone.id]) {
+          setShowBuilding(buildingZones[curZone.id]);
+          canvasInteract();
           return;
         }
         canvasInteract();
@@ -253,6 +294,76 @@ export default function GameCanvas() {
           // Text
           ctx.fillStyle = "#ffffff";
           ctx.fillText(b.label, bx, by + 4);
+        }
+      }
+
+      // ── Draw Gamma Tower floating photo ──
+      if (gammaImgLoaded.current && gammaImgRef.current) {
+        // Toà Gamma is at (30, 880, 245, 240) in map coords
+        const gimgW = 120;
+        const gimgH = 80;
+        const gimgX = 30 + 245 / 2 - gimgW / 2 - cam.x;
+        const gimgY = 880 - gimgH - 18 + Math.sin(Date.now() / 600) * 4 - cam.y;
+        
+        if (gimgX + gimgW > -20 && gimgX < viewW + 20 && gimgY + gimgH > -20 && gimgY < viewH + 20) {
+          ctx.save();
+          // Orange glow shadow
+          ctx.shadowColor = "rgba(243, 112, 33, 0.5)";
+          ctx.shadowBlur = 12;
+          // Rounded rect clip
+          ctx.beginPath();
+          ctx.roundRect(gimgX, gimgY, gimgW, gimgH, 8);
+          ctx.clip();
+          ctx.drawImage(gammaImgRef.current, gimgX, gimgY, gimgW, gimgH);
+          ctx.restore();
+          // Orange border
+          ctx.strokeStyle = "rgba(243, 112, 33, 0.7)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.roundRect(gimgX, gimgY, gimgW, gimgH, 8);
+          ctx.stroke();
+          // Label below
+          ctx.font = "bold 7px 'Press Start 2P', monospace";
+          ctx.textAlign = "center";
+          ctx.fillStyle = "rgba(0,0,0,0.7)";
+          const lblW = ctx.measureText("FPT UNIVERSITY").width + 8;
+          ctx.fillRect(gimgX + gimgW / 2 - lblW / 2, gimgY + gimgH + 3, lblW, 12);
+          ctx.fillStyle = "#f37021";
+          ctx.fillText("FPT UNIVERSITY", gimgX + gimgW / 2, gimgY + gimgH + 12);
+        }
+      }
+
+      // ── Draw Alpha Tower floating photo ──
+      if (alphaImgLoaded.current && alphaImgRef.current) {
+        // Toà Alpha is at (400, 880, 260, 240) in map coords
+        const aimgW = 100;
+        const aimgH = 110;
+        const aimgX = 400 + 260 / 2 - aimgW / 2 - cam.x;
+        const aimgY = 880 - aimgH - 18 + Math.sin(Date.now() / 700 + 1) * 4 - cam.y;
+        
+        if (aimgX + aimgW > -20 && aimgX < viewW + 20 && aimgY + aimgH > -20 && aimgY < viewH + 20) {
+          ctx.save();
+          ctx.shadowColor = "rgba(243, 112, 33, 0.5)";
+          ctx.shadowBlur = 12;
+          ctx.beginPath();
+          ctx.roundRect(aimgX, aimgY, aimgW, aimgH, 8);
+          ctx.clip();
+          ctx.drawImage(alphaImgRef.current, aimgX, aimgY, aimgW, aimgH);
+          ctx.restore();
+          // Orange border
+          ctx.strokeStyle = "rgba(243, 112, 33, 0.7)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.roundRect(aimgX, aimgY, aimgW, aimgH, 8);
+          ctx.stroke();
+          // Label below
+          ctx.font = "bold 7px 'Press Start 2P', monospace";
+          ctx.textAlign = "center";
+          ctx.fillStyle = "rgba(0,0,0,0.7)";
+          const lblWa = ctx.measureText("TOÀ ALPHA").width + 8;
+          ctx.fillRect(aimgX + aimgW / 2 - lblWa / 2, aimgY + aimgH + 3, lblWa, 12);
+          ctx.fillStyle = "#f37021";
+          ctx.fillText("TOÀ ALPHA", aimgX + aimgW / 2, aimgY + aimgH + 12);
         }
       }
 
@@ -450,7 +561,7 @@ export default function GameCanvas() {
               <button
                 onClick={() => {
                   setGammaDialog(false);
-                  setShowLanding(true);
+                  setShowBuilding("gamma-tower");
                 }}
                 style={{
                   background: "linear-gradient(135deg, #f37021, #e85d10)",
@@ -494,6 +605,14 @@ export default function GameCanvas() {
             setShowLanding(false);
             canvasInteract();
           }}
+        />
+      )}
+
+      {/* ── Building Landing Page ── */}
+      {showBuilding && (
+        <BuildingLandingPage
+          buildingId={showBuilding}
+          onClose={() => setShowBuilding(null)}
         />
       )}
     </div>
