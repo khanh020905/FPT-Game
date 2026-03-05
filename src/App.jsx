@@ -8,6 +8,7 @@ import LukApp from "./systems/LukApp";
 import ShopSystem from "./systems/ShopSystem";
 import MentorSystem from "./systems/MentorSystem";
 import SubmissionHub from "./systems/SubmissionHub";
+import FPTChatBot from "./components/FPTChatBot";
 
 /**
  * Game Over Screen — shown when player runs out of health/progress or wins
@@ -167,6 +168,7 @@ export default function App() {
   return (
     <GameProvider>
       <AppRouter />
+      <FPTChatBot />
     </GameProvider>
   );
 }

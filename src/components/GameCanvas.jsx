@@ -70,6 +70,16 @@ export default function GameCanvas() {
     alphaImgRef.current = img;
   }, []);
 
+  // ───── Load Event Convocation floating image ─────
+  const eventImgRef = useRef(null);
+  const eventImgLoaded = useRef(false);
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => { eventImgLoaded.current = true; };
+    img.src = "/event-convocation.png";
+    eventImgRef.current = img;
+  }, []);
+
   // ───── Keyboard listeners ─────
   useEffect(() => {
     const onDown = (e) => {
@@ -367,6 +377,96 @@ export default function GameCanvas() {
         }
       }
 
+      // ── Draw Event Convocation 3D floating photo ──
+      if (eventImgLoaded.current && eventImgRef.current) {
+        // Event plaza zone is at (395, 705, 270, 125) in map coords
+        const eimgW = 150;
+        const eimgH = 95;
+        const t = Date.now();
+        const floatY = Math.sin(t / 800) * 5;
+        const tiltX = Math.sin(t / 2000) * 0.06; // subtle 3D tilt
+        const eimgCenterX = 395 + 270 / 2 - cam.x;
+        const eimgCenterY = 705 - eimgH - 25 + floatY - cam.y;
+        const eimgX = eimgCenterX - eimgW / 2;
+        const eimgY = eimgCenterY;
+        
+        if (eimgX + eimgW > -40 && eimgX < viewW + 40 && eimgY + eimgH > -40 && eimgY < viewH + 40) {
+          ctx.save();
+          
+          // 3D perspective transform — translate to center, apply skew, translate back
+          ctx.translate(eimgCenterX, eimgCenterY + eimgH / 2);
+          ctx.transform(1, tiltX, -tiltX * 0.5, 1, 0, 0);
+          ctx.translate(-eimgCenterX, -(eimgCenterY + eimgH / 2));
+          
+          // Outer glow — festive golden/orange
+          ctx.shadowColor = "rgba(255, 165, 0, 0.6)";
+          ctx.shadowBlur = 20;
+          ctx.shadowOffsetY = 4;
+          
+          // Draw rounded image
+          ctx.beginPath();
+          ctx.roundRect(eimgX, eimgY, eimgW, eimgH, 10);
+          ctx.clip();
+          ctx.drawImage(eventImgRef.current, eimgX, eimgY, eimgW, eimgH);
+          ctx.restore();
+          
+          // 3D border with same transform
+          ctx.save();
+          ctx.translate(eimgCenterX, eimgCenterY + eimgH / 2);
+          ctx.transform(1, tiltX, -tiltX * 0.5, 1, 0, 0);
+          ctx.translate(-eimgCenterX, -(eimgCenterY + eimgH / 2));
+          
+          // Animated border glow
+          const glowIntensity = 0.5 + Math.sin(t / 400) * 0.3;
+          ctx.strokeStyle = `rgba(255, 165, 0, ${glowIntensity})`;
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.roundRect(eimgX, eimgY, eimgW, eimgH, 10);
+          ctx.stroke();
+          
+          // Second glow layer for depth
+          ctx.strokeStyle = `rgba(255, 200, 50, ${glowIntensity * 0.4})`;
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.roundRect(eimgX - 1, eimgY - 1, eimgW + 2, eimgH + 2, 11);
+          ctx.stroke();
+          
+          // Label below with 3D transform
+          const labelText = "🎓 CONVOCATION DAY";
+          ctx.font = "bold 7px 'Press Start 2P', monospace";
+          ctx.textAlign = "center";
+          const lblW = ctx.measureText(labelText).width + 12;
+          
+          // Label background pill
+          ctx.fillStyle = "rgba(0,0,0,0.8)";
+          ctx.beginPath();
+          ctx.roundRect(eimgCenterX - lblW / 2, eimgY + eimgH + 5, lblW, 14, 4);
+          ctx.fill();
+          
+          // Label border
+          ctx.strokeStyle = "rgba(255, 165, 0, 0.5)";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.roundRect(eimgCenterX - lblW / 2, eimgY + eimgH + 5, lblW, 14, 4);
+          ctx.stroke();
+          
+          // Label text
+          ctx.fillStyle = "#ffa500";
+          ctx.fillText(labelText, eimgCenterX, eimgY + eimgH + 15);
+          
+          ctx.restore();
+          
+          // 3D shadow on ground
+          ctx.save();
+          ctx.globalAlpha = 0.15 + Math.sin(t / 800) * 0.05;
+          ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+          ctx.beginPath();
+          ctx.ellipse(eimgCenterX, eimgY + eimgH + 28, eimgW / 2.5, 6, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
       // ── Draw player character ──
       const px = player.x - cam.x;
       const py = player.y - cam.y;
@@ -435,69 +535,146 @@ export default function GameCanvas() {
         />
       </div>
 
-      {/* Action Bar — Bottom Panel (same style as old CampusMap) */}
-      <div className="bg-[#0d1117]/95 border-t border-[#00fff7]/10 px-4 py-3 flex-shrink-0 backdrop-blur-md">
-        <div className="flex items-center gap-3 overflow-x-auto">
-          {/* Location Context */}
-          <div className="flex items-center gap-2 pr-3 border-r border-white/10 flex-shrink-0">
-            <span className="text-xl">{currentLoc?.emoji}</span>
-            <div className="min-w-0">
-              <p
-                className="text-xs font-bold text-[#00fff7] truncate"
-                style={{
-                  fontFamily: "'Press Start 2P', monospace",
-                  fontSize: "9px",
-                }}
-              >
-                {currentLoc?.name}
-              </p>
-              <p className="text-[9px] text-gray-500 truncate">
-                {currentLoc?.nameEn}
-              </p>
+      {/* Action Bar — Bottom Panel with LED Border & Game Guide */}
+      <div style={{ position: "relative", flexShrink: 0 }}>
+        {/* LED Running Border */}
+        <div style={{
+          position: "absolute", inset: -2, borderRadius: 0, overflow: "hidden", zIndex: 0,
+          pointerEvents: "none",
+        }}>
+          <div style={{
+            position: "absolute", inset: -2,
+            background: "conic-gradient(from var(--led-angle, 0deg), #00fff7, #f37021, #ff2d95, #7c3aed, #22c55e, #eab308, #00fff7)",
+            animation: "ledSpin 3s linear infinite",
+            opacity: 0.8,
+          }} />
+          <div style={{
+            position: "absolute", inset: 2,
+            background: "rgba(13,17,23,0.97)",
+          }} />
+        </div>
+        <style>{`
+          @property --led-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+          @keyframes ledSpin { to { --led-angle: 360deg; } }
+          @keyframes ledPulse { 0%,100%{opacity:.6}50%{opacity:1} }
+          @keyframes keyBounce { 0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)} }
+        `}</style>
+
+        <div className="px-4 py-3" style={{
+          position: "relative", zIndex: 1,
+          background: "rgba(13,17,23,0.97)",
+          backdropFilter: "blur(12px)",
+        }}>
+          <div className="flex items-center gap-3 overflow-x-auto">
+            {/* Location Context */}
+            <div className="flex items-center gap-2 pr-3 border-r border-white/10 flex-shrink-0">
+              <span className="text-xl">{currentLoc?.emoji}</span>
+              <div className="min-w-0">
+                <p
+                  className="text-xs font-bold text-[#00fff7] truncate"
+                  style={{
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: "9px",
+                  }}
+                >
+                  {currentLoc?.name}
+                </p>
+                <p className="text-[9px] text-gray-500 truncate">
+                  {currentLoc?.nameEn}
+                </p>
+              </div>
             </div>
+
+            {/* Action Buttons */}
+            {availableActions.map((action) => (
+              <button
+                key={action.id}
+                onClick={() => performAction(action.id)}
+                className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold
+                           bg-gradient-to-r from-white/5 to-white/[0.02]
+                           border border-white/10 hover:border-[#00fff7]/40
+                           hover:bg-[#00fff7]/10 hover:shadow-[0_0_12px_#00fff720]
+                           transition-all duration-200 hover:scale-[1.03] active:scale-95 group"
+              >
+                <span className="text-base group-hover:scale-110 transition-transform">
+                  {action.emoji}
+                </span>
+                <div className="text-left">
+                  <span className="text-gray-200 block">{action.name}</span>
+                  {action.effects &&
+                    Object.entries(action.effects).length > 0 && (
+                      <span className="text-[9px] text-gray-500 flex gap-1 mt-0.5">
+                        {Object.entries(action.effects).map(([key, val]) => (
+                          <span
+                            key={key}
+                            className={
+                              val > 0 ? "text-green-400/80" : "text-red-400/80"
+                            }
+                          >
+                            {val > 0 ? "+" : ""}
+                            {key === "money" ? `${val / 1000}K` : val}
+                          </span>
+                        ))}
+                      </span>
+                    )}
+                </div>
+              </button>
+            ))}
+
+            {availableActions.length === 0 && (
+              <p className="text-xs text-gray-600 italic">
+                Di chuyển đến một toà nhà và nhấn [E] để tương tác.
+              </p>
+            )}
           </div>
 
-          {/* Action Buttons */}
-          {availableActions.map((action) => (
-            <button
-              key={action.id}
-              onClick={() => performAction(action.id)}
-              className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold
-                         bg-gradient-to-r from-white/5 to-white/[0.02]
-                         border border-white/10 hover:border-[#00fff7]/40
-                         hover:bg-[#00fff7]/10 hover:shadow-[0_0_12px_#00fff720]
-                         transition-all duration-200 hover:scale-[1.03] active:scale-95 group"
-            >
-              <span className="text-base group-hover:scale-110 transition-transform">
-                {action.emoji}
-              </span>
-              <div className="text-left">
-                <span className="text-gray-200 block">{action.name}</span>
-                {action.effects &&
-                  Object.entries(action.effects).length > 0 && (
-                    <span className="text-[9px] text-gray-500 flex gap-1 mt-0.5">
-                      {Object.entries(action.effects).map(([key, val]) => (
-                        <span
-                          key={key}
-                          className={
-                            val > 0 ? "text-green-400/80" : "text-red-400/80"
-                          }
-                        >
-                          {val > 0 ? "+" : ""}
-                          {key === "money" ? `${val / 1000}K` : val}
-                        </span>
-                      ))}
-                    </span>
-                  )}
+          {/* Game Guide — Centered */}
+          <div style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
+            gap: 10, marginTop: 6, paddingTop: 6,
+            borderTop: "1px solid rgba(255,255,255,0.06)",
+          }}>
+              <div style={{
+                display: "flex", alignItems: "center", gap: 8,
+                padding: "4px 12px", borderRadius: 10,
+                background: "linear-gradient(135deg, rgba(0,255,247,0.06), rgba(243,112,33,0.04))",
+                border: "1px solid rgba(0,255,247,0.1)",
+              }}>
+                <span style={{ fontSize: 14, animation: "ledPulse 2s ease infinite" }}>🎮</span>
+                <span style={{ fontSize: 9, fontWeight: 700, color: "#00fff7", letterSpacing: 1, textTransform: "uppercase", fontFamily: "'Press Start 2P', monospace" }}>GUIDE</span>
               </div>
-            </button>
-          ))}
-
-          {availableActions.length === 0 && (
-            <p className="text-xs text-gray-600 italic">
-              Di chuyển đến một toà nhà và nhấn [E] để tương tác.
-            </p>
-          )}
+              {[
+                { keys: "W A S D", label: "Di chuyển", icon: "🕹️" },
+                { keys: "E", label: "Tương tác", icon: "⚡" },
+                { keys: "M", label: "Bản đồ", icon: "🗺️" },
+              ].map((g, i) => (
+                <div key={g.keys} style={{
+                  display: "flex", alignItems: "center", gap: 6,
+                  padding: "4px 10px", borderRadius: 8,
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                }}>
+                  <span style={{ fontSize: 12 }}>{g.icon}</span>
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {g.keys.split(" ").map(k => (
+                      <span key={k} style={{
+                        display: "inline-flex", alignItems: "center", justifyContent: "center",
+                        minWidth: 20, height: 20, padding: "0 4px",
+                        borderRadius: 4,
+                        background: "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
+                        border: "1px solid rgba(255,255,255,0.15)",
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
+                        fontSize: 8, fontWeight: 800, color: "#e2e8f0",
+                        fontFamily: "'Press Start 2P', monospace",
+                        letterSpacing: 0.5,
+                        animation: `keyBounce ${2 + i * 0.3}s ease-in-out infinite`,
+                      }}>{k}</span>
+                    ))}
+                  </div>
+                  <span style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", fontWeight: 500 }}>{g.label}</span>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
 
