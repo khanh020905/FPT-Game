@@ -423,7 +423,7 @@ export const BUILDING_DATA = {
     dailySchedule: [
       {
         time: "07:30 - 09:30",
-        activity: "LUK Global — English Communication Level 2 (Greenfire)",
+        activity: "LUK Global — English Communication Level 1 (Hurricane)",
         emoji: "🌍",
         type: "luk",
       },

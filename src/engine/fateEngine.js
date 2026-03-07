@@ -76,11 +76,19 @@ export const generateLocationEvent = (locationId, day) => {
 
   const locationEvents = {
     canteen: ["free-food", "tien-roi"],
-    "alpha-tower": ["kiem-tra-dot-xuat", "gap-senior"],
+    "alpha-tower": ["kiem-tra-dot-xuat", "gap-senior", "luk-presentation"],
     "beta-tower": ["bug-code", "gap-senior"],
     "dorm-a": ["mat-dien"],
     "dorm-b": ["mat-dien"],
-    "gamma-tower": ["scholarship"],
+    "gamma-tower": [
+      "scholarship",
+      "luk-presentation",
+      "luk-best-team",
+      "sao-truc",
+      "dan-bau-nhi",
+      "dan-tranh",
+    ],
+    "main-gate": ["vovinam-training", "vovinam-belt"],
   };
 
   const eventIds = locationEvents[locationId];

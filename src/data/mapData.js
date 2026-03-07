@@ -195,7 +195,7 @@ export const ACTIONS = {
     name: "Ăn cơm",
     emoji: "🍚",
     description: "Ăn uống tại Cantin phục hồi HP",
-    effects: { health: 20, money: -25000, confidence: 3 },
+    effects: { health: 20, money: -25000, confidence: 3, progress: 3 },
     location: "canteen",
   },
   socialize: {
@@ -258,8 +258,8 @@ export const BUILDING_COLLISIONS = [
   { id: "sports", x: 28, y: 215, w: 205, h: 105, label: "🏀 Sân TT" },
   // Football — left below
   { id: "football", x: 28, y: 340, w: 208, h: 150, label: "⚽ Sân Bóng" },
-  // Lotus Pond
-  { id: "lotus-pond", x: 392, y: 330, w: 198, h: 118, label: "" },
+  // Lotus Pond (moved down for wider cantin path)
+  { id: "lotus-pond", x: 392, y: 360, w: 198, h: 100, label: "" },
   // Dorm A — where Cafe was
   { id: "dorm-a", x: 496, y: 436, w: 138, h: 148, label: "🏠 KTX A" },
   // Building B — large courtyard
@@ -284,23 +284,13 @@ export const BUILDING_COLLISIONS = [
 export const INTERACTION_ZONES = [
   {
     id: "cantin-door",
-    x: 500,
-    y: 313,
-    w: 60,
-    h: 22,
+    x: 420,
+    y: 310,
+    w: 150,
+    h: 50,
     locationId: "canteen",
     label: "🍜 Cantin",
     prompt: "Ăn cơm / Giao lưu",
-  },
-  {
-    id: "building-b-door",
-    x: 374,
-    y: 645,
-    w: 22,
-    h: 50,
-    locationId: "gamma-tower",
-    label: "🏢 Toà B (LUK Global)",
-    prompt: "Truy cập LUK-App (LMS Portal)",
   },
   {
     id: "toa-gamma-door",

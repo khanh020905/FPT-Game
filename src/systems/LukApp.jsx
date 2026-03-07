@@ -4,25 +4,25 @@ const SCHEDULE = [
   {
     time: "07:30 - 09:30",
     subject: "Nhập môn lập trình (PRF192)",
-    room: "Alpha-301",
+    room: "LUK Cafe - Tầng 1",
     type: "theory",
   },
   {
     time: "09:45 - 11:45",
     subject: "Toán cao cấp (MAE101)",
-    room: "Alpha-205",
+    room: "Brain 1 - Tầng 3",
     type: "theory",
   },
   {
     time: "13:00 - 15:00",
     subject: "Kỹ năng mềm (SSG104)",
-    room: "Alpha-102",
+    room: "Brain 2 - Tầng 3",
     type: "theory",
   },
   {
     time: "15:15 - 17:15",
     subject: "Lab Lập trình (PRF192)",
-    room: "Beta-Lab3",
+    room: "Phòng Lab - Tầng 2",
     type: "lab",
   },
 ];
@@ -126,7 +126,7 @@ export default function LukApp() {
                       {item.subject}
                     </p>
                     <p className="text-[10px] text-gray-400">
-                      {item.time} • Phòng {item.room}
+                      {item.time} • {item.room}
                     </p>
                   </div>
                   <span

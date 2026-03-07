@@ -224,7 +224,11 @@ export function gameReducer(state, action) {
       const actionData = ACTIONS[action.payload];
       if (!actionData) return state;
 
-      if (state.actionsTakenToday >= state.maxActionsPerDay) {
+      // Sleep is always allowed regardless of action limit
+      if (
+        action.payload !== "sleep" &&
+        state.actionsTakenToday >= state.maxActionsPerDay
+      ) {
         return {
           ...state,
           notifications: [
@@ -288,18 +292,40 @@ export function gameReducer(state, action) {
       // If action triggers next day (sleep)
       if (actionData.triggersNextDay) {
         const nextDay = state.day + 1;
-        const morningEvent = generateMorningEvent(nextDay, newStats);
+
+        // Auto-complete all remaining active quests for this day
+        let finalStats = newStats;
+        const allCompletedQuests = [...newCompletedQuests];
+        for (const quest of activeQuests) {
+          const allDone = quest.objectives.every((o) => o.completed);
+          if (!allDone) {
+            // Force-complete remaining objectives
+            finalStats = applyEffects(finalStats, quest.rewards);
+            allCompletedQuests.push(quest.id);
+            newLog.push({
+              day: state.day,
+              message: `🏆 Quest hoàn thành (tự động): ${quest.name}!`,
+            });
+            newNotifications.push({
+              id: Date.now() + Math.random(),
+              message: `🏆 Hoàn thành: ${quest.emoji} ${quest.name}!`,
+              type: "quest",
+            });
+          }
+        }
+
+        const morningEvent = generateMorningEvent(nextDay, finalStats);
         const newDayQuests = activateNewQuests(
           nextDay,
-          newCompletedQuests,
-          activeQuests.map((q) => q.id),
+          allCompletedQuests,
+          [], // all active quests are now completed
         );
 
         // Win condition: survive 30 days
         if (nextDay > 30) {
           return {
             ...state,
-            stats: newStats,
+            stats: finalStats,
             gamePhase: "gameover",
             gameOverReason:
               "🎉 Chúc mừng! Bạn đã sống sót qua kỳ học đầu tiên tại FPT University! 🎓",
@@ -314,9 +340,9 @@ export function gameReducer(state, action) {
         return {
           ...state,
           day: nextDay,
-          stats: newStats,
-          activeQuests: [...activeQuests, ...newDayQuests],
-          completedQuests: newCompletedQuests,
+          stats: finalStats,
+          activeQuests: [...newDayQuests],
+          completedQuests: allCompletedQuests,
           actionsTakenToday: 0,
           showDayTransition: true,
           dayTransitionEvent: morningEvent,
@@ -511,10 +537,22 @@ export function gameReducer(state, action) {
           break;
         }
       }
+
+      // Auto-update location when player enters a zone
+      let newLocation = state.location;
+      if (
+        nearZone &&
+        nearZone.locationId &&
+        nearZone.locationId !== state.location
+      ) {
+        newLocation = nearZone.locationId;
+      }
+
       return {
         ...state,
         playerPos: { x, y },
         nearInteraction: nearZone,
+        location: newLocation,
       };
     }
 

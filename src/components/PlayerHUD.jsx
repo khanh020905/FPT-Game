@@ -301,25 +301,33 @@ export default function PlayerHUD() {
       </div>
 
       {/* Bottom Quick Actions */}
-      <div className="px-3 py-2.5 border-t border-white/5 flex gap-1.5 flex-shrink-0 bg-[#0d1117]">
+      <div className="px-3 py-2.5 border-t border-white/5 flex flex-col gap-1.5 flex-shrink-0 bg-[#0d1117]">
+        <div className="flex gap-1.5">
+          <button
+            onClick={() => openSystem("mentor")}
+            className="flex-1 py-2 rounded-lg text-[10px] font-bold bg-[#3b82f6]/10 text-[#3b82f6] border border-[#3b82f6]/20 hover:bg-[#3b82f6]/20 transition-all flex items-center justify-center gap-1"
+          >
+            🧑‍🏫 Cố Vấn
+          </button>
+          <button
+            onClick={() => openSystem("shop")}
+            className="flex-1 py-2 rounded-lg text-[10px] font-bold bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20 hover:bg-[#22c55e]/20 transition-all flex items-center justify-center gap-1"
+          >
+            🏪 Shop
+          </button>
+          <button
+            onClick={saveGame}
+            className="py-2 px-3 rounded-lg text-[10px] font-bold bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 transition-all"
+            title="Lưu Game"
+          >
+            💾
+          </button>
+        </div>
         <button
-          onClick={() => openSystem("mentor")}
-          className="flex-1 py-2 rounded-lg text-[10px] font-bold bg-[#3b82f6]/10 text-[#3b82f6] border border-[#3b82f6]/20 hover:bg-[#3b82f6]/20 transition-all flex items-center justify-center gap-1"
+          onClick={() => openSystem("leaderboard")}
+          className="w-full py-2 rounded-lg text-[10px] font-bold bg-[#ffd700]/10 text-[#ffd700] border border-[#ffd700]/20 hover:bg-[#ffd700]/20 transition-all flex items-center justify-center gap-1"
         >
-          🧑‍🏫 Cố Vấn
-        </button>
-        <button
-          onClick={() => openSystem("shop")}
-          className="flex-1 py-2 rounded-lg text-[10px] font-bold bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20 hover:bg-[#22c55e]/20 transition-all flex items-center justify-center gap-1"
-        >
-          🏪 Shop
-        </button>
-        <button
-          onClick={saveGame}
-          className="py-2 px-3 rounded-lg text-[10px] font-bold bg-white/5 text-gray-400 border border-white/10 hover:bg-white/10 transition-all"
-          title="Lưu Game"
-        >
-          💾
+          🏆 Bảng Xếp Hạng
         </button>
       </div>
     </div>

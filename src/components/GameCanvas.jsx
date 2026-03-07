@@ -37,6 +37,7 @@ export default function GameCanvas() {
   const [gammaDialog, setGammaDialog] = useState(false);
   const [showLanding, setShowLanding] = useState(false);
   const [showBuilding, setShowBuilding] = useState(null); // building ID or null
+  const [feedbackDialog, setFeedbackDialog] = useState(false);
 
   const { nearInteraction, location } = state;
   const nearInteractionRef = useRef(nearInteraction);
@@ -55,7 +56,9 @@ export default function GameCanvas() {
   const gammaImgLoaded = useRef(false);
   useEffect(() => {
     const img = new Image();
-    img.onload = () => { gammaImgLoaded.current = true; };
+    img.onload = () => {
+      gammaImgLoaded.current = true;
+    };
     img.src = "/fpt-gamma-building.png";
     gammaImgRef.current = img;
   }, []);
@@ -65,7 +68,9 @@ export default function GameCanvas() {
   const alphaImgLoaded = useRef(false);
   useEffect(() => {
     const img = new Image();
-    img.onload = () => { alphaImgLoaded.current = true; };
+    img.onload = () => {
+      alphaImgLoaded.current = true;
+    };
     img.src = "/fpt-alpha-building.png";
     alphaImgRef.current = img;
   }, []);
@@ -75,7 +80,9 @@ export default function GameCanvas() {
   const eventImgLoaded = useRef(false);
   useEffect(() => {
     const img = new Image();
-    img.onload = () => { eventImgLoaded.current = true; };
+    img.onload = () => {
+      eventImgLoaded.current = true;
+    };
     img.src = "/event-convocation.png";
     eventImgRef.current = img;
   }, []);
@@ -99,7 +106,6 @@ export default function GameCanvas() {
         // Show building landing page for building zones
         const buildingZones = {
           "toa-alpha-door": "alpha-tower",
-          "building-b-door": "beta-tower",
           "cantin-door": "canteen",
           "dorm-a-door": "dorm-a",
           "dorm-b-door": "dorm-b",
@@ -112,6 +118,20 @@ export default function GameCanvas() {
         if (buildingZones[curZone.id]) {
           setShowBuilding(buildingZones[curZone.id]);
           canvasInteract();
+          // Auto-perform action when entering buildings
+          if (curZone.id === "toa-alpha-door") {
+            performAction("attend_class");
+          }
+          if (curZone.id === "cantin-door") {
+            performAction("eat_meal");
+          }
+          if (
+            curZone.id === "dorm-a-door" ||
+            curZone.id === "dorm-b-door" ||
+            curZone.id === "dorm-door"
+          ) {
+            performAction("sleep");
+          }
           return;
         }
         canvasInteract();
@@ -238,17 +258,29 @@ export default function GameCanvas() {
       const cam = cameraRef.current;
       cam.x = player.x + PS / 2 - viewW / 2;
       cam.y = player.y + PS / 2 - viewH / 2;
-      // Center map when viewport is larger than map
+
+      // Compute draw offsets for centering when viewport > map
+      let drawOffsetX = 0;
+      let drawOffsetY = 0;
+
       if (viewW >= MAP_W) {
-        cam.x = -(viewW - MAP_W) / 2;
+        // Viewport wider than map → center map horizontally
+        cam.x = 0;
+        drawOffsetX = (viewW - MAP_W) / 2;
       } else {
         cam.x = Math.max(0, Math.min(MAP_W - viewW, cam.x));
       }
       if (viewH >= MAP_H) {
-        cam.y = -(viewH - MAP_H) / 2;
+        // Viewport taller than map → center map vertically
+        cam.y = 0;
+        drawOffsetY = (viewH - MAP_H) / 2;
       } else {
         cam.y = Math.max(0, Math.min(MAP_H - viewH, cam.y));
       }
+
+      // Store offsets for interaction zone / player drawing
+      cam.drawOffsetX = drawOffsetX;
+      cam.drawOffsetY = drawOffsetY;
 
       // ── Clear ──
       ctx.fillStyle = "#0a0e17";
@@ -256,23 +288,29 @@ export default function GameCanvas() {
 
       // ── Draw map (from procedural offscreen canvas) ──
       if (mapImgRef.current) {
+        // Source: crop from map at camera position
+        const srcX = cam.x;
+        const srcY = cam.y;
+        const srcW = Math.min(viewW, MAP_W);
+        const srcH = Math.min(viewH, MAP_H);
+        // Destination: offset for centering
         ctx.drawImage(
           mapImgRef.current,
-          cam.x,
-          cam.y,
-          viewW,
-          viewH, // source crop from 1024×1024 map
-          0,
-          0,
-          viewW,
-          viewH, // destination (fill viewport)
+          srcX,
+          srcY,
+          srcW,
+          srcH,
+          drawOffsetX,
+          drawOffsetY,
+          srcW,
+          srcH,
         );
       }
 
       // ── Draw interaction zones (subtle highlights) ──
       for (const zone of INTERACTION_ZONES) {
-        const zx = zone.x - cam.x;
-        const zy = zone.y - cam.y;
+        const zx = zone.x - cam.x + drawOffsetX;
+        const zy = zone.y - cam.y + drawOffsetY;
         // Only draw if visible
         if (zx + zone.w > 0 && zx < viewW && zy + zone.h > 0 && zy < viewH) {
           ctx.fillStyle = "rgba(0, 255, 247, 0.12)";
@@ -288,8 +326,8 @@ export default function GameCanvas() {
       ctx.textAlign = "center";
       for (const b of BUILDING_COLLISIONS) {
         if (!b.label) continue;
-        const bx = b.x + b.w / 2 - cam.x;
-        const by = b.y + b.h / 2 - cam.y;
+        const bx = b.x + b.w / 2 - cam.x + drawOffsetX;
+        const by = b.y + b.h / 2 - cam.y + drawOffsetY;
         if (bx > -50 && bx < viewW + 50 && by > -20 && by < viewH + 20) {
           // Background pill
           const textWidth = ctx.measureText(b.label).width;
@@ -312,10 +350,21 @@ export default function GameCanvas() {
         // Toà Gamma is at (30, 880, 245, 240) in map coords
         const gimgW = 120;
         const gimgH = 80;
-        const gimgX = 30 + 245 / 2 - gimgW / 2 - cam.x;
-        const gimgY = 880 - gimgH - 18 + Math.sin(Date.now() / 600) * 4 - cam.y;
-        
-        if (gimgX + gimgW > -20 && gimgX < viewW + 20 && gimgY + gimgH > -20 && gimgY < viewH + 20) {
+        const gimgX = 30 + 245 / 2 - gimgW / 2 - cam.x + drawOffsetX;
+        const gimgY =
+          880 -
+          gimgH -
+          18 +
+          Math.sin(Date.now() / 600) * 4 -
+          cam.y +
+          drawOffsetY;
+
+        if (
+          gimgX + gimgW > -20 &&
+          gimgX < viewW + 20 &&
+          gimgY + gimgH > -20 &&
+          gimgY < viewH + 20
+        ) {
           ctx.save();
           // Orange glow shadow
           ctx.shadowColor = "rgba(243, 112, 33, 0.5)";
@@ -337,7 +386,12 @@ export default function GameCanvas() {
           ctx.textAlign = "center";
           ctx.fillStyle = "rgba(0,0,0,0.7)";
           const lblW = ctx.measureText("FPT UNIVERSITY").width + 8;
-          ctx.fillRect(gimgX + gimgW / 2 - lblW / 2, gimgY + gimgH + 3, lblW, 12);
+          ctx.fillRect(
+            gimgX + gimgW / 2 - lblW / 2,
+            gimgY + gimgH + 3,
+            lblW,
+            12,
+          );
           ctx.fillStyle = "#f37021";
           ctx.fillText("FPT UNIVERSITY", gimgX + gimgW / 2, gimgY + gimgH + 12);
         }
@@ -348,10 +402,21 @@ export default function GameCanvas() {
         // Toà Alpha is at (400, 880, 260, 240) in map coords
         const aimgW = 100;
         const aimgH = 110;
-        const aimgX = 400 + 260 / 2 - aimgW / 2 - cam.x;
-        const aimgY = 880 - aimgH - 18 + Math.sin(Date.now() / 700 + 1) * 4 - cam.y;
-        
-        if (aimgX + aimgW > -20 && aimgX < viewW + 20 && aimgY + aimgH > -20 && aimgY < viewH + 20) {
+        const aimgX = 400 + 260 / 2 - aimgW / 2 - cam.x + drawOffsetX;
+        const aimgY =
+          880 -
+          aimgH -
+          18 +
+          Math.sin(Date.now() / 700 + 1) * 4 -
+          cam.y +
+          drawOffsetY;
+
+        if (
+          aimgX + aimgW > -20 &&
+          aimgX < viewW + 20 &&
+          aimgY + aimgH > -20 &&
+          aimgY < viewH + 20
+        ) {
           ctx.save();
           ctx.shadowColor = "rgba(243, 112, 33, 0.5)";
           ctx.shadowBlur = 12;
@@ -371,7 +436,12 @@ export default function GameCanvas() {
           ctx.textAlign = "center";
           ctx.fillStyle = "rgba(0,0,0,0.7)";
           const lblWa = ctx.measureText("TOÀ ALPHA").width + 8;
-          ctx.fillRect(aimgX + aimgW / 2 - lblWa / 2, aimgY + aimgH + 3, lblWa, 12);
+          ctx.fillRect(
+            aimgX + aimgW / 2 - lblWa / 2,
+            aimgY + aimgH + 3,
+            lblWa,
+            12,
+          );
           ctx.fillStyle = "#f37021";
           ctx.fillText("TOÀ ALPHA", aimgX + aimgW / 2, aimgY + aimgH + 12);
         }
@@ -385,37 +455,42 @@ export default function GameCanvas() {
         const t = Date.now();
         const floatY = Math.sin(t / 800) * 5;
         const tiltX = Math.sin(t / 2000) * 0.06; // subtle 3D tilt
-        const eimgCenterX = 395 + 270 / 2 - cam.x;
-        const eimgCenterY = 705 - eimgH - 25 + floatY - cam.y;
+        const eimgCenterX = 395 + 270 / 2 - cam.x + drawOffsetX;
+        const eimgCenterY = 705 - eimgH - 25 + floatY - cam.y + drawOffsetY;
         const eimgX = eimgCenterX - eimgW / 2;
         const eimgY = eimgCenterY;
-        
-        if (eimgX + eimgW > -40 && eimgX < viewW + 40 && eimgY + eimgH > -40 && eimgY < viewH + 40) {
+
+        if (
+          eimgX + eimgW > -40 &&
+          eimgX < viewW + 40 &&
+          eimgY + eimgH > -40 &&
+          eimgY < viewH + 40
+        ) {
           ctx.save();
-          
+
           // 3D perspective transform — translate to center, apply skew, translate back
           ctx.translate(eimgCenterX, eimgCenterY + eimgH / 2);
           ctx.transform(1, tiltX, -tiltX * 0.5, 1, 0, 0);
           ctx.translate(-eimgCenterX, -(eimgCenterY + eimgH / 2));
-          
+
           // Outer glow — festive golden/orange
           ctx.shadowColor = "rgba(255, 165, 0, 0.6)";
           ctx.shadowBlur = 20;
           ctx.shadowOffsetY = 4;
-          
+
           // Draw rounded image
           ctx.beginPath();
           ctx.roundRect(eimgX, eimgY, eimgW, eimgH, 10);
           ctx.clip();
           ctx.drawImage(eventImgRef.current, eimgX, eimgY, eimgW, eimgH);
           ctx.restore();
-          
+
           // 3D border with same transform
           ctx.save();
           ctx.translate(eimgCenterX, eimgCenterY + eimgH / 2);
           ctx.transform(1, tiltX, -tiltX * 0.5, 1, 0, 0);
           ctx.translate(-eimgCenterX, -(eimgCenterY + eimgH / 2));
-          
+
           // Animated border glow
           const glowIntensity = 0.5 + Math.sin(t / 400) * 0.3;
           ctx.strokeStyle = `rgba(255, 165, 0, ${glowIntensity})`;
@@ -423,53 +498,61 @@ export default function GameCanvas() {
           ctx.beginPath();
           ctx.roundRect(eimgX, eimgY, eimgW, eimgH, 10);
           ctx.stroke();
-          
+
           // Second glow layer for depth
           ctx.strokeStyle = `rgba(255, 200, 50, ${glowIntensity * 0.4})`;
           ctx.lineWidth = 5;
           ctx.beginPath();
           ctx.roundRect(eimgX - 1, eimgY - 1, eimgW + 2, eimgH + 2, 11);
           ctx.stroke();
-          
+
           // Label below with 3D transform
           const labelText = "🎓 CONVOCATION DAY";
           ctx.font = "bold 7px 'Press Start 2P', monospace";
           ctx.textAlign = "center";
           const lblW = ctx.measureText(labelText).width + 12;
-          
+
           // Label background pill
           ctx.fillStyle = "rgba(0,0,0,0.8)";
           ctx.beginPath();
           ctx.roundRect(eimgCenterX - lblW / 2, eimgY + eimgH + 5, lblW, 14, 4);
           ctx.fill();
-          
+
           // Label border
           ctx.strokeStyle = "rgba(255, 165, 0, 0.5)";
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.roundRect(eimgCenterX - lblW / 2, eimgY + eimgH + 5, lblW, 14, 4);
           ctx.stroke();
-          
+
           // Label text
           ctx.fillStyle = "#ffa500";
           ctx.fillText(labelText, eimgCenterX, eimgY + eimgH + 15);
-          
+
           ctx.restore();
-          
+
           // 3D shadow on ground
           ctx.save();
           ctx.globalAlpha = 0.15 + Math.sin(t / 800) * 0.05;
           ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
           ctx.beginPath();
-          ctx.ellipse(eimgCenterX, eimgY + eimgH + 28, eimgW / 2.5, 6, 0, 0, Math.PI * 2);
+          ctx.ellipse(
+            eimgCenterX,
+            eimgY + eimgH + 28,
+            eimgW / 2.5,
+            6,
+            0,
+            0,
+            Math.PI * 2,
+          );
           ctx.fill();
           ctx.restore();
         }
       }
 
       // ── Draw player character ──
-      const px = player.x - cam.x;
-      const py = player.y - cam.y;
+      const px = player.x - cam.x + drawOffsetX;
+      const py = player.y - cam.y + drawOffsetY;
       drawPlayer(ctx, px, py, PS, player.dir, player.frame);
 
       // ── Draw interaction prompt ──
@@ -538,20 +621,33 @@ export default function GameCanvas() {
       {/* Action Bar — Bottom Panel with LED Border & Game Guide */}
       <div style={{ position: "relative", flexShrink: 0 }}>
         {/* LED Running Border */}
-        <div style={{
-          position: "absolute", inset: -2, borderRadius: 0, overflow: "hidden", zIndex: 0,
-          pointerEvents: "none",
-        }}>
-          <div style={{
-            position: "absolute", inset: -2,
-            background: "conic-gradient(from var(--led-angle, 0deg), #00fff7, #f37021, #ff2d95, #7c3aed, #22c55e, #eab308, #00fff7)",
-            animation: "ledSpin 3s linear infinite",
-            opacity: 0.8,
-          }} />
-          <div style={{
-            position: "absolute", inset: 2,
-            background: "rgba(13,17,23,0.97)",
-          }} />
+        <div
+          style={{
+            position: "absolute",
+            inset: -2,
+            borderRadius: 0,
+            overflow: "hidden",
+            zIndex: 0,
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              inset: -2,
+              background:
+                "conic-gradient(from var(--led-angle, 0deg), #00fff7, #f37021, #ff2d95, #7c3aed, #22c55e, #eab308, #00fff7)",
+              animation: "ledSpin 3s linear infinite",
+              opacity: 0.8,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 2,
+              background: "rgba(13,17,23,0.97)",
+            }}
+          />
         </div>
         <style>{`
           @property --led-angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
@@ -560,11 +656,15 @@ export default function GameCanvas() {
           @keyframes keyBounce { 0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)} }
         `}</style>
 
-        <div className="px-4 py-3" style={{
-          position: "relative", zIndex: 1,
-          background: "rgba(13,17,23,0.97)",
-          backdropFilter: "blur(12px)",
-        }}>
+        <div
+          className="px-4 py-3"
+          style={{
+            position: "relative",
+            zIndex: 1,
+            background: "rgba(13,17,23,0.97)",
+            backdropFilter: "blur(12px)",
+          }}
+        >
           <div className="flex items-center gap-3 overflow-x-auto">
             {/* Location Context */}
             <div className="flex items-center gap-2 pr-3 border-r border-white/10 flex-shrink-0">
@@ -629,51 +729,105 @@ export default function GameCanvas() {
           </div>
 
           {/* Game Guide — Centered */}
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            gap: 10, marginTop: 6, paddingTop: 6,
-            borderTop: "1px solid rgba(255,255,255,0.06)",
-          }}>
-              <div style={{
-                display: "flex", alignItems: "center", gap: 8,
-                padding: "4px 12px", borderRadius: 10,
-                background: "linear-gradient(135deg, rgba(0,255,247,0.06), rgba(243,112,33,0.04))",
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 10,
+              marginTop: 6,
+              paddingTop: 6,
+              borderTop: "1px solid rgba(255,255,255,0.06)",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                padding: "4px 12px",
+                borderRadius: 10,
+                background:
+                  "linear-gradient(135deg, rgba(0,255,247,0.06), rgba(243,112,33,0.04))",
                 border: "1px solid rgba(0,255,247,0.1)",
-              }}>
-                <span style={{ fontSize: 14, animation: "ledPulse 2s ease infinite" }}>🎮</span>
-                <span style={{ fontSize: 9, fontWeight: 700, color: "#00fff7", letterSpacing: 1, textTransform: "uppercase", fontFamily: "'Press Start 2P', monospace" }}>GUIDE</span>
-              </div>
-              {[
-                { keys: "W A S D", label: "Di chuyển", icon: "🕹️" },
-                { keys: "E", label: "Tương tác", icon: "⚡" },
-                { keys: "M", label: "Bản đồ", icon: "🗺️" },
-              ].map((g, i) => (
-                <div key={g.keys} style={{
-                  display: "flex", alignItems: "center", gap: 6,
-                  padding: "4px 10px", borderRadius: 8,
+              }}
+            >
+              <span
+                style={{ fontSize: 14, animation: "ledPulse 2s ease infinite" }}
+              >
+                🎮
+              </span>
+              <span
+                style={{
+                  fontSize: 9,
+                  fontWeight: 700,
+                  color: "#00fff7",
+                  letterSpacing: 1,
+                  textTransform: "uppercase",
+                  fontFamily: "'Press Start 2P', monospace",
+                }}
+              >
+                GUIDE
+              </span>
+            </div>
+            {[
+              { keys: "W A S D", label: "Di chuyển", icon: "🕹️" },
+              { keys: "E", label: "Tương tác", icon: "⚡" },
+              { keys: "M", label: "Bản đồ", icon: "🗺️" },
+            ].map((g, i) => (
+              <div
+                key={g.keys}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
+                  padding: "4px 10px",
+                  borderRadius: 8,
                   background: "rgba(255,255,255,0.03)",
                   border: "1px solid rgba(255,255,255,0.06)",
-                }}>
-                  <span style={{ fontSize: 12 }}>{g.icon}</span>
-                  <div style={{ display: "flex", gap: 3 }}>
-                    {g.keys.split(" ").map(k => (
-                      <span key={k} style={{
-                        display: "inline-flex", alignItems: "center", justifyContent: "center",
-                        minWidth: 20, height: 20, padding: "0 4px",
+                }}
+              >
+                <span style={{ fontSize: 12 }}>{g.icon}</span>
+                <div style={{ display: "flex", gap: 3 }}>
+                  {g.keys.split(" ").map((k) => (
+                    <span
+                      key={k}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        minWidth: 20,
+                        height: 20,
+                        padding: "0 4px",
                         borderRadius: 4,
-                        background: "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
+                        background:
+                          "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
                         border: "1px solid rgba(255,255,255,0.15)",
-                        boxShadow: "0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
-                        fontSize: 8, fontWeight: 800, color: "#e2e8f0",
+                        boxShadow:
+                          "0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
+                        fontSize: 8,
+                        fontWeight: 800,
+                        color: "#e2e8f0",
                         fontFamily: "'Press Start 2P', monospace",
                         letterSpacing: 0.5,
                         animation: `keyBounce ${2 + i * 0.3}s ease-in-out infinite`,
-                      }}>{k}</span>
-                    ))}
-                  </div>
-                  <span style={{ fontSize: 9, color: "rgba(255,255,255,0.4)", fontWeight: 500 }}>{g.label}</span>
+                      }}
+                    >
+                      {k}
+                    </span>
+                  ))}
                 </div>
-              ))}
+                <span
+                  style={{
+                    fontSize: 9,
+                    color: "rgba(255,255,255,0.4)",
+                    fontWeight: 500,
+                  }}
+                >
+                  {g.label}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -789,8 +943,125 @@ export default function GameCanvas() {
       {showBuilding && (
         <BuildingLandingPage
           buildingId={showBuilding}
-          onClose={() => setShowBuilding(null)}
+          onClose={() => {
+            const wasGamma = showBuilding === "gamma-tower";
+            setShowBuilding(null);
+            // Show feedback dialog on Day 2 after closing Gamma Tower
+            if (wasGamma && state.day >= 2) {
+              setFeedbackDialog(true);
+            }
+          }}
         />
+      )}
+
+      {/* ── Day 2 Feedback Dialog ── */}
+      {feedbackDialog && (
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(0,0,0,0.75)",
+            zIndex: 55,
+          }}
+        >
+          <div
+            style={{
+              background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+              border: "2px solid #00fff7",
+              borderRadius: 16,
+              padding: "32px 28px",
+              maxWidth: 440,
+              textAlign: "center",
+              boxShadow:
+                "0 0 40px rgba(0,255,247,0.2), 0 0 80px rgba(243,112,33,0.1)",
+            }}
+          >
+            <div style={{ fontSize: 48, marginBottom: 12 }}>🎉</div>
+            <h2
+              style={{
+                color: "#00fff7",
+                fontSize: 14,
+                fontWeight: "bold",
+                fontFamily: "'Press Start 2P', monospace",
+                marginBottom: 16,
+                lineHeight: 1.6,
+              }}
+            >
+              CHÚC MỪNG!
+            </h2>
+            <p
+              style={{
+                color: "#e2e8f0",
+                fontSize: 14,
+                lineHeight: 1.8,
+                marginBottom: 8,
+              }}
+            >
+              Đó là{" "}
+              <span style={{ color: "#f37021", fontWeight: "bold" }}>
+                hai ngày
+              </span>{" "}
+              của{" "}
+              <span style={{ color: "#00fff7", fontWeight: "bold" }}>
+                sinh viên năm nhất
+              </span>{" "}
+              tại FPT University! 🎓
+            </p>
+            <p
+              style={{
+                color: "#94a3b8",
+                fontSize: 13,
+                lineHeight: 1.7,
+                marginBottom: 24,
+              }}
+            >
+              Nếu bạn có feedback gì hãy nhấn vào ô bên dưới để feedback, giúp
+              nhóm sử dụng làm tài liệu báo cáo nhé ❤️
+            </p>
+            <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+              <button
+                onClick={() => {
+                  window.open(
+                    "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
+                    "_blank",
+                  );
+                }}
+                style={{
+                  background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "10px 24px",
+                  fontSize: 13,
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 15px rgba(59,130,246,0.4)",
+                }}
+              >
+                📝 Feedback
+              </button>
+              <button
+                onClick={() => setFeedbackDialog(false)}
+                style={{
+                  background: "linear-gradient(135deg, #f37021, #e85d10)",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 8,
+                  padding: "10px 24px",
+                  fontSize: 13,
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 15px rgba(243,112,33,0.4)",
+                }}
+              >
+                🎮 Tiếp tục trải nghiệm game
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

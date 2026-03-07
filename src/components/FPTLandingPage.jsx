@@ -36,7 +36,7 @@ export default function FPTLandingPage({ onClose }) {
         scrollBehavior: "smooth",
       }}
     >
-<style>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         #fpt-landing-scroll * { box-sizing: border-box; }
         #fpt-landing-scroll { font-family: 'Inter', system-ui, sans-serif; color: #1e293b; }
@@ -60,374 +60,367 @@ export default function FPTLandingPage({ onClose }) {
           .fpt-section { padding: 48px 16px; }
           .fpt-hero-features { flex-direction: column !important; }
         }
-      `}</style>;
+      `}</style>
 
-{
-  /* ════════════════ TOP BAR ════════════════ */
-}
-<div
-  style={{
-    background: "#0f172a",
-    color: "#94a3b8",
-    fontSize: 12,
-    padding: "8px 40px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  }}
->
-  <div style={{ display: "flex", gap: 20 }}>
-    <span>📧 info@fpt.edu.vn</span>
-    <span>📍 FPT University, Đà Nẵng</span>
-  </div>
-  <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-    <button
-      onClick={handleStart}
-      style={{
-        background: "#2563eb",
-        color: "#fff",
-        border: "none",
-        padding: "6px 18px",
-        borderRadius: 6,
-        fontSize: 12,
-        fontWeight: 600,
-        cursor: "pointer",
-      }}
-    >
-      Bắt Đầu Game
-    </button>
-  </div>
-</div>;
-
-{
-  /* ════════════════ NAVBAR ════════════════ */
-}
-<nav
-  style={{
-    position: "sticky",
-    top: 0,
-    zIndex: 20,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: "0 40px",
-    height: 72,
-    background: scrollY > 50 ? "rgba(255,255,255,0.98)" : "#fff",
-    boxShadow: scrollY > 50 ? "0 2px 20px rgba(0,0,0,.08)" : "none",
-    transition: "all 0.3s ease",
-  }}
->
-  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-    <span style={{ fontSize: 26 }}>🎓</span>
-    <span
-      style={{
-        color: "#0f172a",
-        fontSize: 20,
-        fontWeight: 800,
-        letterSpacing: 1,
-      }}
-    >
-      FPT<span style={{ color: "#2563eb" }}> University</span>
-    </span>
-  </div>
-  <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
-    {["LUK Global", "Lịch Trình", "Nhạc Cụ"].map((t) => (
-      <a
-        key={t}
-        href={`#${t.toLowerCase().replace(/\s/g, "")}`}
-        style={{
-          color: "#475569",
-          fontSize: 14,
-          textDecoration: "none",
-          fontWeight: 600,
-          transition: "color 0.2s",
-        }}
-        onMouseEnter={(e) => (e.target.style.color = "#2563eb")}
-        onMouseLeave={(e) => (e.target.style.color = "#475569")}
-      >
-        {t}
-      </a>
-    ))}
-    <button
-      onClick={handleStart}
-      className="fpt-btn"
-      style={{
-        background: "#2563eb",
-        color: "#fff",
-        padding: "10px 28px",
-        fontSize: 13,
-        borderRadius: 8,
-        boxShadow: "0 4px 16px rgba(37,99,235,.3)",
-      }}
-    >
-      🚀 Khám Phá →
-    </button>
-  </div>
-</nav>;
-
-{
-  /* ════════════════ HERO — FULL BLEED ════════════════ */
-}
-<section
-  style={{
-    position: "relative",
-    height: "80vh",
-    minHeight: 520,
-    overflow: "hidden",
-  }}
->
-  <img
-    src="/luk-student-learn.jpg"
-    alt="FPT University"
-    style={{
-      position: "absolute",
-      inset: 0,
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-    }}
-  />
-  <div
-    style={{
-      position: "absolute",
-      inset: 0,
-      background:
-        "linear-gradient(180deg, rgba(15,23,42,0.6) 0%, rgba(15,23,42,0.85) 100%)",
-    }}
-  />
-  <div
-    style={{
-      position: "relative",
-      zIndex: 2,
-      height: "100%",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      padding: "0 80px",
-      maxWidth: 1200,
-    }}
-  >
-    <div className="fpt-fade" style={{ animationDelay: "0.2s" }}>
-      <p
-        style={{
-          color: "rgba(255,255,255,.7)",
-          fontSize: 14,
-          fontWeight: 600,
-          letterSpacing: 2,
-          marginBottom: 16,
-          textTransform: "uppercase",
-        }}
-      >
-        FPT UNIVERSITY — ĐÀ NẴNG
-      </p>
-      <h1
-        style={{
-          color: "#fff",
-          fontSize: "clamp(36px,5vw,60px)",
-          fontWeight: 900,
-          lineHeight: 1.15,
-          margin: "0 0 20px",
-          maxWidth: 650,
-        }}
-      >
-        Trải Nghiệm Ngày Đầu Tiên{" "}
-        <span style={{ color: "#60a5fa" }}>Tại FPT University</span>
-      </h1>
-      <p
-        style={{
-          color: "rgba(255,255,255,.75)",
-          fontSize: 17,
-          lineHeight: 1.8,
-          margin: "0 0 32px",
-          maxWidth: 520,
-        }}
-      >
-        Khám phá hệ thống học tập LUK Global, rèn luyện Vovinam, chinh phục môn
-        DSA, và hòa mình vào âm nhạc dân tộc Việt Nam.
-      </p>
-      <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-        <button
-          onClick={handleStart}
-          className="fpt-btn"
-          style={{
-            background: "#2563eb",
-            color: "#fff",
-            boxShadow: "0 4px 24px rgba(37,99,235,0.4)",
-            padding: "16px 40px",
-            fontSize: 16,
-          }}
-        >
-          🚀 Bắt Đầu Trải Nghiệm
-        </button>
-        <a
-          href="#lukglobal"
-          className="fpt-btn"
-          style={{
-            background: "transparent",
-            color: "#fff",
-            border: "2px solid rgba(255,255,255,.4)",
-            padding: "16px 40px",
-            fontSize: 16,
-          }}
-        >
-          Tìm Hiểu Thêm ↓
-        </a>
-      </div>
-    </div>
-  </div>
-  <div
-    style={{
-      position: "absolute",
-      top: "50%",
-      left: 24,
-      transform: "translateY(-50%)",
-      zIndex: 3,
-      width: 44,
-      height: 44,
-      borderRadius: "50%",
-      background: "rgba(255,255,255,.15)",
-      backdropFilter: "blur(8px)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "#fff",
-      fontSize: 20,
-      cursor: "pointer",
-    }}
-  >
-    ←
-  </div>
-  <div
-    style={{
-      position: "absolute",
-      top: "50%",
-      right: 24,
-      transform: "translateY(-50%)",
-      zIndex: 3,
-      width: 44,
-      height: 44,
-      borderRadius: "50%",
-      background: "rgba(255,255,255,.15)",
-      backdropFilter: "blur(8px)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "#fff",
-      fontSize: 20,
-      cursor: "pointer",
-    }}
-  >
-    →
-  </div>
-</section>;
-
-{
-  /* ════════════════ FLOATING FEATURE CARDS ════════════════ */
-}
-<div
-  style={{
-    maxWidth: 1100,
-    margin: "-60px auto 0",
-    padding: "0 24px",
-    position: "relative",
-    zIndex: 5,
-  }}
->
-  <div className="fpt-hero-features" style={{ display: "flex", gap: 24 }}>
-    {[
-      {
-        icon: "🎓",
-        color: "#dbeafe",
-        title: "LUK Global",
-        desc: "Chương trình tiếng Anh nền tảng bắt buộc cho tất cả sinh viên năm nhất FPT.",
-      },
-      {
-        icon: "🎵",
-        color: "#fce7f3",
-        title: "Nhạc Cụ Dân Tộc",
-        desc: "FPT tiên phong đưa nhạc cụ dân tộc vào giảng dạy chính thức từ 2014.",
-      },
-      {
-        icon: "🏆",
-        color: "#dcfce7",
-        title: "Hoạt Động Năng Động",
-        desc: "Vovinam, Workshop, Debate, Project — trải nghiệm toàn diện cho sinh viên.",
-      },
-    ].map((f, i) => (
+      {/* ════════════════ TOP BAR ════════════════ */}
       <div
-        key={i}
-        className="fpt-feature-card fpt-fade"
-        style={{ flex: 1, animationDelay: `${0.3 + i * 0.15}s` }}
+        style={{
+          background: "#0f172a",
+          color: "#94a3b8",
+          fontSize: 12,
+          padding: "8px 40px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <div className="icon" style={{ background: f.color }}>
-          {f.icon}
+        <div style={{ display: "flex", gap: 20 }}>
+          <span>📧 info@fpt.edu.vn</span>
+          <span>📍 FPT University, Đà Nẵng</span>
         </div>
-        <h3
-          style={{
-            fontSize: 18,
-            fontWeight: 700,
-            margin: "0 0 8px",
-            color: "#0f172a",
-          }}
-        >
-          {f.title}
-        </h3>
-        <p
-          style={{
-            color: "#64748b",
-            fontSize: 13,
-            lineHeight: 1.6,
-            margin: "0 0 12px",
-          }}
-        >
-          {f.desc}
-        </p>
-        <a
-          href="#lukglobal"
-          style={{
-            color: "#2563eb",
-            fontSize: 13,
-            fontWeight: 600,
-            textDecoration: "none",
-          }}
-        >
-          Xem thêm →
-        </a>
+        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          <button
+            onClick={handleStart}
+            style={{
+              background: "#2563eb",
+              color: "#fff",
+              border: "none",
+              padding: "6px 18px",
+              borderRadius: 6,
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            Bắt Đầu Game
+          </button>
+        </div>
       </div>
-    ))}
-  </div>
-</div>;
 
-{
-  /* ════════════════ STATS BAR ════════════════ */
-}
-<div style={{ maxWidth: 1100, margin: "60px auto 0", padding: "0 24px" }}>
-  <div
-    style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 20 }}
-  >
-    {[
-      { icon: "🌐", n: "3+", l: "Cơ Sở Toàn Quốc" },
-      { icon: "📚", n: "99+", l: "Khóa Học Đa Dạng" },
-      { icon: "👨‍🏫", n: "10+", l: "Giáo Viên Bản Ngữ" },
-      { icon: "👥", n: "30,000+", l: "Sinh Viên Đang Học" },
-    ].map((s, i) => (
+      {/* ════════════════ NAVBAR ════════════════ */}
+      <nav
+        style={{
+          position: "sticky",
+          top: 0,
+          zIndex: 20,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0 40px",
+          height: 72,
+          background: scrollY > 50 ? "rgba(255,255,255,0.98)" : "#fff",
+          boxShadow: scrollY > 50 ? "0 2px 20px rgba(0,0,0,.08)" : "none",
+          transition: "all 0.3s ease",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontSize: 26 }}>🎓</span>
+          <span
+            style={{
+              color: "#0f172a",
+              fontSize: 20,
+              fontWeight: 800,
+              letterSpacing: 1,
+            }}
+          >
+            FPT<span style={{ color: "#2563eb" }}> University</span>
+          </span>
+        </div>
+        <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
+          {["LUK Global", "Lịch Trình", "Nhạc Cụ"].map((t) => (
+            <a
+              key={t}
+              href={`#${t.toLowerCase().replace(/\s/g, "")}`}
+              style={{
+                color: "#475569",
+                fontSize: 14,
+                textDecoration: "none",
+                fontWeight: 600,
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => (e.target.style.color = "#2563eb")}
+              onMouseLeave={(e) => (e.target.style.color = "#475569")}
+            >
+              {t}
+            </a>
+          ))}
+          <button
+            onClick={handleStart}
+            className="fpt-btn"
+            style={{
+              background: "#2563eb",
+              color: "#fff",
+              padding: "10px 28px",
+              fontSize: 13,
+              borderRadius: 8,
+              boxShadow: "0 4px 16px rgba(37,99,235,.3)",
+            }}
+          >
+            🚀 Khám Phá →
+          </button>
+        </div>
+      </nav>
+
+      {/* ════════════════ HERO — FULL BLEED ════════════════ */}
+      <section
+        style={{
+          position: "relative",
+          height: "80vh",
+          minHeight: 520,
+          overflow: "hidden",
+        }}
+      >
+        <img
+          src="/luk-student-learn.jpg"
+          alt="FPT University"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "linear-gradient(180deg, rgba(15,23,42,0.6) 0%, rgba(15,23,42,0.85) 100%)",
+          }}
+        />
+        <div
+          style={{
+            position: "relative",
+            zIndex: 2,
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "0 80px",
+            maxWidth: 1200,
+          }}
+        >
+          <div className="fpt-fade" style={{ animationDelay: "0.2s" }}>
+            <p
+              style={{
+                color: "rgba(255,255,255,.7)",
+                fontSize: 14,
+                fontWeight: 600,
+                letterSpacing: 2,
+                marginBottom: 16,
+                textTransform: "uppercase",
+              }}
+            >
+              FPT UNIVERSITY — ĐÀ NẴNG
+            </p>
+            <h1
+              style={{
+                color: "#fff",
+                fontSize: "clamp(36px,5vw,60px)",
+                fontWeight: 900,
+                lineHeight: 1.15,
+                margin: "0 0 20px",
+                maxWidth: 650,
+              }}
+            >
+              Trải Nghiệm Ngày Đầu Tiên{" "}
+              <span style={{ color: "#60a5fa" }}>Tại FPT University</span>
+            </h1>
+            <p
+              style={{
+                color: "rgba(255,255,255,.75)",
+                fontSize: 17,
+                lineHeight: 1.8,
+                margin: "0 0 32px",
+                maxWidth: 520,
+              }}
+            >
+              Khám phá hệ thống học tập LUK Global, rèn luyện Vovinam, chinh
+              phục môn DSA, và hòa mình vào âm nhạc dân tộc Việt Nam.
+            </p>
+            <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+              <button
+                onClick={handleStart}
+                className="fpt-btn"
+                style={{
+                  background: "#2563eb",
+                  color: "#fff",
+                  boxShadow: "0 4px 24px rgba(37,99,235,0.4)",
+                  padding: "16px 40px",
+                  fontSize: 16,
+                }}
+              >
+                🚀 Bắt Đầu Trải Nghiệm
+              </button>
+              <a
+                href="#lukglobal"
+                className="fpt-btn"
+                style={{
+                  background: "transparent",
+                  color: "#fff",
+                  border: "2px solid rgba(255,255,255,.4)",
+                  padding: "16px 40px",
+                  fontSize: 16,
+                }}
+              >
+                Tìm Hiểu Thêm ↓
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: 24,
+            transform: "translateY(-50%)",
+            zIndex: 3,
+            width: 44,
+            height: 44,
+            borderRadius: "50%",
+            background: "rgba(255,255,255,.15)",
+            backdropFilter: "blur(8px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#fff",
+            fontSize: 20,
+            cursor: "pointer",
+          }}
+        >
+          ←
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            right: 24,
+            transform: "translateY(-50%)",
+            zIndex: 3,
+            width: 44,
+            height: 44,
+            borderRadius: "50%",
+            background: "rgba(255,255,255,.15)",
+            backdropFilter: "blur(8px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#fff",
+            fontSize: 20,
+            cursor: "pointer",
+          }}
+        >
+          →
+        </div>
+      </section>
+
+      {/* ════════════════ FLOATING FEATURE CARDS ════════════════ */}
       <div
-        key={i}
-        className="fpt-stat-card fpt-fade"
-        style={{ animationDelay: `${0.5 + i * 0.1}s` }}
+        style={{
+          maxWidth: 1100,
+          margin: "-60px auto 0",
+          padding: "0 24px",
+          position: "relative",
+          zIndex: 5,
+        }}
       >
-        <div style={{ fontSize: 28, marginBottom: 8 }}>{s.icon}</div>
-        <div style={{ color: "#2563eb", fontSize: 32, fontWeight: 800 }}>
-          {s.n}
-        </div>
-        <div style={{ color: "#64748b", fontSize: 12, marginTop: 4 }}>
-          {s.l}
+        <div className="fpt-hero-features" style={{ display: "flex", gap: 24 }}>
+          {[
+            {
+              icon: "🎓",
+              color: "#dbeafe",
+              title: "LUK Global",
+              desc: "Chương trình tiếng Anh nền tảng bắt buộc cho tất cả sinh viên năm nhất FPT.",
+            },
+            {
+              icon: "🎵",
+              color: "#fce7f3",
+              title: "Nhạc Cụ Dân Tộc",
+              desc: "FPT tiên phong đưa nhạc cụ dân tộc vào giảng dạy chính thức từ 2014.",
+            },
+            {
+              icon: "🏆",
+              color: "#dcfce7",
+              title: "Hoạt Động Năng Động",
+              desc: "Vovinam, Workshop, Debate, Project — trải nghiệm toàn diện cho sinh viên.",
+            },
+          ].map((f, i) => (
+            <div
+              key={i}
+              className="fpt-feature-card fpt-fade"
+              style={{ flex: 1, animationDelay: `${0.3 + i * 0.15}s` }}
+            >
+              <div className="icon" style={{ background: f.color }}>
+                {f.icon}
+              </div>
+              <h3
+                style={{
+                  fontSize: 18,
+                  fontWeight: 700,
+                  margin: "0 0 8px",
+                  color: "#0f172a",
+                }}
+              >
+                {f.title}
+              </h3>
+              <p
+                style={{
+                  color: "#64748b",
+                  fontSize: 13,
+                  lineHeight: 1.6,
+                  margin: "0 0 12px",
+                }}
+              >
+                {f.desc}
+              </p>
+              <a
+                href="#lukglobal"
+                style={{
+                  color: "#2563eb",
+                  fontSize: 13,
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                Xem thêm →
+              </a>
+            </div>
+          ))}
         </div>
       </div>
-    ))}
-  </div>
-</div>;
 
+      {/* ════════════════ STATS BAR ════════════════ */}
+      <div style={{ maxWidth: 1100, margin: "60px auto 0", padding: "0 24px" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4,1fr)",
+            gap: 20,
+          }}
+        >
+          {[
+            { icon: "🌐", n: "3+", l: "Cơ Sở Toàn Quốc" },
+            { icon: "📚", n: "99+", l: "Khóa Học Đa Dạng" },
+            { icon: "👨‍🏫", n: "10+", l: "Giáo Viên Bản Ngữ" },
+            { icon: "👥", n: "30,000+", l: "Sinh Viên Đang Học" },
+          ].map((s, i) => (
+            <div
+              key={i}
+              className="fpt-stat-card fpt-fade"
+              style={{ animationDelay: `${0.5 + i * 0.1}s` }}
+            >
+              <div style={{ fontSize: 28, marginBottom: 8 }}>{s.icon}</div>
+              <div style={{ color: "#2563eb", fontSize: 32, fontWeight: 800 }}>
+                {s.n}
+              </div>
+              <div style={{ color: "#64748b", fontSize: 12, marginTop: 4 }}>
+                {s.l}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* ════════════════ LUK GLOBAL ════════════════ */}
       <section id="lukglobal" style={{ background: "#ffffff" }}>

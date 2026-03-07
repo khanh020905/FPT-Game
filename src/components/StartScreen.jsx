@@ -1,8 +1,21 @@
 import { useGame } from "../engine/GameContext";
+import { useState, useCallback } from "react";
+import { startMusic, stopMusic, isMusicPlaying } from "../engine/musicEngine";
 
 export default function StartScreen() {
   const { newGame, loadGame, hasSave } = useGame();
   const canContinue = hasSave();
+  const [musicOn, setMusicOn] = useState(isMusicPlaying());
+
+  const handleMusicToggle = useCallback(() => {
+    if (musicOn) {
+      stopMusic();
+      setMusicOn(false);
+    } else {
+      startMusic();
+      setMusicOn(true);
+    }
+  }, [musicOn]);
 
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-[#0a0e17] via-[#111827] to-[#1a1f2e]">
@@ -87,6 +100,51 @@ export default function StartScreen() {
             </span>
           </button>
         )}
+
+        {/* Music Toggle Button */}
+        <button
+          onClick={handleMusicToggle}
+          className="group relative px-8 py-3 rounded-xl font-bold text-sm transition-all duration-300 transform hover:scale-105 border"
+          style={{
+            background: musicOn
+              ? "linear-gradient(135deg, rgba(0, 255, 247, 0.12), rgba(139, 92, 246, 0.12))"
+              : "rgba(255, 255, 255, 0.03)",
+            borderColor: musicOn
+              ? "rgba(0, 255, 247, 0.35)"
+              : "rgba(255, 255, 255, 0.08)",
+            boxShadow: musicOn ? "0 0 20px rgba(0, 255, 247, 0.15)" : "none",
+          }}
+        >
+          <span className="flex items-center justify-center gap-3">
+            <span
+              style={{
+                animation: musicOn
+                  ? "musicBounce 1s ease-in-out infinite"
+                  : "none",
+                display: "inline-block",
+              }}
+            >
+              {musicOn ? "🎵" : "🔇"}
+            </span>
+            <span
+              style={{
+                color: musicOn ? "#00fff7" : "#6b7280",
+                textShadow: musicOn ? "0 0 8px rgba(0, 255, 247, 0.4)" : "none",
+              }}
+            >
+              {musicOn ? "Music ON" : "Music OFF"}
+            </span>
+          </span>
+          {musicOn && (
+            <span
+              className="absolute inset-0 rounded-xl pointer-events-none"
+              style={{
+                border: "1px solid rgba(0, 255, 247, 0.2)",
+                animation: "musicPulse 2s ease-in-out infinite",
+              }}
+            />
+          )}
+        </button>
       </div>
 
       {/* Footer */}

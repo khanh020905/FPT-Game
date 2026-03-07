@@ -36,18 +36,12 @@ export const QUESTS = {
     id: "luk-registration",
     name: "Đăng Ký LUK-App",
     emoji: "📱",
-    description: "Đăng ký tài khoản LUK Global để quản lý học tập.",
+    description: "Đến Gamma Tower để đăng ký LUK Global.",
     objectives: [
       {
         id: "goto-gamma",
         description: "Đến Gamma Tower",
         location: "gamma-tower",
-        completed: false,
-      },
-      {
-        id: "access-luk",
-        description: "Truy cập LUK-App tầng 5",
-        action: "access_luk_app",
         completed: false,
       },
     ],

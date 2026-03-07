@@ -1,4 +1,5 @@
 import { GameProvider, useGame } from "./engine/GameContext";
+import { useState, useEffect } from "react";
 import StartScreen from "./components/StartScreen";
 import GameCanvas from "./components/GameCanvas";
 import PlayerHUD from "./components/PlayerHUD";
@@ -9,6 +10,9 @@ import ShopSystem from "./systems/ShopSystem";
 import MentorSystem from "./systems/MentorSystem";
 import SubmissionHub from "./systems/SubmissionHub";
 import FPTChatBot from "./components/FPTChatBot";
+import MusicControl from "./components/MusicControl";
+import Tutorial from "./components/Tutorial";
+import Leaderboard from "./components/Leaderboard";
 
 /**
  * Game Over Screen — shown when player runs out of health/progress or wins
@@ -118,8 +122,27 @@ function GameOverScreen() {
  * Uses flexbox to position the stats sidebar next to the map area
  */
 function GameScreen() {
-  const { state } = useGame();
+  const { state, closeSystem } = useGame();
   const { activeSystem, location } = state;
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+
+  // Show tutorial on first game start
+  useEffect(() => {
+    const tutorialSeen = localStorage.getItem("fpt-tutorial-seen");
+    if (!tutorialSeen) {
+      setShowTutorial(true);
+      localStorage.setItem("fpt-tutorial-seen", "true");
+    }
+  }, []);
+
+  // Listen for leaderboard system
+  useEffect(() => {
+    if (activeSystem === "leaderboard") {
+      setShowLeaderboard(true);
+      closeSystem();
+    }
+  }, [activeSystem, closeSystem]);
 
   return (
     <div className="w-full h-screen flex overflow-hidden bg-[#0a0e17]">
@@ -138,6 +161,14 @@ function GameScreen() {
       {activeSystem === "shop" && <ShopSystem />}
       {activeSystem === "mentor" && <MentorSystem />}
       {activeSystem === "submission" && <SubmissionHub />}
+
+      {/* Tutorial (first time only) */}
+      {showTutorial && <Tutorial onClose={() => setShowTutorial(false)} />}
+
+      {/* Leaderboard */}
+      {showLeaderboard && (
+        <Leaderboard onClose={() => setShowLeaderboard(false)} />
+      )}
     </div>
   );
 }
@@ -169,6 +200,7 @@ export default function App() {
     <GameProvider>
       <AppRouter />
       <FPTChatBot />
+      <MusicControl />
     </GameProvider>
   );
 }
