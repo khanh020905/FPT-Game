@@ -6,7 +6,7 @@ const GUIDE_STEPS = [
   {
     emoji: "🎓",
     title: "Chào mừng đến FPT University!",
-    desc: "Bạn sẽ đóng vai một sinh viên năm nhất tại FPT University Đà Nẵng. Hãy trải nghiệm cuộc sống đại học trong 2 ngày!",
+    desc: "Bạn sẽ đóng vai một sinh viên năm nhất tại FPT University Đà Nẵng. Hãy trải nghiệm cuộc sống đại học tại đây!",
   },
   {
     emoji: "🗺️",
