@@ -90,44 +90,58 @@ const IMGS = {
   ],
   "dorm-a": [
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/ktx-dn-scaled.jpg",
+      url: "/dorm_building.png",
       cap: "Ký Túc Xá FPT University — Thiết kế hiện đại",
     },
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2023/03/Dai-hoc-FPT-Da-Nang.jpg",
+      url: "/dorm_room_interior.png",
+      cap: "Phòng KTX ấm cúng — bàn học, giường tầng",
+    },
+    {
+      url: "/dorm_campus_aerial.png",
       cap: "Toàn cảnh campus — KTX nằm trong khuôn viên",
     },
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/campus-dn-1-scaled.jpg",
-      cap: "Aerial view campus FPT Đà Nẵng",
-    },
-    {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/sinh-vien-fpt-dn.jpg",
+      url: "/dorm_student_life.png",
       cap: "Đời sống sinh viên FPT tại KTX",
     },
   ],
   "dorm-b": [
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/ktx-dn-scaled.jpg",
+      url: "/dorm_building.png",
       cap: "KTX B — Khu vực yên tĩnh gần sân thể thao",
     },
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2023/06/vovinam-fpt-1.jpg",
-      cap: "Sân thể thao ngay cạnh KTX B",
-    },
-    {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/campus-dn-1-scaled.jpg",
+      url: "/dorm_campus_aerial.png",
       cap: "Khuôn viên FPT University từ trên cao",
     },
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/sinh-vien-fpt-dn.jpg",
-      cap: "Sinh viên FPT hoạt động thể thao",
+      url: "/dorm_room_interior.png",
+      cap: "Phòng ở tiện nghi cho sinh viên",
+    },
+    {
+      url: "/dorm_student_life.png",
+      cap: "Sinh viên FPT giao lưu tại KTX",
     },
   ],
   "main-gate": [
     {
       url: "https://images2.thanhnien.vn/528068263637045248/2024/2/4/fptu-da-nang-02-1707012458234479740570.jpg",
       cap: "Cổng chính FPT",
+    },
+  ],
+  "event-yard": [
+    {
+      url: "/event_yard_vovinam.png",
+      cap: "Giải vô địch VOVINAM sinh viên FPT",
+    },
+    {
+      url: "/event_yard_campus.png",
+      cap: "Khuôn viên Sân Sự Kiện rộng lớn",
+    },
+    {
+      url: "/event_yard_music.png",
+      cap: "Đại Nhạc Hội FPT & Hội Làng hoành tráng",
     },
   ],
 };
@@ -175,6 +189,13 @@ const PALETTES = {
     accent2: "#f59e0b",
     light: "rgba(217,119,6,.08)",
     lightBorder: "rgba(217,119,6,.12)",
+  },
+  "event-yard": {
+    bg: "linear-gradient(180deg,#f8fafc 0%,#fff1f2 40%,#ffe4e6 100%)",
+    accent: "#e11d48",
+    accent2: "#be123c",
+    light: "rgba(225,29,72,.08)",
+    lightBorder: "rgba(225,29,72,.12)",
   },
 };
 

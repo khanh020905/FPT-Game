@@ -16,6 +16,8 @@ import { QUESTS } from "../data/quests";
 export const initialState = {
   gamePhase: "start", // 'start' | 'playing' | 'gameover' | 'day-transition'
   day: 1,
+  playerName: "",
+  mssv: "",
   stats: {
     progress: 30,
     health: 100,
@@ -147,12 +149,13 @@ export function gameReducer(state, action) {
       return {
         ...initialState,
         gamePhase: "playing",
+        playerName: action.payload?.playerName || "",
+        mssv: action.payload?.mssv || "",
         activeQuests: newQuests,
         log: [
           {
             day: 1,
-            message:
-              "🎒 Chào mừng đến FPT University! Hành trình bắt đầu tại Cổng Chính.",
+            message: `🎒 Chào mừng ${action.payload?.playerName || "bạn"} đến FPT University! Hành trình bắt đầu tại Cổng Chính.`,
           },
         ],
       };
@@ -546,6 +549,43 @@ export function gameReducer(state, action) {
         nearZone.locationId !== state.location
       ) {
         newLocation = nearZone.locationId;
+
+        // Update quests when entering a new location zone
+        const { activeQuests: updatedQuests, newlyCompleted } = updateQuests(
+          state,
+          null,
+          newLocation,
+        );
+        let newStats = { ...state.stats };
+        const newLog = [...state.log];
+        const newNotifications = [...state.notifications];
+        const newCompletedQuests = [...state.completedQuests];
+
+        newlyCompleted.forEach((quest) => {
+          newStats = applyEffects(newStats, quest.rewards);
+          newCompletedQuests.push(quest.id);
+          newLog.push({
+            day: state.day,
+            message: `🏆 Quest hoàn thành: ${quest.name}!`,
+          });
+          newNotifications.push({
+            id: Date.now() + Math.random(),
+            message: `🏆 Hoàn thành: ${quest.emoji} ${quest.name}!`,
+            type: "quest",
+          });
+        });
+
+        return {
+          ...state,
+          playerPos: { x, y },
+          nearInteraction: nearZone,
+          location: newLocation,
+          stats: newStats,
+          activeQuests: updatedQuests,
+          completedQuests: newCompletedQuests,
+          log: newLog,
+          notifications: newNotifications,
+        };
       }
 
       return {
@@ -563,9 +603,31 @@ export function gameReducer(state, action) {
       const targetLoc = zone.locationId;
       if (!LOCATIONS[targetLoc]) return state;
 
-      // Move to location + update log
-      const newLog = [...state.log];
-      newLog.push({
+      // Update quests for entering this location
+      const {
+        activeQuests: interactQuests,
+        newlyCompleted: interactCompleted,
+      } = updateQuests(state, null, targetLoc);
+      let interactStats = { ...state.stats };
+      const interactLog = [...state.log];
+      const interactNotifications = [...state.notifications];
+      const interactCompletedQuests = [...state.completedQuests];
+
+      interactCompleted.forEach((quest) => {
+        interactStats = applyEffects(interactStats, quest.rewards);
+        interactCompletedQuests.push(quest.id);
+        interactLog.push({
+          day: state.day,
+          message: `🏆 Quest hoàn thành: ${quest.name}!`,
+        });
+        interactNotifications.push({
+          id: Date.now() + Math.random(),
+          message: `🏆 Hoàn thành: ${quest.emoji} ${quest.name}!`,
+          type: "quest",
+        });
+      });
+
+      interactLog.push({
         day: state.day,
         message: `📍 Đã vào ${LOCATIONS[targetLoc].emoji} ${LOCATIONS[targetLoc].name}`,
       });
@@ -574,7 +636,11 @@ export function gameReducer(state, action) {
         ...state,
         location: targetLoc,
         previousLocation: state.location,
-        log: newLog,
+        stats: interactStats,
+        activeQuests: interactQuests,
+        completedQuests: interactCompletedQuests,
+        log: interactLog,
+        notifications: interactNotifications,
       };
     }
 

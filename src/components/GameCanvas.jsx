@@ -10,6 +10,14 @@ import {
 import { getMapCanvas } from "../engine/canvasMapRenderer";
 import FPTLandingPage from "./FPTLandingPage";
 import BuildingLandingPage from "./BuildingLandingPage";
+import {
+  sfxInteract,
+  sfxOpen,
+  sfxClose,
+  sfxClick,
+  sfxSuccess,
+  sfxSport,
+} from "../engine/sfxEngine";
 
 /**
  * GameCanvas — HTML5 Canvas component with:
@@ -33,11 +41,13 @@ export default function GameCanvas() {
   const cameraRef = useRef({ x: 0, y: 0 });
   const animRef = useRef(null);
 
-  const { state, updatePlayerPos, canvasInteract, performAction } = useGame();
+  const { state, updatePlayerPos, canvasInteract, performAction, moveTo } =
+    useGame();
   const [gammaDialog, setGammaDialog] = useState(false);
   const [showLanding, setShowLanding] = useState(false);
   const [showBuilding, setShowBuilding] = useState(null); // building ID or null
   const [feedbackDialog, setFeedbackDialog] = useState(false);
+  const [sportsDialog, setSportsDialog] = useState(false);
 
   const { nearInteraction, location } = state;
   const nearInteractionRef = useRef(nearInteraction);
@@ -90,6 +100,10 @@ export default function GameCanvas() {
   // ───── Keyboard listeners ─────
   useEffect(() => {
     const onDown = (e) => {
+      // Skip ALL key handling when typing in an input/textarea
+      const tag = document.activeElement?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA") return;
+
       const key = e.key.toLowerCase();
       keysRef.current.add(key);
 
@@ -100,6 +114,8 @@ export default function GameCanvas() {
         if (!curZone) return;
         // Show special dialog for Toà Gamma
         if (curZone.id === "toa-gamma-door") {
+          sfxInteract();
+          moveTo("gamma-tower");
           setGammaDialog(true);
           return;
         }
@@ -111,12 +127,21 @@ export default function GameCanvas() {
           "dorm-b-door": "dorm-b",
           "dorm-door": "dorm-b",
           "main-gate-zone": "main-gate",
-          "sports-door": "canteen",
+          "sports-door": "__sports__",
           "fpt-sign-zone": "main-gate",
-          "event-plaza-zone": "alpha-tower",
+          "event-plaza-zone": "event-yard",
         };
         if (buildingZones[curZone.id]) {
-          setShowBuilding(buildingZones[curZone.id]);
+          const target = buildingZones[curZone.id];
+          if (target === "__sports__") {
+            sfxOpen();
+            moveTo("sports");
+            setSportsDialog(true);
+          } else {
+            sfxInteract();
+            moveTo(target);
+            setShowBuilding(target);
+          }
           canvasInteract();
           // Auto-perform action when entering buildings
           if (curZone.id === "toa-alpha-door") {
@@ -689,7 +714,10 @@ export default function GameCanvas() {
             {availableActions.map((action) => (
               <button
                 key={action.id}
-                onClick={() => performAction(action.id)}
+                onClick={() => {
+                  sfxClick();
+                  performAction(action.id);
+                }}
                 className="flex-shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold
                            bg-gradient-to-r from-white/5 to-white/[0.02]
                            border border-white/10 hover:border-[#00fff7]/40
@@ -712,7 +740,9 @@ export default function GameCanvas() {
                             }
                           >
                             {val > 0 ? "+" : ""}
-                            {key === "money" ? `${val / 1000}K` : val}
+                            {key === "money"
+                              ? `${val / 1000}K💰`
+                              : `${val}${key === "health" ? "❤️" : key === "intelligence" ? "🧠" : key === "confidence" ? "💪" : key === "progress" ? "📊" : ""}`}
                           </span>
                         ))}
                       </span>
@@ -740,6 +770,49 @@ export default function GameCanvas() {
               borderTop: "1px solid rgba(255,255,255,0.06)",
             }}
           >
+            <div
+              onClick={() => {
+                window.open(
+                  "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
+                  "_blank",
+                );
+              }}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                padding: "4px 12px",
+                borderRadius: 10,
+                background:
+                  "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.1))",
+                border: "1px solid rgba(59,130,246,0.25)",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background =
+                  "linear-gradient(135deg, rgba(59,130,246,0.3), rgba(139,92,246,0.2))";
+                e.currentTarget.style.borderColor = "rgba(59,130,246,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background =
+                  "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.1))";
+                e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)";
+              }}
+            >
+              <span style={{ fontSize: 12 }}>📝</span>
+              <span
+                style={{
+                  fontSize: 9,
+                  fontWeight: 700,
+                  color: "#3b82f6",
+                  letterSpacing: 0.5,
+                  fontFamily: "'Inter', sans-serif",
+                }}
+              >
+                Feedback
+              </span>
+            </div>
             <div
               style={{
                 display: "flex",
@@ -954,53 +1027,127 @@ export default function GameCanvas() {
         />
       )}
 
-      {/* ── Day 2 Feedback Dialog ── */}
-      {feedbackDialog && (
+      {/* ── Sports Activity Dialog ── */}
+      {sportsDialog && (
         <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "rgba(0,0,0,0.75)",
-            zIndex: 55,
-          }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ animation: "fade-in 0.3s ease-out" }}
         >
           <div
-            style={{
-              background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
-              border: "2px solid #00fff7",
-              borderRadius: 16,
-              padding: "32px 28px",
-              maxWidth: 440,
-              textAlign: "center",
-              boxShadow:
-                "0 0 40px rgba(0,255,247,0.2), 0 0 80px rgba(243,112,33,0.1)",
-            }}
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            onClick={() => setSportsDialog(false)}
+          />
+          <div
+            className="relative glass-card max-w-md w-full p-6 border border-white/10"
+            style={{ animation: "slide-up 0.4s ease-out" }}
           >
-            <div style={{ fontSize: 48, marginBottom: 12 }}>🎉</div>
+            <div className="text-center mb-4">
+              <span className="text-5xl block mb-3 animate-[float_2s_ease-in-out_infinite]">
+                🏀
+              </span>
+              <h2
+                className="text-xl font-bold text-white"
+                style={{
+                  fontFamily: "'Press Start 2P', monospace",
+                  fontSize: "14px",
+                }}
+              >
+                Sân Thể Dục!
+              </h2>
+              <span className="inline-block mt-2 px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider bg-[#2563eb]/20 text-[#3b82f6] border border-[#2563eb]/30">
+                🏃 Chọn môn thể thao
+              </span>
+            </div>
+            <p className="text-sm text-gray-300 text-center leading-relaxed mb-5">
+              Bạn muốn chơi môn thể thao nào hôm nay?
+            </p>
+            <div className="space-y-2">
+              {[
+                {
+                  id: "play_football",
+                  text: "⚽ Đá Banh",
+                  effects: { health: 15, confidence: 10, intelligence: -3 },
+                },
+                {
+                  id: "play_basketball",
+                  text: "🏀 Bóng Rổ",
+                  effects: { health: 12, confidence: 8, intelligence: -2 },
+                },
+                {
+                  id: "play_volleyball",
+                  text: "🏐 Bóng Chuyền",
+                  effects: { health: 10, confidence: 12, intelligence: -2 },
+                },
+              ].map((choice) => (
+                <button
+                  key={choice.id}
+                  onClick={() => {
+                    performAction(choice.id);
+                    setSportsDialog(false);
+                  }}
+                  className="w-full p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-[#00fff740] transition-all text-left group"
+                >
+                  <p className="text-sm font-medium text-white group-hover:text-[#00fff7] transition-colors">
+                    {choice.text}
+                  </p>
+                  <div className="flex gap-2 mt-1.5">
+                    {Object.entries(choice.effects).map(([key, val]) => (
+                      <span
+                        key={key}
+                        className={`text-[10px] ${val > 0 ? "text-green-400" : "text-red-400"}`}
+                      >
+                        {key === "health" && "❤️"}
+                        {key === "intelligence" && "🧠"}
+                        {key === "confidence" && "💪"}
+                        {key === "progress" && "📊"}
+                        {key === "money" && "💰"}
+                        {val > 0 ? "+" : ""}
+                        {key === "money" ? `${val / 1000}K` : val}
+                      </span>
+                    ))}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Day 2 Completion Dialog ── */}
+      {feedbackDialog && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ animation: "fade-in 0.3s ease-out" }}
+        >
+          <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
+          <div
+            className="relative glass-card max-w-md w-full p-8 border border-white/10 text-center"
+            style={{ animation: "slide-up 0.4s ease-out" }}
+          >
+            <span className="text-6xl block mb-4 animate-[float_2s_ease-in-out_infinite]">
+              🎓
+            </span>
             <h2
               style={{
-                color: "#00fff7",
-                fontSize: 14,
+                color: "#f37021",
+                fontSize: 16,
                 fontWeight: "bold",
                 fontFamily: "'Press Start 2P', monospace",
-                marginBottom: 16,
-                lineHeight: 1.6,
+                marginBottom: 20,
+                lineHeight: 1.8,
               }}
             >
-              CHÚC MỪNG!
+              HÀNH TRÌNH HOÀN THÀNH!
             </h2>
             <p
               style={{
                 color: "#e2e8f0",
-                fontSize: 14,
-                lineHeight: 1.8,
+                fontSize: 15,
+                lineHeight: 1.9,
                 marginBottom: 8,
               }}
             >
-              Đó là{" "}
+              Đây là hành trình{" "}
               <span style={{ color: "#f37021", fontWeight: "bold" }}>
                 hai ngày
               </span>{" "}
@@ -1008,58 +1155,62 @@ export default function GameCanvas() {
               <span style={{ color: "#00fff7", fontWeight: "bold" }}>
                 sinh viên năm nhất
               </span>{" "}
-              tại FPT University! 🎓
+              tại{" "}
+              <span style={{ color: "#f37021", fontWeight: "bold" }}>
+                FPT University
+              </span>
+              ! 🎓
             </p>
             <p
               style={{
                 color: "#94a3b8",
                 fontSize: 13,
-                lineHeight: 1.7,
-                marginBottom: 24,
+                lineHeight: 1.8,
+                marginBottom: 12,
               }}
             >
-              Nếu bạn có feedback gì hãy nhấn vào ô bên dưới để feedback, giúp
-              nhóm sử dụng làm tài liệu báo cáo nhé ❤️
+              Cảm ơn bạn đã trải nghiệm cuộc sống sinh viên FPT Đà Nẵng! Hy vọng
+              bạn đã có những khoảnh khắc thú vị. ❤️
             </p>
-            <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-              <button
-                onClick={() => {
-                  window.open(
-                    "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
-                    "_blank",
-                  );
-                }}
-                style={{
-                  background: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 8,
-                  padding: "10px 24px",
-                  fontSize: 13,
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                  boxShadow: "0 4px 15px rgba(59,130,246,0.4)",
-                }}
-              >
-                📝 Feedback
-              </button>
-              <button
-                onClick={() => setFeedbackDialog(false)}
-                style={{
-                  background: "linear-gradient(135deg, #f37021, #e85d10)",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: 8,
-                  padding: "10px 24px",
-                  fontSize: 13,
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                  boxShadow: "0 4px 15px rgba(243,112,33,0.4)",
-                }}
-              >
-                🎮 Tiếp tục trải nghiệm game
-              </button>
-            </div>
+            <p
+              style={{
+                color: "#64748b",
+                fontSize: 12,
+                lineHeight: 1.7,
+                marginBottom: 28,
+              }}
+            >
+              Nếu bạn có góp ý gì, hãy nhấn <strong>📝 Feedback</strong> ở thanh
+              bên dưới nhé!
+            </p>
+            <button
+              onClick={() => setFeedbackDialog(false)}
+              style={{
+                background: "linear-gradient(135deg, #f37021, #e85d10)",
+                color: "#fff",
+                border: "none",
+                borderRadius: 12,
+                padding: "14px 36px",
+                fontSize: 14,
+                fontWeight: "bold",
+                cursor: "pointer",
+                fontFamily: "'Press Start 2P', monospace",
+                boxShadow: "0 4px 20px rgba(243,112,33,0.4)",
+                transition: "all 0.25s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.boxShadow =
+                  "0 6px 30px rgba(243,112,33,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow =
+                  "0 4px 20px rgba(243,112,33,0.4)";
+              }}
+            >
+              🎮 Tiếp tục chơi
+            </button>
           </div>
         </div>
       )}

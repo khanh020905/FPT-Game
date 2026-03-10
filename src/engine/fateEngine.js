@@ -48,7 +48,7 @@ export const generateMorningEvent = (day, stats) => {
       adjustedWeight *= 1.5;
     }
 
-    // If player progress is low, increase chance of academic events
+    // If player progress is low, increase chance of coach surprise questions
     if (stats.progress < 50 && event.id === "kiem-tra-dot-xuat") {
       adjustedWeight *= 2;
     }
@@ -75,9 +75,8 @@ export const generateLocationEvent = (locationId, day) => {
   if (!chance(0.2)) return null;
 
   const locationEvents = {
-    canteen: ["free-food", "tien-roi"],
+    canteen: ["free-food", "tien-roi", "mat-the"],
     "alpha-tower": ["kiem-tra-dot-xuat", "gap-senior", "luk-presentation"],
-    "beta-tower": ["bug-code", "gap-senior"],
     "dorm-a": ["mat-dien"],
     "dorm-b": ["mat-dien"],
     "gamma-tower": [

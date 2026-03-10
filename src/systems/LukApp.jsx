@@ -1,54 +1,55 @@
 import { useGame } from "../engine/GameContext";
+import { sfxClose, sfxClick } from "../engine/sfxEngine";
 
 const SCHEDULE = [
   {
     time: "07:30 - 09:30",
-    subject: "Nhập môn lập trình (PRF192)",
+    subject: "LUK Listening & Speaking (Level 5)",
     room: "LUK Cafe - Tầng 1",
     type: "theory",
   },
   {
     time: "09:45 - 11:45",
-    subject: "Toán cao cấp (MAE101)",
+    subject: "LUK Reading & Writing (Level 5)",
     room: "Brain 1 - Tầng 3",
     type: "theory",
   },
   {
     time: "13:00 - 15:00",
-    subject: "Kỹ năng mềm (SSG104)",
-    room: "Brain 2 - Tầng 3",
-    type: "theory",
+    subject: "Tập nói chuyện trước gương",
+    room: "Phòng tự học - Tầng 2",
+    type: "practice",
   },
   {
     time: "15:15 - 17:15",
-    subject: "Lab Lập trình (PRF192)",
-    room: "Phòng Lab - Tầng 2",
+    subject: "Quay video Shadowing Practice",
+    room: "Phòng Lab Media - Tầng 4",
     type: "lab",
   },
 ];
 
 const GRADES = [
   {
-    subject: "Nhập môn IT (CEA201)",
+    subject: "LUK Listening (Level 5)",
     midterm: 7.5,
     final: null,
     status: "in-progress",
   },
   {
-    subject: "Toán cao cấp (MAE101)",
+    subject: "LUK Speaking (Level 5)",
     midterm: null,
     final: null,
     status: "in-progress",
   },
   {
-    subject: "Nhập môn lập trình (PRF192)",
+    subject: "LUK Reading (Level 6)",
     midterm: 8.0,
     final: null,
     status: "in-progress",
   },
   {
-    subject: "Kỹ năng mềm (SSG104)",
-    midterm: 9.0,
+    subject: "LUK Writing (Level 6)",
+    midterm: 7.0,
     final: null,
     status: "in-progress",
   },
@@ -65,7 +66,10 @@ export default function LukApp() {
     >
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={closeSystem}
+        onClick={() => {
+          sfxClose();
+          closeSystem();
+        }}
       />
 
       <div
@@ -82,7 +86,10 @@ export default function LukApp() {
             </div>
           </div>
           <button
-            onClick={closeSystem}
+            onClick={() => {
+              sfxClose();
+              closeSystem();
+            }}
             className="text-white/70 hover:text-white text-xl transition-colors"
           >
             &times;
@@ -98,9 +105,11 @@ export default function LukApp() {
                 🧑‍🎓
               </div>
               <div>
-                <p className="font-bold text-white">Sinh viên FPT</p>
+                <p className="font-bold text-white">
+                  {state.playerName || "Sinh viên FPT"}
+                </p>
                 <p className="text-xs text-gray-400">
-                  MSSV: SE00{1000 + day} • Semester 1
+                  MSSV: {state.mssv || "N/A"} • Semester 1
                 </p>
                 <p className="text-xs text-[#00fff7]">Ngày {day}/30</p>
               </div>
@@ -119,7 +128,7 @@ export default function LukApp() {
                   className="glass-card p-3 flex items-center gap-3 hover:bg-white/5 transition-colors"
                 >
                   <div
-                    className={`w-1 h-10 rounded-full ${item.type === "lab" ? "bg-purple-500" : "bg-blue-500"}`}
+                    className={`w-1 h-10 rounded-full ${item.type === "lab" ? "bg-purple-500" : item.type === "practice" ? "bg-green-500" : "bg-blue-500"}`}
                   />
                   <div className="flex-1">
                     <p className="text-xs font-medium text-white">
@@ -130,9 +139,13 @@ export default function LukApp() {
                     </p>
                   </div>
                   <span
-                    className={`text-[10px] px-2 py-0.5 rounded-full ${item.type === "lab" ? "bg-purple-500/20 text-purple-300" : "bg-blue-500/20 text-blue-300"}`}
+                    className={`text-[10px] px-2 py-0.5 rounded-full ${item.type === "lab" ? "bg-purple-500/20 text-purple-300" : item.type === "practice" ? "bg-green-500/20 text-green-300" : "bg-blue-500/20 text-blue-300"}`}
                   >
-                    {item.type === "lab" ? "Lab" : "Lý thuyết"}
+                    {item.type === "lab"
+                      ? "Lab"
+                      : item.type === "practice"
+                        ? "Thực hành"
+                        : "Lý thuyết"}
                   </span>
                 </div>
               ))}
@@ -215,7 +228,7 @@ export default function LukApp() {
             <div className="space-y-2">
               <div className="glass-card p-3 border-l-2 border-red-400">
                 <p className="text-xs font-medium text-white">
-                  Bài tập PRF192 — Lab 3
+                  Nộp video Shadowing Practice
                 </p>
                 <p className="text-[10px] text-red-400">
                   ⏰ Deadline: Ngày {Math.min(day + 3, 30)}
@@ -223,18 +236,18 @@ export default function LukApp() {
               </div>
               <div className="glass-card p-3 border-l-2 border-yellow-400">
                 <p className="text-xs font-medium text-white">
-                  Tiểu luận SSG104
+                  Bài tập LUK Speaking — Tập nói trước gương
                 </p>
                 <p className="text-[10px] text-yellow-400">
-                  ⏰ Deadline: Ngày {Math.min(day + 7, 30)}
+                  ⏰ Deadline: Ngày {Math.min(day + 5, 30)}
                 </p>
               </div>
               <div className="glass-card p-3 border-l-2 border-green-400">
                 <p className="text-xs font-medium text-white">
-                  Đồ án nhóm PRF192
+                  Project LUK Writing — Viết essay 300 từ
                 </p>
                 <p className="text-[10px] text-green-400">
-                  ⏰ Deadline: Ngày {Math.min(day + 14, 30)}
+                  ⏰ Deadline: Ngày {Math.min(day + 10, 30)}
                 </p>
               </div>
             </div>
@@ -243,12 +256,13 @@ export default function LukApp() {
           {/* Submit Project Button */}
           <button
             onClick={() => {
+              sfxClick();
               closeSystem();
               setTimeout(() => openSystem("submission"), 200);
             }}
             className="w-full py-3 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-[#3b82f6] to-[#8b5cf6] hover:brightness-110 transition-all"
           >
-            📤 Nộp Project / Bài tập
+            📤 Nộp Project / Bài tập LUK
           </button>
         </div>
       </div>

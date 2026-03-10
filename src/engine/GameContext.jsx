@@ -29,7 +29,10 @@ export function GameProvider({ children }) {
     }
   }, [state.notifications]);
 
-  const newGame = useCallback(() => dispatch({ type: "NEW_GAME" }), []);
+  const newGame = useCallback(
+    (playerInfo) => dispatch({ type: "NEW_GAME", payload: playerInfo }),
+    [],
+  );
 
   const loadGame = useCallback(() => {
     const saved = localStorage.getItem("fpt-game-save");

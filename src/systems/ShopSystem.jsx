@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useGame } from "../engine/GameContext";
 import { ITEM_LIST, ITEM_CATEGORIES } from "../data/items";
 import { formatMoney } from "../utils/helpers";
+import { sfxClose, sfxClick, sfxPurchase, sfxError } from "../engine/sfxEngine";
 
 export default function ShopSystem() {
   const { state, closeSystem, buyItem } = useGame();
@@ -17,7 +18,10 @@ export default function ShopSystem() {
     >
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={closeSystem}
+        onClick={() => {
+          sfxClose();
+          closeSystem();
+        }}
       />
 
       <div
@@ -38,7 +42,10 @@ export default function ShopSystem() {
               💰 {formatMoney(state.stats.money)}
             </span>
             <button
-              onClick={closeSystem}
+              onClick={() => {
+                sfxClose();
+                closeSystem();
+              }}
               className="text-white/70 hover:text-white text-xl transition-colors"
             >
               &times;
@@ -51,7 +58,10 @@ export default function ShopSystem() {
           {Object.entries(ITEM_CATEGORIES).map(([key, cat]) => (
             <button
               key={key}
-              onClick={() => setActiveCategory(key)}
+              onClick={() => {
+                sfxClick();
+                setActiveCategory(key);
+              }}
               className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                 activeCategory === key
                   ? "bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30"
@@ -127,7 +137,10 @@ export default function ShopSystem() {
                     {formatMoney(item.price)}
                   </p>
                   <button
-                    onClick={() => buyItem(item.id)}
+                    onClick={() => {
+                      sfxPurchase();
+                      buyItem(item.id);
+                    }}
                     disabled={!canAfford || isMaxed || isRetakeBlocked}
                     className={`mt-1 px-3 py-1 rounded-lg text-[10px] font-bold transition-all ${
                       canAfford && !isMaxed && !isRetakeBlocked

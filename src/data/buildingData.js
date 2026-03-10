@@ -1156,4 +1156,156 @@ export const BUILDING_DATA = {
       "Campus Đà Nẵng rộng hơn 30 hecta — lớn nhất khu vực miền Trung",
     ],
   },
+  "event-yard": {
+    id: "event-yard",
+    name: "Sân Sự Kiện",
+    subtitle: "Trái Tim Sự Kiện FPT",
+    emoji: "🏮",
+    heroGradient:
+      "linear-gradient(135deg, #be123c 0%, #e11d48 50%, #f43f5e 100%)",
+    accentColor: "#e11d48",
+    tagline:
+      "Đại nhạc hội — Lễ Hội truyền thống — Nơi tạo ra những kỷ niệm không thể quên",
+    description:
+      "Sân Sự Kiện FPT University Đà Nẵng là không gian ngoài trời rộng lớn bậc nhất, được sử dụng cho Đại Nhạc Hội, Hội Làng FPT, hoạt động thể thao như giải đấu VOVINAM và các sự kiện tầm cỡ. Đây chính là 'thủ phủ' của nhiệt huyết tuổi trẻ FPT.",
+    welcomeHighlights: [
+      {
+        icon: "🎪",
+        stat: "10,000m²",
+        label: "Diện tích",
+        desc: "Sân sự kiện lớn nhất campus",
+      },
+      {
+        icon: "🎤",
+        stat: "1000+",
+        label: "Chỗ ngồi",
+        desc: "Sức chứa tối đa trong sự kiện",
+      },
+      {
+        icon: "🥋",
+        stat: "Vovinam",
+        label: "Hội Làng",
+        desc: "Lễ hội văn hoá võ thuật dân tộc",
+      },
+      {
+        icon: "🌟",
+        stat: "Hạng A",
+        label: "Ca Sĩ",
+        desc: "Nơi các ca sĩ hàng đầu biểu diễn",
+      },
+    ],
+    dailySchedule: [
+      {
+        time: "07:00 - 11:00",
+        activity: "Tập luyện và thi đấu VOVINAM",
+        emoji: "🥋",
+        type: "activity",
+      },
+      {
+        time: "16:00 - 18:00",
+        activity: "Hoạt động CLB sinh viên ngoài trời",
+        emoji: "🏃",
+        type: "social",
+      },
+      {
+        time: "19:00 - 22:00",
+        activity: "Event: FPT Music Fest / Đại Nhạc Hội FPT",
+        emoji: "🎸",
+        type: "event",
+      },
+    ],
+    events: {
+      title: "Hội Làng FPT & Đại Nhạc Hội",
+      description:
+        "Sân sự kiện là nơi diễn ra các hoạt động văn hóa, nghệ thuật hoành tráng nhất của FPT University Đà Nẵng.",
+      upcomingEvents: [
+        {
+          name: "🏮 HỘI LÀNG FPT 2026",
+          date: "Tháng 4 hàng năm",
+          speaker: "Lễ hội văn hóa lớn nhất — Hàng nghìn SV tham gia",
+          emoji: "🎪",
+          color: "#e11d48",
+        },
+        {
+          name: "🎤 Đại Nhạc Hội FPT",
+          date: "Tháng 11",
+          speaker: "Sơn Tùng M-TP, Đen Vâu... biểu diễn live",
+          emoji: "🌟",
+          color: "#dc2626",
+        },
+        {
+          name: "🥋 Giải Vô Địch VOVINAM FPT",
+          date: "Tháng 5",
+          speaker: "Sinh viên giao lưu võ thuật truyền thống",
+          emoji: "🥋",
+          color: "#2563eb",
+        },
+      ],
+      hoiLang: {
+        title: "🏮 Hội Làng FPT — Lễ Hội Huyền Thoại",
+        description:
+          "Hội Làng là lễ hội truyền thống lớn nhất và đặc biệt nhất của FPT University — diễn ra hàng năm vào tháng 4. Đây là sự kiện mà mọi sinh viên FPT đều mong chờ nhất trong năm!",
+        activities: [
+          {
+            name: "Rước kiệu & Lễ khai mạc",
+            emoji: "🏮",
+            desc: "Đoàn rước kiệu truyền thống khai mạc lễ hội",
+          },
+          {
+            name: "Đại nhạc hội ca sĩ nổi tiếng",
+            emoji: "🎤",
+            desc: "Các nghệ sĩ hàng đầu Vpop biểu diễn",
+          },
+          {
+            name: "Hội chợ ẩm thực đường phố",
+            emoji: "🍢",
+            desc: "100+ gian hàng sinh viên",
+          },
+          {
+            name: "Trò chơi dân gian",
+            emoji: "🎯",
+            desc: "Kéo co, nhảy bao bố, đập niêu... siêu vui",
+          },
+          {
+            name: "Lễ hội ánh sáng & pháo hoa",
+            emoji: "🎆",
+            desc: "Màn pháo hoa rực rỡ bùng nổ đêm Hội",
+          },
+        ],
+      },
+      highlights: [
+        "Sân khấu ngoài trời chuyên nghiệp sức chứa 1000+",
+        "Hệ thống âm thanh, ánh sáng chuẩn concert",
+        "Nơi hàng nghìn sinh viên đồng diễn VOVINAM",
+        "Thu hút sinh viên từ các trường ĐH khác quanh FPT City",
+      ],
+    },
+    features: [
+      {
+        icon: "🏮",
+        title: "Hội Làng FPT",
+        desc: "Lễ hội truyền thống lớn nhất",
+      },
+      {
+        icon: "🥋",
+        title: "Thi Đấu VOVINAM",
+        desc: "Giải đấu võ thuật quy mô toàn trường",
+      },
+      {
+        icon: "🎤",
+        title: "Sân Khấu Lớn",
+        desc: "Tổ chức đại nhạc hội hoành tráng",
+      },
+      {
+        icon: "🤝",
+        title: "Team Building",
+        desc: "Hoạt động tập thể và rèn luyện thể chất",
+      },
+    ],
+    funFacts: [
+      "Hội Làng FPT từng mời Sơn Tùng M-TP, Đen Vâu, HIEUTHUHAI biểu diễn!",
+      "Hàng nghìn sinh viên từng thi đồng diễn VOVINAM lập kỷ lục tại đây.",
+      "Vào mùa thi đấu, không khí sân sự kiện luôn bùng nổ.",
+    ],
+  },
 };

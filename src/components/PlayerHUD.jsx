@@ -186,13 +186,13 @@ export default function PlayerHUD() {
         </div>
 
         {/* Active Quests */}
-        {activeQuests.length > 0 && (
-          <div>
-            <h3 className="text-[10px] uppercase tracking-widest text-gray-500 font-bold flex items-center gap-1.5 mb-2">
-              <span className="w-3 h-px bg-gray-600" />
-              Nhiệm Vụ ({activeQuests.length})
-              <span className="flex-1 h-px bg-gray-600/30" />
-            </h3>
+        <div>
+          <h3 className="text-[10px] uppercase tracking-widest text-gray-500 font-bold flex items-center gap-1.5 mb-2">
+            <span className="w-3 h-px bg-gray-600" />
+            Nhiệm Vụ ({activeQuests.length})
+            <span className="flex-1 h-px bg-gray-600/30" />
+          </h3>
+          {activeQuests.length > 0 ? (
             <div className="space-y-2">
               {activeQuests.map((quest) => {
                 const completed = quest.objectives.filter(
@@ -236,8 +236,14 @@ export default function PlayerHUD() {
                 );
               })}
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="glass-card p-3 text-center">
+              <p className="text-[10px] text-gray-500 italic">
+                ✨ Không còn nhiệm vụ nào khác
+              </p>
+            </div>
+          )}
+        </div>
 
         {/* Inventory */}
         {inventory.length > 0 && (
