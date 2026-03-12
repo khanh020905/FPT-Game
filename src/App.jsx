@@ -126,6 +126,7 @@ function GameScreen() {
   const { activeSystem, location } = state;
   const [showTutorial, setShowTutorial] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Show tutorial on first game start
   useEffect(() => {
@@ -146,8 +147,85 @@ function GameScreen() {
 
   return (
     <div className="w-full h-screen flex overflow-hidden bg-[#0a0e17]">
+      {/* ── Hamburger Toggle Button (mobile only) ── */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="md:hidden fixed top-3 left-3 z-[60] flex items-center justify-center"
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: 10,
+          background: sidebarOpen
+            ? "rgba(239, 68, 68, 0.2)"
+            : "rgba(0, 0, 0, 0.7)",
+          border: sidebarOpen
+            ? "1.5px solid rgba(239, 68, 68, 0.5)"
+            : "1.5px solid rgba(0, 255, 247, 0.3)",
+          backdropFilter: "blur(12px)",
+          boxShadow: sidebarOpen
+            ? "0 0 16px rgba(239, 68, 68, 0.3)"
+            : "0 0 16px rgba(0, 255, 247, 0.2)",
+          transition: "all 0.25s ease",
+        }}
+        aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
+      >
+        {sidebarOpen ? (
+          <span style={{ fontSize: 18, color: "#ef4444", fontWeight: "bold" }}>
+            ✕
+          </span>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            <span
+              style={{
+                display: "block",
+                width: 18,
+                height: 2,
+                background: "#00fff7",
+                borderRadius: 2,
+              }}
+            />
+            <span
+              style={{
+                display: "block",
+                width: 14,
+                height: 2,
+                background: "#00fff7",
+                borderRadius: 2,
+              }}
+            />
+            <span
+              style={{
+                display: "block",
+                width: 18,
+                height: 2,
+                background: "#00fff7",
+                borderRadius: 2,
+              }}
+            />
+          </div>
+        )}
+      </button>
+
+      {/* ── Mobile Backdrop ── */}
+      {sidebarOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-[45] bg-black/60 backdrop-blur-sm"
+          onClick={() => setSidebarOpen(false)}
+          style={{ animation: "fade-in 0.2s ease-out" }}
+        />
+      )}
+
       {/* Left Sidebar — Player Stats Panel */}
-      <PlayerHUD />
+      <div
+        className={`
+          fixed md:relative z-[50] h-full
+          transition-transform duration-300 ease-in-out
+          ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
+          md:translate-x-0
+        `}
+      >
+        <PlayerHUD />
+      </div>
 
       {/* Main Area — Canvas Game */}
       <GameCanvas />

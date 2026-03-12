@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useState } from "react";
+import { useRef, useEffect, useCallback, useState, useMemo } from "react";
 import { useGame } from "../engine/GameContext";
 import {
   LOCATIONS,
@@ -31,6 +31,7 @@ export default function GameCanvas() {
   const canvasRef = useRef(null);
   const mapImgRef = useRef(null);
   const keysRef = useRef(new Set());
+  const touchDirRef = useRef({ dx: 0, dy: 0 }); // mobile joystick direction
   const playerRef = useRef({
     x: CANVAS_MAP.spawnX,
     y: CANVAS_MAP.spawnY,
@@ -41,8 +42,43 @@ export default function GameCanvas() {
   const cameraRef = useRef({ x: 0, y: 0 });
   const animRef = useRef(null);
 
-  const { state, updatePlayerPos, canvasInteract, performAction, moveTo } =
-    useGame();
+  // ───── Mobile touch detection ─────
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  useEffect(() => {
+    const check = () => {
+      setIsTouchDevice(
+        "ontouchstart" in window || navigator.maxTouchPoints > 0,
+      );
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  // ───── Virtual Joystick state ─────
+  const joystickRef = useRef({
+    active: false,
+    baseX: 0,
+    baseY: 0,
+    knobX: 0,
+    knobY: 0,
+    touchId: null,
+    rect: null, // cached bounding rect
+    rafPending: false,
+  });
+  const joystickRingRef = useRef(null);
+  const joystickKnobRef = useRef(null);
+  const joystickIdleRef = useRef(null);
+  const [joystickActive, setJoystickActive] = useState(false); // only toggled on start/end
+
+  const {
+    state,
+    updatePlayerPos,
+    canvasInteract,
+    performAction,
+    moveTo,
+    openSystem,
+  } = useGame();
   const [gammaDialog, setGammaDialog] = useState(false);
   const [showLanding, setShowLanding] = useState(false);
   const [showBuilding, setShowBuilding] = useState(null); // building ID or null
@@ -174,6 +210,150 @@ export default function GameCanvas() {
     };
   }, [canvasInteract]);
 
+  // ───── Mobile joystick touch handlers ─────
+  const JOYSTICK_RADIUS = 50;
+
+  const updateJoystickDOM = useCallback(() => {
+    const js = joystickRef.current;
+    const ring = joystickRingRef.current;
+    const knob = joystickKnobRef.current;
+    if (ring) {
+      ring.style.left = `${js.baseX - JOYSTICK_RADIUS - 4}px`;
+      ring.style.top = `${js.baseY - JOYSTICK_RADIUS - 4}px`;
+    }
+    if (knob) {
+      knob.style.left = `${js.knobX - 20}px`;
+      knob.style.top = `${js.knobY - 20}px`;
+    }
+    js.rafPending = false;
+  }, []);
+
+  const handleJoystickStart = useCallback(
+    (e) => {
+      e.preventDefault();
+      const touch = e.changedTouches[0];
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      const js = joystickRef.current;
+      js.active = true;
+      js.baseX = x;
+      js.baseY = y;
+      js.knobX = x;
+      js.knobY = y;
+      js.touchId = touch.identifier;
+      js.rect = rect; // cache rect for move events
+      touchDirRef.current = { dx: 0, dy: 0 };
+      setJoystickActive(true);
+      requestAnimationFrame(updateJoystickDOM);
+    },
+    [updateJoystickDOM],
+  );
+
+  const handleJoystickMove = useCallback(
+    (e) => {
+      e.preventDefault();
+      const js = joystickRef.current;
+      if (!js.active) return;
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        const touch = e.changedTouches[i];
+        if (touch.identifier === js.touchId) {
+          const rect = js.rect; // use cached rect
+          if (!rect) break;
+          let kx = touch.clientX - rect.left;
+          let ky = touch.clientY - rect.top;
+          const ddx = kx - js.baseX;
+          const ddy = ky - js.baseY;
+          const dist = Math.sqrt(ddx * ddx + ddy * ddy);
+          if (dist > JOYSTICK_RADIUS) {
+            kx = js.baseX + (ddx / dist) * JOYSTICK_RADIUS;
+            ky = js.baseY + (ddy / dist) * JOYSTICK_RADIUS;
+          }
+          js.knobX = kx;
+          js.knobY = ky;
+          // Update direction ref (read by game loop)
+          const normDist = Math.min(dist, JOYSTICK_RADIUS) / JOYSTICK_RADIUS;
+          if (normDist > 0.15) {
+            touchDirRef.current = {
+              dx: (ddx / dist) * normDist,
+              dy: (ddy / dist) * normDist,
+            };
+          } else {
+            touchDirRef.current = { dx: 0, dy: 0 };
+          }
+          // Batch DOM update via rAF (at most once per frame)
+          if (!js.rafPending) {
+            js.rafPending = true;
+            requestAnimationFrame(updateJoystickDOM);
+          }
+          break;
+        }
+      }
+    },
+    [updateJoystickDOM],
+  );
+
+  const handleJoystickEnd = useCallback((e) => {
+    e.preventDefault();
+    const js = joystickRef.current;
+    for (let i = 0; i < e.changedTouches.length; i++) {
+      if (e.changedTouches[i].identifier === js.touchId) {
+        js.active = false;
+        js.touchId = null;
+        js.rect = null;
+        touchDirRef.current = { dx: 0, dy: 0 };
+        setJoystickActive(false);
+        break;
+      }
+    }
+  }, []);
+
+  // ───── Mobile interact button handler ─────
+  const handleMobileInteract = useCallback(() => {
+    const curZone = nearInteractionRef.current;
+    if (!curZone) return;
+    if (curZone.id === "toa-gamma-door") {
+      sfxInteract();
+      moveTo("gamma-tower");
+      setGammaDialog(true);
+      return;
+    }
+    const buildingZones = {
+      "toa-alpha-door": "alpha-tower",
+      "cantin-door": "canteen",
+      "dorm-a-door": "dorm-a",
+      "dorm-b-door": "dorm-b",
+      "dorm-door": "dorm-b",
+      "main-gate-zone": "main-gate",
+      "sports-door": "__sports__",
+      "fpt-sign-zone": "main-gate",
+      "event-plaza-zone": "event-yard",
+    };
+    if (buildingZones[curZone.id]) {
+      const target = buildingZones[curZone.id];
+      if (target === "__sports__") {
+        sfxOpen();
+        moveTo("sports");
+        setSportsDialog(true);
+      } else {
+        sfxInteract();
+        moveTo(target);
+        setShowBuilding(target);
+      }
+      canvasInteract();
+      if (curZone.id === "toa-alpha-door") performAction("attend_class");
+      if (curZone.id === "cantin-door") performAction("eat_meal");
+      if (
+        curZone.id === "dorm-a-door" ||
+        curZone.id === "dorm-b-door" ||
+        curZone.id === "dorm-door"
+      )
+        performAction("sleep");
+      return;
+    }
+    canvasInteract();
+  }, [canvasInteract, moveTo, performAction]);
+
   // ───── AABB collision check ─────
   const checkCollision = useCallback((px, py) => {
     const ps = CANVAS_MAP.playerSize;
@@ -220,7 +400,7 @@ export default function GameCanvas() {
       const player = playerRef.current;
       const keys = keysRef.current;
 
-      // ── Movement ──
+      // ── Movement (keyboard) ──
       let dx = 0,
         dy = 0;
       if (keys.has("w") || keys.has("arrowup")) {
@@ -238,6 +418,19 @@ export default function GameCanvas() {
       if (keys.has("d") || keys.has("arrowright")) {
         dx = SPEED;
         player.dir = "right";
+      }
+
+      // ── Movement (mobile touch joystick) ──
+      const td = touchDirRef.current;
+      if (td.dx !== 0 || td.dy !== 0) {
+        dx = td.dx * SPEED;
+        dy = td.dy * SPEED;
+        // Set facing direction based on dominant axis
+        if (Math.abs(td.dx) > Math.abs(td.dy)) {
+          player.dir = td.dx > 0 ? "right" : "left";
+        } else {
+          player.dir = td.dy > 0 ? "down" : "up";
+        }
       }
 
       // Normalize diagonal
@@ -611,11 +804,18 @@ export default function GameCanvas() {
       // ── Minimap ──
       drawMinimap(ctx, viewW, viewH, player, cam, PS);
 
-      // ── WASD controls hint (top-left) ──
+      // ── Controls hint (top-left) ──
       ctx.font = "10px 'Press Start 2P', monospace";
       ctx.fillStyle = "rgba(255,255,255,0.25)";
       ctx.textAlign = "left";
-      ctx.fillText("WASD to move  |  E to interact", 12, 20);
+      const isMobile = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      ctx.fillText(
+        isMobile
+          ? "Drag to move  |  Tap ⚡ to interact"
+          : "WASD to move  |  E to interact",
+        12,
+        20,
+      );
 
       animRef.current = requestAnimationFrame(gameLoop);
     };
@@ -639,8 +839,152 @@ export default function GameCanvas() {
           ref={canvasRef}
           className="absolute inset-0 w-full h-full pixel-art"
           tabIndex={0}
-          style={{ outline: "none", cursor: "none" }}
+          style={{
+            outline: "none",
+            cursor: isTouchDevice ? "default" : "none",
+          }}
         />
+
+        {/* ── Mobile Virtual Joystick Zone (left half) ── */}
+        {isTouchDevice && (
+          <div
+            className="absolute left-0 top-0 z-20"
+            style={{ width: "50%", height: "100%", touchAction: "none" }}
+            onTouchStart={handleJoystickStart}
+            onTouchMove={handleJoystickMove}
+            onTouchEnd={handleJoystickEnd}
+            onTouchCancel={handleJoystickEnd}
+          >
+            {/* Joystick visual — ref-based for zero re-renders */}
+            {joystickActive && (
+              <>
+                {/* Outer ring */}
+                <div
+                  ref={joystickRingRef}
+                  style={{
+                    position: "absolute",
+                    width: (JOYSTICK_RADIUS + 4) * 2,
+                    height: (JOYSTICK_RADIUS + 4) * 2,
+                    borderRadius: "50%",
+                    border: "2px solid rgba(0, 255, 247, 0.4)",
+                    background: "rgba(0, 0, 0, 0.25)",
+                    pointerEvents: "none",
+                    willChange: "left, top",
+                  }}
+                />
+                {/* Inner knob */}
+                <div
+                  ref={joystickKnobRef}
+                  style={{
+                    position: "absolute",
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    background:
+                      "radial-gradient(circle, rgba(0,255,247,0.6), rgba(0,255,247,0.2))",
+                    border: "2px solid rgba(0, 255, 247, 0.7)",
+                    boxShadow:
+                      "0 0 16px rgba(0, 255, 247, 0.5), inset 0 0 8px rgba(0, 255, 247, 0.3)",
+                    pointerEvents: "none",
+                    willChange: "left, top",
+                  }}
+                />
+              </>
+            )}
+            {/* Idle hint */}
+            {!joystickActive && (
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 80,
+                  left: 24,
+                  opacity: 0.4,
+                  pointerEvents: "none",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                <div
+                  style={{
+                    width: 60,
+                    height: 60,
+                    borderRadius: "50%",
+                    border: "2px dashed rgba(0, 255, 247, 0.5)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span style={{ fontSize: 20 }}>🕹️</span>
+                </div>
+                <span
+                  style={{
+                    fontSize: 8,
+                    color: "#00fff7",
+                    fontFamily: "'Press Start 2P', monospace",
+                    textShadow: "0 1px 4px rgba(0,0,0,0.8)",
+                  }}
+                >
+                  DRAG
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Mobile Interact Button (bottom-right) ── */}
+        {isTouchDevice && (
+          <button
+            onTouchStart={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleMobileInteract();
+            }}
+            className="absolute z-30"
+            style={{
+              right: 24,
+              bottom: 80,
+              width: 64,
+              height: 64,
+              borderRadius: "50%",
+              background: nearInteraction
+                ? "radial-gradient(circle, rgba(0,255,247,0.5), rgba(0,255,247,0.15))"
+                : "radial-gradient(circle, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
+              border: nearInteraction
+                ? "2px solid rgba(0, 255, 247, 0.8)"
+                : "2px solid rgba(255, 255, 255, 0.15)",
+              boxShadow: nearInteraction
+                ? "0 0 24px rgba(0, 255, 247, 0.5), 0 0 48px rgba(0, 255, 247, 0.2)"
+                : "0 2px 8px rgba(0,0,0,0.3)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 2,
+              touchAction: "none",
+              transition: "all 0.2s ease",
+              animation: nearInteraction
+                ? "pulse 1.5s ease-in-out infinite"
+                : "none",
+            }}
+          >
+            <span style={{ fontSize: 22 }}>
+              {nearInteraction ? "⚡" : "🔲"}
+            </span>
+            <span
+              style={{
+                fontSize: 7,
+                fontFamily: "'Press Start 2P', monospace",
+                color: nearInteraction ? "#00fff7" : "rgba(255,255,255,0.4)",
+                letterSpacing: 0.5,
+              }}
+            >
+              {nearInteraction ? "TAP" : ""}
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Action Bar — Bottom Panel with LED Border & Game Guide */}
@@ -758,150 +1102,263 @@ export default function GameCanvas() {
             )}
           </div>
 
-          {/* Game Guide — Centered */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 10,
-              marginTop: 6,
-              paddingTop: 6,
-              borderTop: "1px solid rgba(255,255,255,0.06)",
-            }}
-          >
-            <div
-              onClick={() => {
-                window.open(
-                  "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
-                  "_blank",
-                );
-              }}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "4px 12px",
-                borderRadius: 10,
-                background:
-                  "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.1))",
-                border: "1px solid rgba(59,130,246,0.25)",
-                cursor: "pointer",
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background =
-                  "linear-gradient(135deg, rgba(59,130,246,0.3), rgba(139,92,246,0.2))";
-                e.currentTarget.style.borderColor = "rgba(59,130,246,0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background =
-                  "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.1))";
-                e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)";
-              }}
-            >
-              <span style={{ fontSize: 12 }}>📝</span>
-              <span
-                style={{
-                  fontSize: 9,
-                  fontWeight: 700,
-                  color: "#3b82f6",
-                  letterSpacing: 0.5,
-                  fontFamily: "'Inter', sans-serif",
-                }}
-              >
-                Feedback
-              </span>
-            </div>
+          {/* Mobile Quick-Access Buttons */}
+          {isTouchDevice && (
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: 8,
-                padding: "4px 12px",
-                borderRadius: 10,
-                background:
-                  "linear-gradient(135deg, rgba(0,255,247,0.06), rgba(243,112,33,0.04))",
-                border: "1px solid rgba(0,255,247,0.1)",
+                marginTop: 6,
+                paddingTop: 6,
+                borderTop: "1px solid rgba(255,255,255,0.06)",
+                flexWrap: "wrap",
               }}
             >
-              <span
-                style={{ fontSize: 14, animation: "ledPulse 2s ease infinite" }}
-              >
-                🎮
-              </span>
-              <span
+              <button
+                onClick={() => {
+                  sfxClick();
+                  window.open(
+                    "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
+                    "_blank",
+                  );
+                }}
                 style={{
-                  fontSize: 9,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                  padding: "6px 12px",
+                  borderRadius: 8,
+                  background:
+                    "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.1))",
+                  border: "1px solid rgba(59,130,246,0.3)",
+                  color: "#3b82f6",
+                  fontSize: 10,
                   fontWeight: 700,
-                  color: "#00fff7",
-                  letterSpacing: 1,
-                  textTransform: "uppercase",
-                  fontFamily: "'Press Start 2P', monospace",
+                  cursor: "pointer",
                 }}
               >
-                GUIDE
-              </span>
+                📝 Feedback
+              </button>
+              <button
+                onClick={() => {
+                  sfxClick();
+                  openSystem("luk-app");
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                  padding: "6px 12px",
+                  borderRadius: 8,
+                  background:
+                    "linear-gradient(135deg, rgba(234,88,12,0.15), rgba(245,158,11,0.1))",
+                  border: "1px solid rgba(234,88,12,0.3)",
+                  color: "#ea580c",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                🌍 LUK App
+              </button>
+              <button
+                onClick={() => {
+                  sfxClick();
+                  openSystem("shop");
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                  padding: "6px 12px",
+                  borderRadius: 8,
+                  background:
+                    "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(16,185,129,0.1))",
+                  border: "1px solid rgba(34,197,94,0.3)",
+                  color: "#22c55e",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                🏪 Shop
+              </button>
+              <button
+                onClick={() => {
+                  sfxClick();
+                  openSystem("mentor");
+                }}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 5,
+                  padding: "6px 12px",
+                  borderRadius: 8,
+                  background:
+                    "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(99,102,241,0.1))",
+                  border: "1px solid rgba(59,130,246,0.3)",
+                  color: "#6366f1",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                🧑‍🏫 Cố Vấn
+              </button>
             </div>
-            {[
-              { keys: "W A S D", label: "Di chuyển", icon: "🕹️" },
-              { keys: "E", label: "Tương tác", icon: "⚡" },
-              { keys: "M", label: "Bản đồ", icon: "🗺️" },
-            ].map((g, i) => (
+          )}
+
+          {/* Game Guide — Centered (hidden on mobile) */}
+          {!isTouchDevice && (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: 10,
+                marginTop: 6,
+                paddingTop: 6,
+                borderTop: "1px solid rgba(255,255,255,0.06)",
+              }}
+            >
               <div
-                key={g.keys}
+                onClick={() => {
+                  window.open(
+                    "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
+                    "_blank",
+                  );
+                }}
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: 6,
-                  padding: "4px 10px",
-                  borderRadius: 8,
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.06)",
+                  padding: "4px 12px",
+                  borderRadius: 10,
+                  background:
+                    "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.1))",
+                  border: "1px solid rgba(59,130,246,0.25)",
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background =
+                    "linear-gradient(135deg, rgba(59,130,246,0.3), rgba(139,92,246,0.2))";
+                  e.currentTarget.style.borderColor = "rgba(59,130,246,0.5)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background =
+                    "linear-gradient(135deg, rgba(59,130,246,0.15), rgba(139,92,246,0.1))";
+                  e.currentTarget.style.borderColor = "rgba(59,130,246,0.25)";
                 }}
               >
-                <span style={{ fontSize: 12 }}>{g.icon}</span>
-                <div style={{ display: "flex", gap: 3 }}>
-                  {g.keys.split(" ").map((k) => (
-                    <span
-                      key={k}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        minWidth: 20,
-                        height: 20,
-                        padding: "0 4px",
-                        borderRadius: 4,
-                        background:
-                          "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
-                        border: "1px solid rgba(255,255,255,0.15)",
-                        boxShadow:
-                          "0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
-                        fontSize: 8,
-                        fontWeight: 800,
-                        color: "#e2e8f0",
-                        fontFamily: "'Press Start 2P', monospace",
-                        letterSpacing: 0.5,
-                        animation: `keyBounce ${2 + i * 0.3}s ease-in-out infinite`,
-                      }}
-                    >
-                      {k}
-                    </span>
-                  ))}
-                </div>
+                <span style={{ fontSize: 12 }}>📝</span>
                 <span
                   style={{
                     fontSize: 9,
-                    color: "rgba(255,255,255,0.4)",
-                    fontWeight: 500,
+                    fontWeight: 700,
+                    color: "#3b82f6",
+                    letterSpacing: 0.5,
+                    fontFamily: "'Inter', sans-serif",
                   }}
                 >
-                  {g.label}
+                  Feedback
                 </span>
               </div>
-            ))}
-          </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  padding: "4px 12px",
+                  borderRadius: 10,
+                  background:
+                    "linear-gradient(135deg, rgba(0,255,247,0.06), rgba(243,112,33,0.04))",
+                  border: "1px solid rgba(0,255,247,0.1)",
+                }}
+              >
+                <span
+                  style={{
+                    fontSize: 14,
+                    animation: "ledPulse 2s ease infinite",
+                  }}
+                >
+                  🎮
+                </span>
+                <span
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    color: "#00fff7",
+                    letterSpacing: 1,
+                    textTransform: "uppercase",
+                    fontFamily: "'Press Start 2P', monospace",
+                  }}
+                >
+                  GUIDE
+                </span>
+              </div>
+              {[
+                { keys: "W A S D", label: "Di chuyển", icon: "🕹️" },
+                { keys: "E", label: "Tương tác", icon: "⚡" },
+                { keys: "M", label: "Bản đồ", icon: "🗺️" },
+              ].map((g, i) => (
+                <div
+                  key={g.keys}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                    padding: "4px 10px",
+                    borderRadius: 8,
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(255,255,255,0.06)",
+                  }}
+                >
+                  <span style={{ fontSize: 12 }}>{g.icon}</span>
+                  <div style={{ display: "flex", gap: 3 }}>
+                    {g.keys.split(" ").map((k) => (
+                      <span
+                        key={k}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          minWidth: 20,
+                          height: 20,
+                          padding: "0 4px",
+                          borderRadius: 4,
+                          background:
+                            "linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04))",
+                          border: "1px solid rgba(255,255,255,0.15)",
+                          boxShadow:
+                            "0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
+                          fontSize: 8,
+                          fontWeight: 800,
+                          color: "#e2e8f0",
+                          fontFamily: "'Press Start 2P', monospace",
+                          letterSpacing: 0.5,
+                          animation: `keyBounce ${2 + i * 0.3}s ease-in-out infinite`,
+                        }}
+                      >
+                        {k}
+                      </span>
+                    ))}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: 9,
+                      color: "rgba(255,255,255,0.4)",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {g.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

@@ -324,6 +324,22 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
 .bIC{position:relative;overflow:hidden;border-radius:14px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .bIC img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .bIC:hover img{transform:scale(1.04)}
+.bpFeatGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.bpRubricFlex{display:flex;align-items:stretch;gap:32px}
+.bpCubeWrap{flex:0 0 44%;min-height:440px;display:flex;align-items:center;justify-content:center;perspective:900px;cursor:grab;user-select:none}
+.bpCubeInner{width:340px;height:340px}
+.bpNavInner{height:80px}
+.bpHeroCap{position:absolute;bottom:48px;right:40px;z-index:3}
+@media(max-width:768px){
+  .bpFeatGrid{grid-template-columns:1fr!important;gap:14px!important}
+  .bpRubricFlex{flex-direction:column!important;gap:20px!important}
+  .bpCubeWrap{flex:none!important;min-height:280px!important;perspective:600px!important}
+  .bpCubeInner{width:220px!important;height:220px!important}
+  .bpNavInner{height:56px!important}
+  .bpHeroCap{bottom:48px!important;right:12px!important;left:12px!important}
+  .bSec{padding:40px 16px!important}
+  .bp .bCard{padding:20px 16px!important}
+}
       `}</style>
       {/* NAV */}
       <nav
@@ -339,11 +355,11 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
         }}
       >
         <div
+          className="bpNavInner"
           style={{
             maxWidth: 1280,
             margin: "0 auto",
             padding: "0 clamp(20px,3vw,40px)",
-            height: 80,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -583,7 +599,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
         )}
 
         {/* Caption bar */}
-        <div style={{ position: "absolute", bottom: 48, right: 40, zIndex: 3 }}>
+        <div className="bpHeroCap">
           <div
             style={{
               background: "rgba(255,255,255,.12)",
@@ -616,13 +632,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
           zIndex: 5,
         }}
       >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3,1fr)",
-            gap: 20,
-          }}
-        >
+        <div className="bpFeatGrid">
           {[
             {
               icon: "🎓",
@@ -769,13 +779,11 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
         }}
       >
         <div
+          className="bpRubricFlex"
           style={{
             maxWidth: 1280,
             padding: "0 clamp(20px,3vw,40px)",
             margin: "0 auto",
-            display: "flex",
-            alignItems: "stretch",
-            gap: 32,
           }}
         >
           {/* Left — 3D Rotating Cube */}
@@ -816,22 +824,12 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
             onMouseLeave={() => {
               dragRef.current.dragging = false;
             }}
-            style={{
-              flex: "0 0 44%",
-              minHeight: 440,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              perspective: 900,
-              cursor: "grab",
-              userSelect: "none",
-            }}
+            className="bpCubeWrap"
           >
             <div
               ref={cubeRef}
+              className="bpCubeInner"
               style={{
-                width: 340,
-                height: 340,
                 position: "relative",
                 transformStyle: "preserve-3d",
                 animation: cubePaused
