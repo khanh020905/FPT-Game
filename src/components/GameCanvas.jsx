@@ -1120,7 +1120,7 @@ export default function GameCanvas() {
                 onClick={() => {
                   sfxClick();
                   window.open(
-                    "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
+                    "https://forms.gle/2nKggwsSVJrHCrAd6",
                     "_blank",
                   );
                 }}
@@ -1226,7 +1226,7 @@ export default function GameCanvas() {
               <div
                 onClick={() => {
                   window.open(
-                    "https://docs.google.com/spreadsheets/d/1Yuqpb33FFQ5kl1XZESlmUFgOtFrpuxhok1uUQ75IMd4/edit?usp=sharing",
+                    "https://forms.gle/2nKggwsSVJrHCrAd6",
                     "_blank",
                   );
                 }}
