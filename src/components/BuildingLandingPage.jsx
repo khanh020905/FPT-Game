@@ -10,16 +10,16 @@ const IMGS = {
       cap: "Toà Alpha — FPT University Đà Nẵng",
     },
     {
-      url: "/alpha-luk-team.jpg",
-      cap: "Sinh viên LUK Global — 21st Century Education",
+      url: "/alphahalloween.jpg",
+      cap: "Spooky Scene — Alpha Building Event 👻🎃",
     },
-    { url: "/alpha-luk-activity.jpg", cap: "Hoạt động tương tác LUK Global" },
+    { url: "/alpha_workshop.jpg", cap: "Hoạt động Workshop tại Alpha Building" },
     {
-      url: "/alpha-luk-music.jpg",
-      cap: "Sinh viên biểu diễn âm nhạc tại LUK Global",
+      url: "/Alpha-Phong-hoc-1.jpg",
+      cap: "Phòng học tại tòa Alpha",
     },
     {
-      url: "/alpha-luk-foreign-teacher.jpg",
+      url: "/alpha-foreign-teach.jpg",
       cap: "Học tiếng Anh với giảng viên nước ngoài",
     },
     {
