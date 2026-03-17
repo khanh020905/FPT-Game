@@ -269,7 +269,7 @@ export const BUILDING_DATA = {
       },
       {
         icon: "🎤",
-        title: "Sân Khấu 1000+",
+        title: "Sân Khấu 200-300 chỗ ngồi",
         desc: "Tổ chức concert, đại nhạc hội hoành tráng",
       },
       {
@@ -576,7 +576,7 @@ export const BUILDING_DATA = {
         },
       },
       highlights: [
-        "100% sinh viên năm nhất học LUK Global",
+        "Phần lớn sinh viên năm nhất yếu tiếng Anh học LUK Global",
         "Giáo viên bản ngữ từ Anh, Mỹ, Úc",
         "Thi IELTS miễn phí sau khi hoàn thành",
         "Tầng 5 Gamma Tower — Không gian học hiện đại",
@@ -799,7 +799,7 @@ export const BUILDING_DATA = {
       },
       {
         icon: "💰",
-        stat: "500K",
+        stat: "1,100,000",
         label: "VNĐ/tháng",
         desc: "Phí KTX siêu hợp lý",
       },
@@ -885,12 +885,12 @@ export const BUILDING_DATA = {
       {
         icon: "🔒",
         title: "An Ninh 24/7",
-        desc: "Camera giám sát, bảo vệ, quẹt thẻ ra vào",
+        desc: "Camera giám sát, bảo vệ",
       },
       {
-        icon: "👕",
-        title: "Giặt Ủi Tự Động",
-        desc: "Máy giặt công nghiệp tự phục vụ, sấy khô",
+        icon: "🌳",
+        title: "Môi trường",
+        desc: "Không gian xanh, sạch, thoáng, gần trường",
       },
       {
         icon: "🏋️",
@@ -903,7 +903,7 @@ export const BUILDING_DATA = {
       "Phí KTX chỉ từ 4,300,000đ/3 tháng — rẻ nhất Đà Nẵng",
       "WiFi speed trung bình 100Mbps — đủ streaming 4K",
       "KTX có phòng gym miễn phí với nhiều dụng cụ thể thao",
-      "Mỗi tầng KTX có khu bếp chung để sinh viên tự nấu ăn",
+      "Nấu ăn trong KTX sẽ bị phạt 500,000",
     ],
   },
 
