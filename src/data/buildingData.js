@@ -117,16 +117,16 @@ export const BUILDING_DATA = {
         "Sau khi hoàn thành LUK Global (Level 1-4) tại Toà Gamma, sinh viên năm nhất tiếp tục học English Level 5 & 6 tại Toà Alpha — hoàn toàn với giảng viên bản ngữ đến từ Anh, Mỹ, Úc, Canada.",
       levels: [
         {
-          name: "Level 5 — Typhoon",
+          name: "Level 5 — Summit 1",
           level: 5,
           color: "#f37021",
-          desc: "Speaking & Debate — Thuyết trình, tranh luận và phản biện bằng tiếng Anh",
+          desc: "Phát triển các kỹ năng nghe, nói, đọc, viết cơ bản và làm quen với giao tiếp tiếng Anh trong môi trường học tập.",
         },
         {
-          name: "Level 6 — Volcano",
+          name: "Level 6 — Summit 2",
           level: 6,
           color: "#dc2626",
-          desc: "Academic Writing & Research — Viết luận học thuật, nghiên cứu khoa học",
+          desc: "Cải thiện khả năng giao tiếp, thuyết trình và sử dụng tiếng Anh trong học tập và làm việc nhóm.",
         },
       ],
       teachers: [
