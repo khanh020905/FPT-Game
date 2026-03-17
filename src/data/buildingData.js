@@ -900,7 +900,7 @@ export const BUILDING_DATA = {
     ],
     funFacts: [
       "KTX A có sức chứa hơn 800 sinh viên — luôn full mỗi kỳ",
-      "Phí KTX chỉ từ 500,000đ/tháng — rẻ nhất Đà Nẵng",
+      "Phí KTX chỉ từ 4,300,000đ/3 tháng — rẻ nhất Đà Nẵng",
       "WiFi speed trung bình 100Mbps — đủ streaming 4K",
       "KTX có phòng gym miễn phí với nhiều dụng cụ thể thao",
       "Mỗi tầng KTX có khu bếp chung để sinh viên tự nấu ăn",
