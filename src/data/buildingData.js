@@ -689,7 +689,7 @@ export const BUILDING_DATA = {
       },
       {
         icon: "💰",
-        stat: "15K-35K",
+        stat: "25-40K",
         label: "Giá/suất",
         desc: "Giá sinh viên cực kỳ hợp lý",
       },
@@ -747,7 +747,7 @@ export const BUILDING_DATA = {
       {
         icon: "💰",
         title: "Giá Sinh Viên",
-        desc: "Cơm 15-25K, Phở/Bún 20-30K, Trà sữa 15-25K",
+        desc: "Cơm 25-35K, Phở/Bún 30-35K, Trà sữa 20-25K",
       },
       {
         icon: "🧋",
@@ -757,7 +757,7 @@ export const BUILDING_DATA = {
       {
         icon: "🤝",
         title: "Networking Zone",
-        desc: "Khu vực giao lưu rộng 200m² cho CLB & nhóm project",
+        desc: "Khu vực giao lưu rộng cho CLB & nhóm project",
       },
       {
         icon: "❄️",
@@ -767,15 +767,15 @@ export const BUILDING_DATA = {
       {
         icon: "📶",
         title: "WiFi Miễn Phí",
-        desc: "Kết nối internet tốc độ cao tại mọi khu vực",
+        desc: "Kết nối internet tốc độ cao tại mọi khu vực.",
       },
     ],
     funFacts: [
-      "Món phổ biến nhất: Cơm gà xối mỡ — chỉ 25,000đ",
-      "Sinh viên FPT uống trung bình 2 ly trà sữa mỗi tuần",
-      "Cantin 3 tầng rộng hơn 2000m² — lớn nhất khu vực FPT City",
-      "Giờ cao điểm trưa có hơn 1500 sinh viên ăn cùng lúc",
-      "Tầng 3 cantin có khu vực riêng cho CLB họp và sinh hoạt",
+      "Căn tin là nơi dễ gặp bạn bè nhất… kể cả khi bạn không muốn 😆",
+      "Trà sữa là đồ uống rất phổ biến với sinh viên FPT",
+      "80% câu chuyện sinh viên bắt đầu từ: “Ăn gì không?”",
+      "Giờ trưa: tìm được chỗ ngồi còn khó hơn chọn món ăn",
+      "Ngoài ăn uống, căn tin còn là nơi học nhóm phổ biến",
     ],
   },
 
@@ -793,7 +793,7 @@ export const BUILDING_DATA = {
     welcomeHighlights: [
       {
         icon: "🛏️",
-        stat: "800+",
+        stat: "500+",
         label: "Sinh viên",
         desc: "Sức chứa KTX A toàn bộ",
       },
@@ -1006,7 +1006,7 @@ export const BUILDING_DATA = {
       },
       {
         icon: "🏋️",
-        title: "Khu Thể Thao Đa Năng",
+        title: "Khu Thể Thao Đà Năng",
         desc: "Bóng rổ, cầu lông, xà đơn, xà kép, thiết bị gym",
       },
       {
@@ -1023,9 +1023,9 @@ export const BUILDING_DATA = {
     funFacts: [
       "KTX B gần sân bóng đá nhất — chỉ 30 giây đi bộ",
       "Sân bóng cỏ nhân tạo 1500m² có hệ thống chiếu sáng đêm",
-      "Sinh viên KTX B thường dậy sớm hơn 30 phút để tập thể dục",
-      "Study Room tầng 1 có sinh viên học đến 2-3 giờ sáng mỗi mùa thi",
-      "Phòng tập gym miễn phí với xoay eo, xà đơn, đi bộ trên không",
+      "Ai ở ktx cũng từng có ý định tập thể dục… ít nhất là 1 lần",
+      "Mùa thi: đèn phòng học sáng hơn cả tương lai của bạn",
+      "Wifi mạnh nhất vào lúc bạn không cần, yếu nhất khi đang nộp bài",
     ],
   },
 
@@ -1171,7 +1171,7 @@ export const BUILDING_DATA = {
     welcomeHighlights: [
       {
         icon: "🎪",
-        stat: "10,000m²",
+        stat: "~1,500m²",
         label: "Diện tích",
         desc: "Sân sự kiện lớn nhất campus",
       },
@@ -1284,7 +1284,7 @@ export const BUILDING_DATA = {
       {
         icon: "🏮",
         title: "Hội Làng FPT",
-        desc: "Lễ hội truyền thống lớn nhất",
+        desc: "Lễ hội truyền thống lớn",
       },
       {
         icon: "🥋",
