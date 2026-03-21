@@ -2112,7 +2112,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                     marginBottom: 6,
                   }}
                 >
-                  100% Sinh Viên Năm Nhất Học LUK Global
+                  Phần lớn Sinh Viên Năm Nhất Học LUK Global
                 </h3>
                 <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.7 }}>
                   Chương trình tiếng Anh bắt buộc giúp sinh viên FPT tự tin giao
@@ -3456,7 +3456,6 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   marginBottom: 8,
                 }}
               >
-                Đàn Tỳ Bà &{" "}
                 <span style={{ color: "#d97706" }}>Nhạc Cụ Truyền Thống</span>
               </h2>
               <div
