@@ -325,14 +325,16 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
 .bIC{position:relative;overflow:hidden;border-radius:14px;border:1px solid rgba(0,0,0,.06);box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .bIC img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .bIC:hover img{transform:scale(1.04)}
-.bpFeatGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.bpFeatGrid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.bpFeatGrid>div{width:calc(33.33% - 14px);box-sizing:border-box}
 .bpRubricFlex{display:flex;align-items:stretch;gap:32px}
 .bpCubeWrap{flex:0 0 44%;min-height:440px;display:flex;align-items:center;justify-content:center;perspective:900px;cursor:grab;user-select:none}
 .bpCubeInner{width:340px;height:340px}
 .bpNavInner{height:80px}
 .bpHeroCap{position:absolute;bottom:48px;right:40px;z-index:3}
 @media(max-width:768px){
-  .bpFeatGrid{grid-template-columns:1fr!important;gap:14px!important}
+  .bpFeatGrid{flex-direction:column!important;gap:14px!important}
+  .bpFeatGrid>div{width:100%!important}
   .bpRubricFlex{flex-direction:column!important;gap:20px!important}
   .bpCubeWrap{flex:none!important;min-height:280px!important;perspective:600px!important}
   .bpCubeInner{width:220px!important;height:220px!important}
@@ -1096,8 +1098,9 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
             style={{
               maxWidth: 1280,
               margin: "0 auto",
-              display: "grid",
-              gridTemplateColumns: "repeat(4,1fr)",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
               gap: 14,
             }}
           >
@@ -1106,7 +1109,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                 key={i}
                 className="bCard bReveal"
                 data-delay={i + 1}
-                style={{ padding: "24px 18px", textAlign: "center" }}
+                style={{ padding: "24px 18px", textAlign: "center", width: "calc(25% - 11px)", boxSizing: "border-box" }}
               >
                 <div
                   style={{
@@ -1444,8 +1447,9 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
             </h3>
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4,1fr)",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
                 gap: 12,
                 marginBottom: 36,
               }}
@@ -1457,6 +1461,8 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   style={{
                     textAlign: "center",
                     padding: "28px 14px",
+                    width: "calc(25% - 9px)",
+                    boxSizing: "border-box",
                     animationDelay: `${i * 0.1}s`,
                   }}
                 >
@@ -2028,7 +2034,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                 {b.events.summerInterfest.description}
               </p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center",  gap: 16 }}>
               {b.events.summerInterfest.activities.map((a, i) => (
                 <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "28px 20px", textAlign: "center", borderTop: `4px solid ${ac}` }}>
                   <div style={{ fontSize: 36, marginBottom: 12 }}>{a.emoji}</div>
@@ -2058,7 +2064,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
               {b.events.hoiLang.activities.map((a, i) => (
-                <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "24px 20px", display: "flex", alignItems: "flex-start", gap: 16, borderLeft: `4px solid ${"#e11d48"}` }}>
+                <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "24px 20px", display: "flex", alignItems: "flex-start", gap: 16, width: "calc(50% - 8px)", boxSizing: "border-box", borderLeft: `4px solid ${"#e11d48"}` }}>
                   <div style={{ width: 48, height: 48, borderRadius: 14, background: "rgba(225,29,72,.08)", border: "1px solid rgba(225,29,72,.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, flexShrink: 0 }}>
                     {a.emoji}
                   </div>
@@ -2088,9 +2094,9 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                 {b.events.description}
               </p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center",  gap: 16 }}>
               {b.events.upcomingEvents.filter(e => !e.name.includes("SUMMER") && !e.name.includes("HỘI LÀNG")).map((ev, i) => (
-                <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "28px 20px", borderTop: `4px solid ${ev.color}`, background: `linear-gradient(180deg,${ev.color}06,rgba(255,255,255,.95))` }}>
+                <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "28px 20px", borderTop: `4px solid ${ev.color}`, width: "calc(33.33% - 11px)", boxSizing: "border-box", background: `linear-gradient(180deg,${ev.color}06,rgba(255,255,255,.95))` }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                     <div style={{ width: 44, height: 44, borderRadius: 12, background: `${ev.color}12`, border: `2px solid ${ev.color}25`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>
                       {ev.emoji}
@@ -2105,9 +2111,9 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
               ))}
             </div>
             {b.events.highlights && (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 32 }}>
+              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 10, marginTop: 32 }}>
                 {b.events.highlights.map((h, i) => (
-                  <div key={i} className="bCard" style={{ padding: "14px 18px", display: "flex", alignItems: "center", gap: 12 }}>
+                  <div key={i} className="bCard" style={{ padding: "14px 18px", display: "flex", alignItems: "center", gap: 12, width: "calc(50% - 5px)", boxSizing: "border-box" }}>
                     <div style={{ width: 28, height: 28, borderRadius: 8, background: P.light, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                       <span style={{ color: ac, fontSize: 13, fontWeight: 900 }}>✓</span>
                     </div>
@@ -2388,8 +2394,9 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
             </h3>
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(4,1fr)",
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
                 gap: 12,
                 marginBottom: 36,
               }}
@@ -3908,7 +3915,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(4,1fr)",
+                
                 gap: 12,
                 marginBottom: 28,
               }}
@@ -4488,8 +4495,9 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
           </h3>
           <div
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
               gap: 12,
             }}
           >
@@ -4503,6 +4511,8 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   display: "flex",
                   alignItems: "center",
                   gap: 14,
+                  width: "calc(25% - 9px)",
+                  boxSizing: "border-box",
                   borderLeft: `3px solid ${ac}50`,
                 }}
               >
