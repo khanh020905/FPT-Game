@@ -132,16 +132,16 @@ const IMGS = {
   ],
   "event-yard": [
     {
-      url: "/event_yard_vovinam.png",
-      cap: "Giải vô địch VOVINAM sinh viên FPT",
+      url: "/new-img/event_interfest.png",
+      cap: "Summer Interfest — Ngày hội giao lưu văn hóa quốc tế",
     },
     {
-      url: "/event_yard_campus.png",
-      cap: "Khuôn viên Sân Sự Kiện rộng lớn",
+      url: "/new-img/event_hoilang.png",
+      cap: "Hội Làng FPT — Lễ hội truyền thống dịp Tết cổ truyền",
     },
     {
-      url: "/event_yard_music.png",
-      cap: "Đại Nhạc Hội FPT & Hội Làng hoành tráng",
+      url: "/new-img/event_musicfest.png",
+      cap: "Music Fest — Đại nhạc hội với nghệ sĩ nổi tiếng",
     },
   ],
 };
