@@ -673,14 +673,14 @@ export default function FPTLandingPage({ onClose }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                gridTemplateColumns: "repeat(2, 1fr)",
                 gap: 16,
               }}
             >
               {[
                 {
                   title: "Tuần 1 & 2",
-                  img: "/hurricane-week1-2.png",
+                  img: "/hurricane-week1-2.jpg",
                   color: "#3b82f6",
                   items: [
                     "Sinh viên làm quen với các rule của LUK",
@@ -703,7 +703,7 @@ export default function FPTLandingPage({ onClose }) {
                 },
                 {
                   title: "Tuần 5",
-                  img: "/hurricane-week5.png",
+                  img: "/hurricane-week5.jpg",
                   color: "#f59e0b",
                   items: [
                     "Đổi team mới",
@@ -957,7 +957,7 @@ export default function FPTLandingPage({ onClose }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                gridTemplateColumns: "repeat(2, 1fr)",
                 gap: 16,
               }}
             >
@@ -1266,7 +1266,7 @@ export default function FPTLandingPage({ onClose }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                gridTemplateColumns: "repeat(2, 1fr)",
                 gap: 16,
               }}
             >
@@ -1316,7 +1316,7 @@ export default function FPTLandingPage({ onClose }) {
                 },
                 {
                   title: "Cách Đánh Giá Điểm Số",
-                  img: "/heatwave-scoring.png",
+                  img: "/heatwave-scoring.jpg",
                   color: "#16a34a",
                   items: [
                     "Presentation: 20-30%",
@@ -1559,14 +1559,14 @@ export default function FPTLandingPage({ onClose }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                gridTemplateColumns: "repeat(2, 1fr)",
                 gap: 16,
               }}
             >
               {[
                 {
                   title: "Thuyết Trình News",
-                  img: "/thunderbolt-news.png",
+                  img: "/thunderbolt-news.jpg",
                   color: "#7c3aed",
                   items: [
                     "Viết news theo chủ đề debate",
@@ -1587,7 +1587,7 @@ export default function FPTLandingPage({ onClose }) {
                 },
                 {
                   title: "Debate — Giải Quyết Vấn Đề",
-                  img: "/thunderbolt-solution.png",
+                  img: "/thunderbolt-solution.jpg",
                   color: "#ea580c",
                   items: [
                     "Debate 5: Solution for MOOCs and the Future of Learning",
@@ -1601,7 +1601,7 @@ export default function FPTLandingPage({ onClose }) {
                 },
                 {
                   title: "Cấu Trúc Debate",
-                  img: "/thunderbolt-structure.png",
+                  img: "/thunderbolt-structure.jpg",
                   color: "#0891b2",
                   items: [
                     "Debate bình thường: 4 Speaker, 5-6 QsA",
@@ -2067,7 +2067,7 @@ export default function FPTLandingPage({ onClose }) {
             {[
               { n: "2014", l: "Năm bắt đầu" },
               { n: "46", l: "Giảng viên" },
-              { n: "8", l: "Loại nhạc cụ" },
+              { n: "5", l: "Loại nhạc cụ" },
               { n: "62%", l: "SV tham gia" },
             ].map((s) => (
               <div key={s.l} style={{ textAlign: "center" }}>

@@ -72,30 +72,30 @@ const IMGS = {
   ],
   canteen: [
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2023/03/Dai-hoc-FPT-Da-Nang.jpg",
-      cap: "Cantin FPT University — Khu ẩm thực sinh viên",
+      url: "/new-img/cantin.png",
+      cap: "Căn tin FPT Đà Nẵng — Không gian rộng rãi, ghế màu sắc",
     },
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/campus-dn-1-scaled.jpg",
-      cap: "Toàn cảnh campus từ trên cao — Cantin gần hồ nước",
+      url: "/new-img/cantin_aerial.png",
+      cap: "Toàn cảnh campus FPT — Căn tin 3 tầng",
     },
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/01/sinh-vien-fpt-dn.jpg",
-      cap: "Sinh viên FPT giao lưu tại khu vực Cantin",
+      url: "/new-img/cantin_lunch.png",
+      cap: "Tầng 2-3 — Khu vực ăn trưa & ăn vặt sôi động",
     },
     {
-      url: "https://daihoc.fpt.edu.vn/wp-content/uploads/2024/06/campus-da-nang-3.jpg",
-      cap: "Không gian xanh quanh khu Cantin",
+      url: "/new-img/cantin_students.png",
+      cap: "Sinh viên FPT giao lưu tại căn tin",
     },
   ],
   "dorm-a": [
     {
-      url: "/dorm_building.png",
-      cap: "Ký Túc Xá FPT University — Thiết kế hiện đại",
+      url: "/new-img/dorm.png",
+      cap: "Phòng KTX A — Giường tầng, bàn học, tiện nghi đầy đủ",
     },
     {
-      url: "/dorm_room_interior.png",
-      cap: "Phòng KTX ấm cúng — bàn học, giường tầng",
+      url: "/dorm_building.png",
+      cap: "Ký Túc Xá FPT University — Thiết kế hiện đại",
     },
     {
       url: "/dorm_campus_aerial.png",
@@ -108,20 +108,20 @@ const IMGS = {
   ],
   "dorm-b": [
     {
+      url: "/new-img/dorm.png",
+      cap: "Phòng KTX B — Giường tầng 1930x900mm, bàn học đầy đủ",
+    },
+    {
       url: "/dorm_building.png",
-      cap: "KTX B — Khu vực yên tĩnh gần sân thể thao",
+      cap: "KTX B — Gần khu thể thao campus",
     },
     {
       url: "/dorm_campus_aerial.png",
       cap: "Khuôn viên FPT University từ trên cao",
     },
     {
-      url: "/dorm_room_interior.png",
-      cap: "Phòng ở tiện nghi cho sinh viên",
-    },
-    {
       url: "/dorm_student_life.png",
-      cap: "Sinh viên FPT giao lưu tại KTX",
+      cap: "Sinh viên FPT tại KTX",
     },
   ],
   "main-gate": [
@@ -1552,8 +1552,8 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
           </div>
         </section>
       )}
-      {/* ═══ ALPHA: EVENTS & WORKSHOPS ═══ */}
-      {isA && b.events && (
+      {/* ═══ ALPHA: DEPARTMENTS ═══ */}
+      {isA && b.departments && (
         <section
           style={{
             background: "rgba(255,255,255,.4)",
@@ -1571,7 +1571,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   marginBottom: 16,
                 }}
               >
-                🏮 HỘI LÀNG & ĐẠI NHẠC HỘI
+                🏛️ CÁC PHÒNG BAN HÀNH CHÍNH
               </div>
               <h2
                 style={{
@@ -1581,7 +1581,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   marginBottom: 8,
                 }}
               >
-                Hội Làng FPT & <span style={{ color: ac }}>Đại Nhạc Hội</span>
+                Phòng Ban Tại <span style={{ color: ac }}>Toà Alpha</span>
               </h2>
               <div className="bDiv" />
               <p
@@ -1593,209 +1593,247 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   lineHeight: 1.8,
                 }}
               >
-                {b.events.description}
+                {b.departments.description}
               </p>
             </div>
 
-            {b.events.hoiLang && (
-              <div
-                style={{
-                  background:
-                    "linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,247,237,.8))",
-                  border: `2px solid ${ac}20`,
-                  borderRadius: 20,
-                  padding: "36px 32px",
-                  marginBottom: 36,
-                  position: "relative",
-                  overflow: "hidden",
-                  animation: "bGlow 3s ease infinite",
-                }}
-              >
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -30,
-                    right: -30,
-                    width: 140,
-                    height: 140,
-                    borderRadius: "50%",
-                    background: `${ac}06`,
-                  }}
-                />
-                <div style={{ position: "relative", zIndex: 1 }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 16,
-                      marginBottom: 16,
-                      flexWrap: "wrap",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: 48,
-                        animation: "bFl 3s ease-in-out infinite",
-                        filter: `drop-shadow(0 4px 12px ${ac}30)`,
-                      }}
-                    >
-                      🏮
-                    </div>
-                    <div>
-                      <div
-                        className="bBdg"
-                        style={{
-                          background: ac,
-                          color: "#fff",
-                          marginBottom: 8,
-                          fontWeight: 800,
-                        }}
-                      >
-                        ★ SỰ KIỆN LỚN NHẤT NĂM
-                      </div>
-                      <h3
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 900,
-                          color: "#0f172a",
-                        }}
-                      >
-                        Hội Làng FPT — Lễ Hội Huyền Thoại
-                      </h3>
-                    </div>
-                  </div>
-                  <p
-                    style={{
-                      fontSize: 13,
-                      color: "#475569",
-                      lineHeight: 1.8,
-                      marginBottom: 20,
-                    }}
-                  >
-                    {b.events.hoiLang.description}
-                  </p>
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(3,1fr)",
-                      gap: 10,
-                    }}
-                  >
-                    {b.events.hoiLang.activities.map((a, i) => (
-                      <div
-                        key={a.name}
-                        className="bCard bF"
-                        style={{
-                          textAlign: "center",
-                          padding: "16px 12px",
-                          animationDelay: `${i * 0.08}s`,
-                        }}
-                      >
-                        <div style={{ fontSize: 28, marginBottom: 6 }}>
-                          {a.emoji}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 12,
-                            fontWeight: 700,
-                            color: "#0f172a",
-                            marginBottom: 3,
-                          }}
-                        >
-                          {a.name}
-                        </div>
-                        <div
-                          style={{
-                            fontSize: 10,
-                            color: "#64748b",
-                            lineHeight: 1.4,
-                          }}
-                        >
-                          {a.desc}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <h3
-              style={{
-                fontSize: 16,
-                fontWeight: 700,
-                color: "#0f172a",
-                marginBottom: 16,
-                textAlign: "center",
-              }}
-            >
-              🎤 Sự Kiện & Ca Sĩ Nổi Tiếng
-            </h3>
+            {/* Department Cards */}
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
-                gap: 14,
+                gap: 20,
                 marginBottom: 36,
               }}
             >
-              {b.events.upcomingEvents.map((ev, i) => (
+              {b.departments.list.map((dept, i) => (
                 <div
-                  key={ev.name}
+                  key={dept.name}
                   className="bCard bF"
                   style={{
-                    padding: "20px 18px",
-                    borderLeft: `4px solid ${ev.color}`,
-                    animationDelay: `${i * 0.1}s`,
-                    display: "flex",
-                    gap: 14,
-                    alignItems: "flex-start",
+                    padding: 0,
+                    overflow: "hidden",
+                    borderTop: `4px solid ${dept.color}`,
+                    animationDelay: `${i * 0.12}s`,
+                    cursor: "default",
+                    transition: "all .3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                    e.currentTarget.style.boxShadow = `0 12px 32px ${dept.color}20`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "";
                   }}
                 >
+                  {/* Department Image */}
                   <div
                     style={{
-                      width: 44,
-                      height: 44,
-                      borderRadius: 12,
-                      background: `${ev.color}10`,
-                      border: `1.5px solid ${ev.color}20`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontSize: 22,
-                      flexShrink: 0,
+                      width: "100%",
+                      height: 160,
+                      overflow: "hidden",
+                      position: "relative",
                     }}
                   >
-                    {ev.emoji}
+                    <img
+                      src={dept.img}
+                      alt={dept.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        transition: "transform .5s ease",
+                      }}
+                      onMouseOver={(e) =>
+                        (e.target.style.transform = "scale(1.08)")
+                      }
+                      onMouseOut={(e) =>
+                        (e.target.style.transform = "scale(1)")
+                      }
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.parentElement.style.background = `linear-gradient(135deg, ${dept.color}15, ${dept.color}05)`;
+                        e.target.parentElement.style.display = "flex";
+                        e.target.parentElement.style.alignItems = "center";
+                        e.target.parentElement.style.justifyContent = "center";
+                        e.target.parentElement.innerHTML = `<span style="font-size:48px">${dept.emoji}</span>`;
+                      }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 12,
+                        left: 12,
+                        zIndex: 2,
+                      }}
+                    >
+                      <span
+                        style={{
+                          padding: "4px 12px",
+                          borderRadius: 100,
+                          background: "rgba(255,255,255,.92)",
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: dept.color,
+                          letterSpacing: 0.5,
+                          backdropFilter: "blur(8px)",
+                        }}
+                      >
+                        {dept.emoji} {dept.name}
+                      </span>
+                    </div>
                   </div>
-                  <div style={{ flex: 1 }}>
+
+                  {/* Department Content */}
+                  <div style={{ padding: "20px 22px" }}>
                     <div
                       style={{
-                        fontSize: 13,
-                        fontWeight: 700,
-                        color: "#0f172a",
-                        marginBottom: 3,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        marginBottom: 10,
                       }}
                     >
-                      {ev.name}
+                      <div
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 12,
+                          background: `${dept.color}10`,
+                          border: `2px solid ${dept.color}20`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 20,
+                          flexShrink: 0,
+                        }}
+                      >
+                        {dept.emoji}
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            fontSize: 16,
+                            fontWeight: 800,
+                            color: "#0f172a",
+                          }}
+                        >
+                          {dept.name}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            color: dept.color,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {dept.shortDesc}
+                        </div>
+                      </div>
                     </div>
+                    <p
+                      style={{
+                        fontSize: 12,
+                        color: "#475569",
+                        lineHeight: 1.7,
+                        marginBottom: 14,
+                      }}
+                    >
+                      {dept.description}
+                    </p>
+
+                    {/* Services */}
+                    <div style={{ marginBottom: 14 }}>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          fontWeight: 700,
+                          color: "#0f172a",
+                          marginBottom: 8,
+                          textTransform: "uppercase",
+                          letterSpacing: 0.5,
+                        }}
+                      >
+                        📋 Dịch vụ chính
+                      </div>
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr",
+                          gap: 4,
+                        }}
+                      >
+                        {dept.services.slice(0, 4).map((s, si) => (
+                          <div
+                            key={si}
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 6,
+                              fontSize: 11,
+                              color: "#64748b",
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            <span
+                              style={{
+                                color: dept.color,
+                                fontWeight: 700,
+                                flexShrink: 0,
+                                marginTop: 1,
+                              }}
+                            >
+                              ✓
+                            </span>
+                            {s}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Contact Info */}
                     <div
                       style={{
-                        fontSize: 11,
-                        color: ev.color,
-                        fontWeight: 600,
-                        marginBottom: 3,
+                        padding: "10px 14px",
+                        background: `${dept.color}06`,
+                        borderRadius: 10,
+                        border: `1px solid ${dept.color}12`,
                       }}
                     >
-                      📅 {ev.date}
-                    </div>
-                    <div style={{ fontSize: 11, color: "#64748b" }}>
-                      {ev.speaker}
+                      <div
+                        style={{
+                          fontSize: 10,
+                          color: "#64748b",
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        <div>
+                          📍{" "}
+                          <strong style={{ color: "#475569" }}>
+                            {dept.contact.location}
+                          </strong>
+                        </div>
+                        <div>
+                          🕐{" "}
+                          <strong style={{ color: "#475569" }}>
+                            {dept.contact.hours}
+                          </strong>
+                        </div>
+                        <div>
+                          📞{" "}
+                          <strong style={{ color: "#475569" }}>
+                            {dept.contact.phone}
+                          </strong>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+
+            {/* Highlights */}
             <div
               style={{
                 display: "grid",
@@ -1803,7 +1841,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                 gap: 10,
               }}
             >
-              {b.events.highlights.map((h, i) => (
+              {b.departments.highlights.map((h, i) => (
                 <div
                   key={i}
                   className="bCard"
@@ -2243,14 +2281,14 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                  gridTemplateColumns: "repeat(2, 1fr)",
                   gap: 16,
                 }}
               >
                 {[
                   {
                     title: "Tuần 1 & 2",
-                    img: "/hurricane-week1-2.png",
+                    img: "/hurricane-week1-2.jpg",
                     color: "#3b82f6",
                     items: [
                       "Sinh viên làm quen với các rule của LUK",
@@ -2273,7 +2311,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   },
                   {
                     title: "Tuần 5",
-                    img: "/hurricane-week5.png",
+                    img: "/hurricane-week5.jpg",
                     color: "#f59e0b",
                     items: [
                       "Đổi team mới",
@@ -2529,7 +2567,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                  gridTemplateColumns: "repeat(2, 1fr)",
                   gap: 16,
                 }}
               >
@@ -2848,7 +2886,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                  gridTemplateColumns: "repeat(2, 1fr)",
                   gap: 16,
                 }}
               >
@@ -2898,7 +2936,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   },
                   {
                     title: "Cách Đánh Giá Điểm Số",
-                    img: "/heatwave-scoring.png",
+                    img: "/heatwave-scoring.jpg",
                     color: "#16a34a",
                     items: [
                       "Presentation: 20-30%",
@@ -3143,14 +3181,14 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                  gridTemplateColumns: "repeat(2, 1fr)",
                   gap: 16,
                 }}
               >
                 {[
                   {
                     title: "Thuyết Trình News",
-                    img: "/thunderbolt-news.png",
+                    img: "/thunderbolt-news.jpg",
                     color: "#7c3aed",
                     items: [
                       "Viết news theo chủ đề debate",
@@ -3171,7 +3209,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   },
                   {
                     title: "Debate — Giải Quyết Vấn Đề",
-                    img: "/thunderbolt-solution.png",
+                    img: "/thunderbolt-solution.jpg",
                     color: "#ea580c",
                     items: [
                       "Debate 5: Solution for MOOCs and the Future of Learning",
@@ -3185,7 +3223,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   },
                   {
                     title: "Cấu Trúc Debate",
-                    img: "/thunderbolt-structure.png",
+                    img: "/thunderbolt-structure.jpg",
                     color: "#0891b2",
                     items: [
                       "Debate bình thường: 4 Speaker, 5-6 QsA",
@@ -3626,7 +3664,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
               {[
                 { n: "2014", l: "Năm bắt đầu", c: "#ea580c" },
                 { n: "46", l: "Giảng viên", c: "#d97706" },
-                { n: "8", l: "Loại nhạc cụ", c: "#ca8a04" },
+                { n: "5", l: "Loại nhạc cụ", c: "#ca8a04" },
                 { n: "62%", l: "SV tham gia", c: "#b45309" },
               ].map((s) => (
                 <div
@@ -3674,6 +3712,398 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   <span style={{ fontSize: 13, color: "#475569" }}>{h}</span>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+      {/* ═══ GAMMA: FACILITIES ═══ */}
+      {isG && b.facilities && (
+        <section
+          style={{
+            background: "rgba(255,255,255,.4)",
+            borderTop: "1px solid rgba(0,0,0,.04)",
+          }}
+        >
+          <div className="bSec">
+            <div style={{ textAlign: "center", marginBottom: 48 }}>
+              <div
+                className="bBdg"
+                style={{
+                  background: P.light,
+                  color: ac,
+                  border: `1px solid ${P.lightBorder}`,
+                  marginBottom: 16,
+                }}
+              >
+                🏛️ TIỆN ÍCH & PHÒNG BAN
+              </div>
+              <h2
+                style={{
+                  fontSize: "clamp(24px,4vw,36px)",
+                  fontWeight: 900,
+                  color: "#0f172a",
+                  marginBottom: 8,
+                }}
+              >
+                Tiện Ích Tại <span style={{ color: ac }}>Toà Gamma</span>
+              </h2>
+              <div className="bDiv" />
+              <p
+                style={{
+                  color: "#64748b",
+                  fontSize: 14,
+                  maxWidth: 540,
+                  margin: "0 auto",
+                  lineHeight: 1.8,
+                }}
+              >
+                {b.facilities.description}
+              </p>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr",
+                gap: 20,
+                marginBottom: 36,
+              }}
+            >
+              {b.facilities.list.map((fac, i) => (
+                <div
+                  key={fac.name}
+                  className="bCard bF"
+                  style={{
+                    padding: 0,
+                    overflow: "hidden",
+                    borderLeft: `5px solid ${fac.color}`,
+                    animationDelay: `${i * 0.12}s`,
+                    display: "flex",
+                    transition: "all .3s ease",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-3px)";
+                    e.currentTarget.style.boxShadow = `0 12px 32px ${fac.color}18`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "";
+                  }}
+                >
+                  {/* Image */}
+                  <div
+                    style={{
+                      width: 220,
+                      minHeight: 200,
+                      flexShrink: 0,
+                      overflow: "hidden",
+                      position: "relative",
+                    }}
+                  >
+                    <img
+                      src={fac.img}
+                      alt={fac.name}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        transition: "transform .5s ease",
+                      }}
+                      onMouseOver={(e) =>
+                        (e.target.style.transform = "scale(1.06)")
+                      }
+                      onMouseOut={(e) =>
+                        (e.target.style.transform = "scale(1)")
+                      }
+                      onError={(e) => {
+                        e.target.style.display = "none";
+                        e.target.parentElement.style.background = `linear-gradient(135deg, ${fac.color}15, ${fac.color}05)`;
+                        e.target.parentElement.style.display = "flex";
+                        e.target.parentElement.style.alignItems = "center";
+                        e.target.parentElement.style.justifyContent = "center";
+                        e.target.parentElement.innerHTML = `<span style="font-size:48px">${fac.emoji}</span>`;
+                      }}
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div style={{ flex: 1, padding: "22px 24px" }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 10,
+                        marginBottom: 10,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 12,
+                          background: `${fac.color}10`,
+                          border: `2px solid ${fac.color}20`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontSize: 20,
+                        }}
+                      >
+                        {fac.emoji}
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            fontSize: 16,
+                            fontWeight: 800,
+                            color: "#0f172a",
+                          }}
+                        >
+                          {fac.name}
+                        </div>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            color: fac.color,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {fac.shortDesc}
+                        </div>
+                      </div>
+                    </div>
+                    <p
+                      style={{
+                        fontSize: 12,
+                        color: "#475569",
+                        lineHeight: 1.7,
+                        marginBottom: 14,
+                      }}
+                    >
+                      {fac.description}
+                    </p>
+                    <div
+                      style={{
+                        display: "grid",
+                        gridTemplateColumns: "1fr 1fr",
+                        gap: 4,
+                      }}
+                    >
+                      {fac.services.slice(0, 6).map((s, si) => (
+                        <div
+                          key={si}
+                          style={{
+                            display: "flex",
+                            alignItems: "flex-start",
+                            gap: 6,
+                            fontSize: 11,
+                            color: "#64748b",
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          <span
+                            style={{
+                              color: fac.color,
+                              fontWeight: 700,
+                              flexShrink: 0,
+                              marginTop: 1,
+                            }}
+                          >
+                            ✓
+                          </span>
+                          {s}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      {/* ═══ GAMMA: FLOORS ═══ */}
+      {isG && b.floors && (
+        <section
+          style={{
+            borderTop: "1px solid rgba(0,0,0,.04)",
+          }}
+        >
+          <div className="bSec">
+            <div style={{ textAlign: "center", marginBottom: 48 }}>
+              <div
+                className="bBdg"
+                style={{
+                  background: P.light,
+                  color: ac,
+                  border: `1px solid ${P.lightBorder}`,
+                  marginBottom: 16,
+                }}
+              >
+                🏢 SƠ ĐỒ CÁC TẦNG
+              </div>
+              <h2
+                style={{
+                  fontSize: "clamp(24px,4vw,36px)",
+                  fontWeight: 900,
+                  color: "#0f172a",
+                  marginBottom: 8,
+                }}
+              >
+                Các Tầng <span style={{ color: ac }}>Toà Gamma</span>
+              </h2>
+              <div className="bDiv" />
+              <p
+                style={{
+                  color: "#64748b",
+                  fontSize: 14,
+                  maxWidth: 540,
+                  margin: "0 auto",
+                  lineHeight: 1.8,
+                }}
+              >
+                {b.floors.description}
+              </p>
+            </div>
+
+            {/* Floor Timeline */}
+            <div
+              style={{
+                position: "relative",
+                paddingLeft: 40,
+              }}
+            >
+              {/* Vertical line */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: 18,
+                  top: 0,
+                  bottom: 0,
+                  width: 3,
+                  background: `linear-gradient(180deg, ${ac}40, ${ac}10)`,
+                  borderRadius: 2,
+                }}
+              />
+
+              {b.floors.list
+                .slice()
+                .reverse()
+                .map((fl, i) => (
+                  <div
+                    key={fl.floor}
+                    className="bF"
+                    style={{
+                      position: "relative",
+                      marginBottom: 20,
+                      animationDelay: `${i * 0.1}s`,
+                    }}
+                  >
+                    {/* Floor number circle */}
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: -40,
+                        top: 16,
+                        width: 36,
+                        height: 36,
+                        borderRadius: "50%",
+                        background: fl.color,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#fff",
+                        fontSize: 14,
+                        fontWeight: 900,
+                        boxShadow: `0 4px 14px ${fl.color}30`,
+                        zIndex: 2,
+                      }}
+                    >
+                      {fl.floor}F
+                    </div>
+
+                    {/* Floor card */}
+                    <div
+                      className="bCard"
+                      style={{
+                        padding: "20px 24px",
+                        borderLeft: `4px solid ${fl.color}`,
+                        transition: "all .3s ease",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = "translateX(6px)";
+                        e.currentTarget.style.boxShadow = `0 6px 24px ${fl.color}15`;
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = "translateX(0)";
+                        e.currentTarget.style.boxShadow = "";
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 10,
+                          marginBottom: 8,
+                        }}
+                      >
+                        <span style={{ fontSize: 22 }}>{fl.emoji}</span>
+                        <div
+                          style={{
+                            fontSize: 15,
+                            fontWeight: 800,
+                            color: "#0f172a",
+                          }}
+                        >
+                          {fl.name}
+                        </div>
+                      </div>
+                      <p
+                        style={{
+                          fontSize: 12,
+                          color: "#475569",
+                          lineHeight: 1.7,
+                          marginBottom: 12,
+                        }}
+                      >
+                        {fl.description}
+                      </p>
+                      <div
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1fr",
+                          gap: 4,
+                        }}
+                      >
+                        {fl.highlights.map((h, hi) => (
+                          <div
+                            key={hi}
+                            style={{
+                              display: "flex",
+                              alignItems: "flex-start",
+                              gap: 6,
+                              fontSize: 11,
+                              color: "#64748b",
+                              lineHeight: 1.5,
+                            }}
+                          >
+                            <span
+                              style={{
+                                color: fl.color,
+                                fontWeight: 700,
+                                flexShrink: 0,
+                                marginTop: 1,
+                              }}
+                            >
+                              •
+                            </span>
+                            {h}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </section>
@@ -3807,7 +4237,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+              gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
               gap: 12,
             }}
           >

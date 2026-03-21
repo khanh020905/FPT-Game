@@ -35,14 +35,14 @@ export const BUILDING_DATA = {
   "alpha-tower": {
     id: "alpha-tower",
     name: "Toà Alpha",
-    subtitle: "Sự Kiện & English Level 5-6",
+    subtitle: "Phòng Ban & English Level 5-6",
     emoji: "🏫",
     heroGradient:
       "linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #3b82f6 100%)",
     accentColor: "#f37021",
-    tagline: "Workshop — Sự kiện — English với giảng viên quốc tế",
+    tagline: "Phòng Ban Hành Chính — English với giảng viên quốc tế",
     description:
-      "Toà Alpha là trung tâm sự kiện và workshop lớn nhất FPT University Đà Nẵng. Đây cũng là nơi sinh viên năm nhất học Tiếng Anh Level 5 & 6 với giảng viên nước ngoài đến từ Anh, Mỹ, Úc — trải nghiệm môi trường quốc tế ngay tại trường.",
+      "Toà Alpha là trung tâm hành chính của FPT University Đà Nẵng — nơi đặt các phòng ban quan trọng như Phòng Đào Tạo, Phòng Y Tế, Phòng Dịch Vụ Sinh Viên và Phòng Tuyển Sinh. Đây cũng là nơi sinh viên năm nhất học Tiếng Anh Level 5 & 6 với giảng viên nước ngoài đến từ Anh, Mỹ, Úc.",
     dailySchedule: [
       {
         time: "06:30",
@@ -162,105 +162,114 @@ export const BUILDING_DATA = {
         "Chứng chỉ FPT English Certificate được doanh nghiệp công nhận",
       ],
     },
-    events: {
-      title: "Hội Làng FPT & Đại Nhạc Hội",
+    departments: {
+      title: "Các Phòng Ban Tại Toà Alpha",
       description:
-        "Toà Alpha là trái tim sự kiện của FPT University Đà Nẵng — nơi tổ chức Hội Làng FPT huyền thoại, các đại nhạc hội có ca sĩ nổi tiếng hàng đầu Việt Nam biểu diễn, và những sự kiện hoành tráng nhất.",
-      upcomingEvents: [
+        "Toà Alpha là trung tâm hành chính quan trọng nhất của FPT University Đà Nẵng — nơi đặt các phòng ban phục vụ sinh viên từ tuyển sinh, đào tạo, y tế đến dịch vụ sinh viên. Mọi thủ tục và hỗ trợ đều được giải quyết nhanh chóng và chuyên nghiệp tại đây.",
+      list: [
         {
-          name: "🏮 HỘI LÀNG FPT 2026",
-          date: "Tháng 4 hàng năm",
-          speaker: "Lễ hội văn hóa lớn nhất — Hàng nghìn SV tham gia",
-          emoji: "🎪",
+          name: "Phòng Đào Tạo",
+          emoji: "📚",
+          color: "#2563eb",
+          img: "/phong-dao-tao.png",
+          shortDesc: "Quản lý chương trình học & lịch thi",
+          description:
+            "Phòng Đào Tạo là đầu mối quản lý toàn bộ chương trình giảng dạy, lịch học, lịch thi và kết quả học tập của sinh viên. Đây là nơi sinh viên đến khi cần hỗ trợ về đăng ký môn học, chuyển ngành, bảo lưu, hoặc các vấn đề liên quan đến học vụ.",
+          services: [
+            "Đăng ký và điều chỉnh môn học mỗi học kỳ",
+            "Xếp lịch thi, công bố điểm và xử lý phúc khảo",
+            "Hỗ trợ chuyển ngành, chuyển cơ sở, bảo lưu",
+            "Cấp bảng điểm, xác nhận sinh viên",
+            "Quản lý chương trình đào tạo & chuẩn đầu ra",
+            "Tư vấn lộ trình học tập cho sinh viên",
+          ],
+          contact: {
+            location: "Tầng 1, Toà Alpha",
+            hours: "Thứ 2 - Thứ 6: 8:00 - 17:00",
+            phone: "0236 730 0999 (ext. 1)",
+          },
+        },
+        {
+          name: "Phòng Y Tế",
+          emoji: "🏥",
+          color: "#16a34a",
+          img: "/phong-y-te.png",
+          shortDesc: "Chăm sóc sức khỏe sinh viên",
+          description:
+            "Phòng Y Tế chịu trách nhiệm chăm sóc sức khỏe ban đầu, sơ cứu, và quản lý bảo hiểm y tế cho toàn bộ sinh viên. Đội ngũ y bác sĩ và điều dưỡng túc trực thường xuyên, sẵn sàng hỗ trợ trong giờ học và các sự kiện.",
+          services: [
+            "Khám và sơ cứu ban đầu tại trường",
+            "Phát thuốc thông thường miễn phí cho sinh viên",
+            "Quản lý hồ sơ bảo hiểm y tế (BHYT)",
+            "Tổ chức khám sức khỏe định kỳ đầu năm",
+            "Tư vấn sức khỏe tâm lý và dinh dưỡng",
+            "Hỗ trợ chuyển viện khi cần thiết",
+          ],
+          contact: {
+            location: "Tầng 1, Toà Alpha",
+            hours: "Thứ 2 - Thứ 7: 7:30 - 21:00",
+            phone: "0236 730 0999 (ext. 2)",
+          },
+        },
+        {
+          name: "Phòng Dịch Vụ Sinh Viên",
+          emoji: "🎓",
           color: "#f37021",
+          img: "/phong-dich-vu-sv.png",
+          shortDesc: "Hỗ trợ đời sống & hoạt động SV",
+          description:
+            "Phòng Dịch Vụ Sinh Viên là cầu nối giữa nhà trường và sinh viên, hỗ trợ mọi vấn đề về đời sống sinh hoạt, ký túc xá, học bổng, hoạt động ngoại khóa và các chính sách ưu đãi dành cho sinh viên.",
+          services: [
+            "Quản lý ký túc xá và nhà ở sinh viên",
+            "Xét duyệt học bổng và hỗ trợ tài chính",
+            "Tổ chức hoạt động ngoại khóa, CLB, đoàn hội",
+            "Hỗ trợ xin visa, giấy tờ cho SV quốc tế",
+            "Tư vấn việc làm part-time và thực tập",
+            "Giải quyết khiếu nại và phản ánh của sinh viên",
+          ],
+          contact: {
+            location: "Tầng 2, Toà Alpha",
+            hours: "Thứ 2 - Thứ 6: 8:00 - 17:00",
+            phone: "0236 730 0999 (ext. 3)",
+          },
         },
         {
-          name: "🎤 Đại Nhạc Hội FPT — Sơn Tùng M-TP",
-          date: "Tháng 11",
-          speaker: "Ca sĩ hàng đầu Vpop biểu diễn live",
-          emoji: "🌟",
-          color: "#dc2626",
-        },
-        {
-          name: "🎶 FPT Music Fest — Đen Vâu, HIEUTHUHAI",
-          date: "Tháng 9",
-          speaker: "Rapper/Ca sĩ triệu view biểu diễn",
-          emoji: "🎵",
-          color: "#8b5cf6",
-        },
-        {
-          name: "🏆 FPT Award Night & Gala Dinner",
-          date: "Cuối năm",
-          speaker: "Trao giải SV xuất sắc, biểu diễn văn nghệ",
-          emoji: "✨",
-          color: "#eab308",
-        },
-        {
-          name: "💼 Career Fair 2026",
-          date: "Mỗi học kỳ",
-          speaker: "50+ doanh nghiệp công nghệ tuyển dụng",
-          emoji: "🎯",
-          color: "#3b82f6",
-        },
-        {
-          name: "🤖 Hackathon: Code for Good",
-          date: "Cuối tháng",
-          speaker: "24h coding marathon",
-          emoji: "🏆",
-          color: "#22c55e",
+          name: "Phòng Tuyển Sinh",
+          emoji: "📋",
+          color: "#7c3aed",
+          img: "/phong-tuyen-sinh.png",
+          shortDesc: "Tư vấn & tiếp nhận hồ sơ nhập học",
+          description:
+            "Phòng Tuyển Sinh là nơi đầu tiên các thí sinh và phụ huynh tiếp xúc với FPT University. Đội ngũ tư vấn chuyên nghiệp sẵn sàng giải đáp mọi thắc mắc về ngành học, học phí, chính sách ưu đãi và quy trình nhập học.",
+          services: [
+            "Tư vấn ngành học và chương trình đào tạo",
+            "Tiếp nhận và xử lý hồ sơ xét tuyển",
+            "Tổ chức Open Day và các sự kiện tuyển sinh",
+            "Hỗ trợ đăng ký xét tuyển online",
+            "Tư vấn học bổng tuyển sinh và chính sách ưu đãi",
+            "Hướng dẫn thủ tục nhập học cho tân sinh viên",
+          ],
+          contact: {
+            location: "Tầng 1, Toà Alpha (Sảnh chính)",
+            hours: "Thứ 2 - Chủ Nhật: 8:00 - 20:00",
+            phone: "0236 730 0999 (ext. 4)",
+          },
         },
       ],
-      hoiLang: {
-        title: "🏮 Hội Làng FPT — Lễ Hội Huyền Thoại",
-        description:
-          "Hội Làng là lễ hội truyền thống lớn nhất và đặc biệt nhất của FPT University — diễn ra hàng năm vào tháng 4. Đây là sự kiện mà mọi sinh viên FPT đều mong chờ nhất trong năm!",
-        activities: [
-          {
-            name: "Rước kiệu & Lễ khai mạc",
-            emoji: "🏮",
-            desc: "Đoàn rước kiệu truyền thống khai mạc lễ hội",
-          },
-          {
-            name: "Đại nhạc hội ca sĩ nổi tiếng",
-            emoji: "🎤",
-            desc: "Sơn Tùng, Đen Vâu, HIEUTHUHAI... biểu diễn live",
-          },
-          {
-            name: "Hội chợ ẩm thực đường phố",
-            emoji: "🍢",
-            desc: "100+ gian hàng ăn uống truyền thống & hiện đại",
-          },
-          {
-            name: "Trò chơi dân gian",
-            emoji: "🎯",
-            desc: "Kéo co, nhảy bao bố, đập niêu... siêu vui",
-          },
-          {
-            name: "Cuộc thi cosplay & văn nghệ",
-            emoji: "🎭",
-            desc: "Sinh viên biểu diễn sáng tạo các tiết mục",
-          },
-          {
-            name: "Lễ hội ánh sáng & pháo hoa",
-            emoji: "🎆",
-            desc: "Kết thúc đêm hội với màn pháo hoa rực rỡ",
-          },
-        ],
-      },
       highlights: [
-        "Hội Làng FPT thu hút 5000+ sinh viên mỗi năm",
-        "Ca sĩ hạng A Vpop từng biểu diễn tại đây",
-        "Sân khấu ngoài trời 1000+ chỗ ngồi",
-        "Hệ thống âm thanh, ánh sáng concert chuyên nghiệp",
-        "Live stream sự kiện đến 5 cơ sở FPT toàn quốc",
-        "Networking trực tiếp với doanh nghiệp công nghệ",
+        "Hỗ trợ sinh viên nhanh chóng, chuyên nghiệp",
+        "Đội ngũ nhân viên tận tâm, thân thiện",
+        "Hệ thống quản lý số hóa, hiện đại",
+        "Giải quyết thủ tục trong vòng 24-48 giờ",
+        "Tư vấn trực tuyến qua hotline và email",
+        "Phục vụ liên tục từ thứ 2 đến thứ 7",
       ],
     },
     features: [
       {
-        icon: "🏮",
-        title: "Hội Làng FPT",
-        desc: "Lễ hội truyền thống lớn nhất — ca sĩ nổi tiếng biểu diễn",
+        icon: "📚",
+        title: "Phòng Đào Tạo",
+        desc: "Quản lý chương trình học, lịch thi và kết quả học tập",
       },
       {
         icon: "🇬🇧",
@@ -268,20 +277,26 @@ export const BUILDING_DATA = {
         desc: "Học tiếng Anh nâng cao với giảng viên bản ngữ",
       },
       {
+<<<<<<< HEAD
         icon: "🎤",
         title: "Sân Khấu 200-300 chỗ ngồi",
         desc: "Tổ chức concert, đại nhạc hội hoành tráng",
+=======
+        icon: "🏥",
+        title: "Phòng Y Tế",
+        desc: "Chăm sóc sức khỏe và sơ cứu cho sinh viên",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
-        icon: "💼",
-        title: "Career Center",
-        desc: "Tư vấn nghề nghiệp và kết nối doanh nghiệp",
+        icon: "🎓",
+        title: "Dịch Vụ Sinh Viên",
+        desc: "Hỗ trợ đời sống, học bổng và hoạt động ngoại khóa",
       },
     ],
     funFacts: [
-      "Hội Làng FPT từng mời Sơn Tùng M-TP, Đen Vâu biểu diễn!",
-      "Mỗi năm có 20+ sự kiện lớn tổ chức tại Alpha Tower",
-      "Sân khấu ngoài trời được dựng riêng cho Hội Làng mỗi năm",
+      "Phòng Tuyển Sinh tiếp nhận hơn 5000 hồ sơ mỗi năm!",
+      "Phòng Y Tế mở cửa từ 7h30 sáng đến 9h tối, kể cả thứ 7",
+      "Hơn 90% thủ tục tại Phòng Đào Tạo được xử lý trong 24h",
     ],
   },
 
@@ -412,14 +427,14 @@ export const BUILDING_DATA = {
   "gamma-tower": {
     id: "gamma-tower",
     name: "Toà Gamma",
-    subtitle: "LUK Global & Nhạc Cụ Dân Tộc",
+    subtitle: "LUK Global — Thư Viện — Lab & Nhạc Cụ Dân Tộc",
     emoji: "🏢",
     heroGradient:
       "linear-gradient(135deg, #7c2d12 0%, #c2410c 50%, #f37021 100%)",
     accentColor: "#f37021",
-    tagline: "Hội nhập quốc tế — Gìn giữ bản sắc",
+    tagline: "LUK Global — Thư Viện — Lab — Nhạc Cụ Dân Tộc",
     description:
-      "Toà Gamma là nơi đặc biệt nhất của FPT University — nơi sinh viên vừa học tiếng Anh quốc tế tại LUK Global, vừa học đàn Tỳ Bà và nhạc cụ dân tộc Việt Nam. Đây là triết lý giáo dục độc đáo: Hội nhập toàn cầu nhưng giữ gìn văn hóa dân tộc.",
+      "Toà Gamma là tòa nhà đa chức năng nhất của FPT University Đà Nẵng — nơi đặt LUK Global (tầng 5), Thư viện & Phòng Tự Học (tầng 3), Phòng Lab (tầng 4), cùng các phòng nhạc cụ dân tộc. 5 tầng, mỗi tầng một chức năng riêng biệt.",
     dailySchedule: [
       {
         time: "07:30 - 09:30",
@@ -476,27 +491,27 @@ export const BUILDING_DATA = {
         "Chương trình tiếng Anh nền tảng bắt buộc cho tất cả sinh viên năm nhất. LUK Global giúp sinh viên FPT tự tin giao tiếp quốc tế và sẵn sàng học các môn chuyên ngành bằng tiếng Anh.",
       gallery: [
         {
-          url: "/luk-welcome-k21.png",
+          url: "/new-img/luk-orientation.jpg",
           cap: "Welcome K21 — LUK Global Orientation",
           tag: "Welcome",
         },
         {
-          url: "/luk-stage-performance.png",
+          url: "/new-img/perfomance.jpg",
           cap: "Sinh viên biểu diễn trên sân khấu LUK Global",
           tag: "Performance",
         },
         {
-          url: "/luk-best-team.png",
+          url: "/new-img/best-team-award.jpg",
           cap: "Best Team Presentation Award — 5,000,000 VNĐ",
           tag: "Award",
         },
         {
-          url: "/luk-worksheet.png",
+          url: "/new-img/work-sheet.jpg",
           cap: "Sinh viên hoàn thành worksheet trong lớp LUK",
           tag: "Learning",
         },
         {
-          url: "/luk-greenfire.png",
+          url: "/new-img/gree-fire-move.jpg",
           cap: "GREENFIRE, MOVE! — Hoạt động năng động",
           tag: "Activity",
         },
@@ -587,7 +602,7 @@ export const BUILDING_DATA = {
     tyBa: {
       title: "Đàn Tỳ Bà — Nhạc Cụ Dân Tộc",
       description:
-        "FPT University là trường đại học đầu tiên tại Việt Nam đưa nhạc cụ dân tộc vào chương trình giảng dạy chính thức. Đàn Tỳ Bà (4 dây, lute truyền thống) là một trong 8 nhạc cụ sinh viên có thể học.",
+        "FPT University là trường đại học đầu tiên tại Việt Nam đưa nhạc cụ dân tộc vào chương trình giảng dạy chính thức. Đàn Tỳ Bà (4 dây, lute truyền thống) là một trong 5 nhạc cụ sinh viên có thể học.",
       instruments: [
         {
           name: "Đàn Tỳ Bà",
@@ -615,12 +630,6 @@ export const BUILDING_DATA = {
           desc: "2 dây kéo — Fiddle Việt Nam",
         },
         {
-          name: "Đàn Bầu",
-          emoji: "🎵",
-          img: "/dan-bau.png",
-          desc: "Độc huyền cầm — 1 dây duy nhất",
-        },
-        {
           name: "Đàn Nguyệt",
           emoji: "🎸",
           img: "/dan-nguyet.png",
@@ -634,128 +643,286 @@ export const BUILDING_DATA = {
         "Biểu diễn hàng năm tại 'FPT Edu Music Festival'",
       ],
     },
+    facilities: {
+      title: "Tiện Ích & Phòng Ban Tại Toà Gamma",
+      description:
+        "Ngoài LUK Global và nhạc cụ dân tộc, Toà Gamma còn là nơi đặt Thư viện, các phòng tự học hiện đại và phòng Lab máy tính — phục vụ nhu cầu học tập và nghiên cứu của toàn bộ sinh viên.",
+      list: [
+        {
+          name: "Thư Viện",
+          emoji: "📚",
+          color: "#2563eb",
+          img: "/thu-vien-gamma.png",
+          shortDesc: "Không gian đọc sách & nghiên cứu",
+          description:
+            "Thư viện Toà Gamma là trung tâm tri thức của FPT University Đà Nẵng với hàng nghìn đầu sách chuyên ngành IT, kinh tế, ngoại ngữ và kỹ năng mềm. Không gian yên tĩnh, thoáng mát với hệ thống máy lạnh, WiFi tốc độ cao và ghế ngồi êm ái.",
+          services: [
+            "Hàng nghìn đầu sách chuyên ngành IT, kinh tế, ngoại ngữ",
+            "Hệ thống tra cứu sách điện tử và mượn sách online",
+            "Khu vực đọc sách yên tĩnh với ghế sofa thoải mái",
+            "Máy in, photocopy phục vụ sinh viên giá ưu đãi",
+            "Truy cập miễn phí các cơ sở dữ liệu học thuật quốc tế",
+            "Mở cửa từ 7h00 đến 21h00 các ngày trong tuần",
+          ],
+        },
+        {
+          name: "Phòng Tự Học",
+          emoji: "📖",
+          color: "#16a34a",
+          img: "/phong-tu-hoc.png",
+          shortDesc: "Không gian tự học cá nhân & nhóm",
+          description:
+            "Các phòng tự học tại Toà Gamma được thiết kế riêng biệt cho sinh viên ôn bài, làm project nhóm hoặc tự nghiên cứu. Mỗi phòng đều trang bị bàn ghế chất lượng, ổ cắm điện, WiFi và máy lạnh.",
+          services: [
+            "Phòng tự học cá nhân với vách ngăn riêng tư",
+            "Phòng học nhóm 4-8 người có bảng trắng",
+            "Trang bị đầy đủ ổ cắm điện và WiFi tốc độ cao",
+            "Máy lạnh hoạt động liên tục, không gian yên tĩnh",
+            "Đặt phòng trước qua app FPT Student",
+            "Mở cửa từ 6h30 sáng đến 22h00 tối",
+          ],
+        },
+        {
+          name: "Phòng Lab Máy Tính",
+          emoji: "💻",
+          color: "#7c3aed",
+          img: "/phong-lab-gamma.png",
+          shortDesc: "Lab thực hành & kiểm tra trên máy",
+          description:
+            "Các phòng Lab tại Toà Gamma phục vụ sinh viên thực hành các môn lập trình, thi trên máy và làm đồ án. Máy tính cấu hình cao, kết nối mạng nội bộ FPT và các phần mềm bản quyền được cài đặt sẵn.",
+          services: [
+            "50+ máy tính cấu hình cao mỗi phòng Lab",
+            "Cài đặt sẵn Visual Studio, IntelliJ, NetBeans, Eclipse",
+            "Kết nối mạng nội bộ FPT tốc độ cao",
+            "Phục vụ thi trên máy (Practical Exam) các môn chuyên ngành",
+            "Giám sát viên hỗ trợ kỹ thuật thường trực",
+            "Lab mở cho sinh viên tự luyện ngoài giờ học",
+          ],
+        },
+      ],
+    },
+    floors: {
+      title: "Sơ Đồ Các Tầng — Toà Gamma",
+      description:
+        "Toà Gamma có 5 tầng, mỗi tầng được phân chia chức năng rõ ràng — từ khu hành chính, thư viện, phòng nhạc cụ đến LUK Global.",
+      list: [
+        {
+          floor: 1,
+          name: "Tầng 1 — Sảnh & Hành Chính",
+          emoji: "🏛️",
+          color: "#f37021",
+          description:
+            "Sảnh chính Toà Gamma, khu vực đón tiếp và các phòng hành chính. Sinh viên đến đây để làm thủ tục, gặp cố vấn học tập và nhận thông báo quan trọng.",
+          highlights: [
+            "Sảnh đón tiếp rộng rãi, thoáng mát",
+            "Phòng cố vấn học tập (Academic Advisor)",
+            "Bảng thông báo và kệ tài liệu",
+            "Khu vực ghế ngồi chờ cho sinh viên và phụ huynh",
+          ],
+        },
+        {
+          floor: 2,
+          name: "Tầng 2 — Phòng Học Sinh Viên Năm 2",
+          emoji: "📚",
+          color: "#2563eb",
+          description:
+            "Tầng 2 dành riêng cho các lớp học chuyên ngành của sinh viên năm 2. Các phòng học lớn trang bị máy chiếu, bảng interactive và hệ thống âm thanh hiện đại.",
+          highlights: [
+            "8 phòng học lớn sức chứa 40-60 sinh viên",
+            "Máy chiếu HD và bảng tương tác (Interactive Board)",
+            "Phòng học nhóm nhỏ cho seminar và thảo luận",
+            "Khu vực giải lao và máy bán nước tự động",
+          ],
+        },
+        {
+          floor: 3,
+          name: "Tầng 3 — Thư Viện & Phòng Tự Học",
+          emoji: "📖",
+          color: "#16a34a",
+          description:
+            "Tầng 3 là trung tâm tri thức với Thư viện lớn và các phòng tự học cá nhân/nhóm. Không gian yên tĩnh, lý tưởng cho việc ôn thi và nghiên cứu.",
+          highlights: [
+            "Thư viện với hàng nghìn đầu sách chuyên ngành",
+            "16 phòng tự học cá nhân có vách ngăn riêng tư",
+            "6 phòng học nhóm có bảng trắng và TV màn hình lớn",
+            "Khu vực đọc báo, tạp chí và tài liệu tham khảo",
+          ],
+        },
+        {
+          floor: 4,
+          name: "Tầng 4 — Phòng Lab & Thực Hành",
+          emoji: "💻",
+          color: "#7c3aed",
+          description:
+            "Tầng 4 là khu vực Lab máy tính dành cho thực hành các môn lập trình, thi trên máy và làm đồ án. Đây cũng là nơi tổ chức các buổi Workshop công nghệ.",
+          highlights: [
+            "4 phòng Lab lớn — mỗi phòng 50+ máy tính",
+            "Máy tính cấu hình cao (i7/16GB RAM/SSD)",
+            "Phòng thi trên máy (Practical Exam) chuyên dụng",
+            "Phòng Workshop và Seminar công nghệ",
+          ],
+        },
+        {
+          floor: 5,
+          name: "Tầng 5 — LUK Global (Little UK)",
+          emoji: "🌍",
+          color: "#f37021",
+          description:
+            "Tầng 5 dành riêng cho chương trình LUK Global — nơi sinh viên năm nhất học tiếng Anh với giáo viên bản ngữ. Không gian được thiết kế theo phong cách quốc tế, tạo cảm giác như đang ở 'Little UK'.",
+          highlights: [
+            "Toàn bộ tầng 5 dành riêng cho LUK Global",
+            "Phòng học thiết kế mở, linh hoạt theo nhóm",
+            "Sân khấu mini cho thuyết trình và biểu diễn",
+            "Khu vực 'English Only Zone' — chỉ nói tiếng Anh",
+          ],
+        },
+      ],
+    },
     features: [
       {
         icon: "🌍",
         title: "LUK Global Center",
-        desc: "Trung tâm tiếng Anh quốc tế tầng 4-5",
+        desc: "Trung tâm tiếng Anh quốc tế — Tầng 5",
+      },
+      {
+        icon: "📚",
+        title: "Thư Viện & Tự Học",
+        desc: "Hàng nghìn đầu sách và phòng tự học hiện đại — Tầng 3",
+      },
+      {
+        icon: "💻",
+        title: "Phòng Lab",
+        desc: "4 phòng Lab máy tính cấu hình cao — Tầng 4",
       },
       {
         icon: "🎼",
         title: "Phòng Nhạc Cụ",
-        desc: "20 phòng tập nhạc cụ dân tộc tầng 2-3",
-      },
-      {
-        icon: "🎭",
-        title: "Sảnh Biểu Diễn",
-        desc: "Sân khấu cho concert và biểu diễn văn hóa",
-      },
-      {
-        icon: "📱",
-        title: "LMS Portal",
-        desc: "Hệ thống quản lý học tập trực tuyến",
+        desc: "20 phòng tập nhạc cụ dân tộc — Tầng 2-3",
       },
     ],
     funFacts: [
-      "Sinh viên FPT vừa code vừa biết chơi đàn Tỳ Bà!",
-      "Câu lạc bộ nhạc dân tộc FPT từng biểu diễn tại APEC",
-      "Tòa Gamma có phòng cách âm chuyên dụng cho luyện tập",
+      "Tầng 5 Toà Gamma được gọi là 'Little UK' — chỉ nói tiếng Anh!",
+      "Thư viện Gamma có hơn 5000 đầu sách IT và ngoại ngữ",
+      "Phòng Lab mở cửa miễn phí cho sinh viên tự luyện đến 22h",
     ],
   },
 
   canteen: {
     id: "canteen",
     name: "Cantin FPT",
-    subtitle: "Ẩm Thực & Giao Lưu",
+    subtitle: "Thiên Đường Ăn Uống Giá Sinh Viên",
     emoji: "🍜",
     heroGradient:
       "linear-gradient(135deg, #14532d 0%, #16a34a 50%, #22c55e 100%)",
     accentColor: "#16a34a",
-    tagline: "Nạp năng lượng — Kết nối bạn bè",
+    tagline: "Đa dạng món ăn — Giá cực hạt dẻ — Tiện lợi mỗi ngày",
     description:
-      "Cantin 3 tầng FPT University phục vụ hơn 3000 suất ăn mỗi ngày với thực đơn đa dạng từ cơm văn phòng, phở, bún đến trà sữa, café. Đây không chỉ là nơi ăn uống mà còn là trung tâm giao lưu, networking yêu thích nhất của sinh viên FPT.",
+      "Căn tin FPT University Đà Nẵng là thiên đường ăn uống giá sinh viên với 3 tầng phục vụ đa dạng. Tầng 1 chuyên đồ ăn sáng (bánh mì, bánh ướt, xôi), Tầng 2 & 3 phục vụ cơm trưa và ăn vặt. Giá chỉ từ 17,000 – 30,000 VNĐ, cực kỳ phù hợp với túi tiền sinh viên.",
     welcomeHighlights: [
       {
         icon: "🍚",
-        stat: "3,000+",
-        label: "Suất ăn/ngày",
-        desc: "Phục vụ liên tục 3 bữa chính",
-      },
-      {
-        icon: "🏪",
-        stat: "15+",
-        label: "Gian hàng",
-        desc: "Đa dạng món Việt & quốc tế",
+        stat: "3 tầng",
+        label: "Khu ẩm thực",
+        desc: "T1 đồ sáng, T2-3 cơm trưa & ăn vặt",
       },
       {
         icon: "💰",
+<<<<<<< HEAD
         stat: "25-40K",
         label: "Giá/suất",
         desc: "Giá sinh viên cực kỳ hợp lý",
+=======
+        stat: "17-30K",
+        label: "VNĐ/suất",
+        desc: "Giá cực kỳ hạt dẻ cho sinh viên",
+      },
+      {
+        icon: "🧋",
+        stat: "20-35K",
+        label: "Trà sữa",
+        desc: "Quán trà sữa siêu ngon tại T2-3",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "⏰",
-        stat: "16h",
-        label: "Mở cửa/ngày",
-        desc: "Từ 6h sáng đến 22h tối",
+        stat: "Cả ngày",
+        label: "Phục vụ",
+        desc: "Sáng — Trưa — Chiều — Tối",
       },
     ],
     dailySchedule: [
       {
-        time: "06:00 - 08:00",
-        activity: "Bữa sáng — Phở, bún, xôi, bánh mì, cháo",
+        time: "06:00 - 08:30",
+        activity: "Bữa sáng Tầng 1 — Bánh mì, bánh ướt, xôi, bánh mì chảo",
         emoji: "🌅",
         type: "meal",
       },
       {
         time: "09:30 - 10:00",
-        activity: "Giải lao slot 1 — Trà sữa, café, snack",
+        activity: "Giải lao — Nước uống, trà sữa, café tại quầy Tầng 1",
         emoji: "☕",
         type: "break",
       },
       {
-        time: "11:30 - 13:30",
-        activity: "Bữa trưa — Cơm văn phòng, mì, hủ tiếu (cao điểm)",
+        time: "11:00 - 13:30",
+        activity: "Bữa trưa Tầng 2-3 — Cơm phần ~30K (cao điểm)",
         emoji: "🍚",
         type: "meal",
       },
       {
         time: "14:00 - 16:00",
-        activity: "Giờ vàng tự học — Sinh viên học nhóm tại cantin",
-        emoji: "📖",
-        type: "study",
+        activity: "Ăn vặt & Trà sữa Tầng 2-3 — Giá 20-35K",
+        emoji: "🧋",
+        type: "social",
       },
       {
         time: "17:00 - 19:00",
-        activity: "Bữa tối — Đa dạng món truyền thống & hiện đại",
+        activity: "Bữa tối — Đa dạng món ăn tại Tầng 2-3",
         emoji: "🍲",
         type: "meal",
       },
       {
-        time: "19:00 - 22:00",
-        activity: "Café & Trà sữa — Khu vực sinh hoạt tối, giao lưu",
+        time: "19:00 - 21:00",
+        activity: "Trà sữa & giao lưu buổi tối",
         emoji: "🧋",
         type: "social",
       },
     ],
     features: [
       {
-        icon: "🍚",
-        title: "3000+ Suất/Ngày",
-        desc: "Phục vụ đa dạng món Việt Nam từ Bắc-Trung-Nam",
+        icon: "🥖",
+        title: "Tầng 1 — Đồ Ăn Sáng",
+        desc: "Bánh mì ~17K, bánh ướt ~25K, xôi ~25K, bánh mì chảo ~25K",
       },
       {
+<<<<<<< HEAD
         icon: "💰",
         title: "Giá Sinh Viên",
         desc: "Cơm 25-35K, Phở/Bún 30-35K, Trà sữa 20-25K",
+=======
+        icon: "🍚",
+        title: "Tầng 2-3 — Cơm Trưa",
+        desc: "Cơm phần đa dạng chỉ khoảng 30,000đ/phần",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "🧋",
-        title: "Khu Trà Sữa & Café",
-        desc: "Hơn 5 quầy đồ uống — Tiger Sugar, Mixue, café Phin",
+        title: "Trà Sữa Siêu Ngon",
+        desc: "Trà và trà sữa giá 20,000 – 35,000 VNĐ",
+      },
+      {
+        icon: "💰",
+        title: "Giá Hạt Dẻ",
+        desc: "Tất cả món ăn chỉ từ 17,000 – 30,000 VNĐ",
+      },
+      {
+        icon: "☕",
+        title: "Quầy Nước Tầng 1",
+        desc: "Đồ uống buổi sáng tiện lợi phục vụ SV",
       },
       {
         icon: "🤝",
+<<<<<<< HEAD
         title: "Networking Zone",
         desc: "Khu vực giao lưu rộng cho CLB & nhóm project",
       },
@@ -776,6 +943,18 @@ export const BUILDING_DATA = {
       "80% câu chuyện sinh viên bắt đầu từ: “Ăn gì không?”",
       "Giờ trưa: tìm được chỗ ngồi còn khó hơn chọn món ăn",
       "Ngoài ăn uống, căn tin còn là nơi học nhóm phổ biến",
+=======
+        title: "Giao Lưu & Kết Nối",
+        desc: "Không gian rộng rãi cho sinh viên giao lưu, họp nhóm",
+      },
+    ],
+    funFacts: [
+      "Bánh mì tại căn tin chỉ ~17,000đ — rẻ nhất campus",
+      "Cơm phần Tầng 2-3 chỉ khoảng 30,000đ — no bụng cả buổi",
+      "Trà sữa tại căn tin siêu ngon, giá chỉ từ 20,000đ",
+      "Tầng 1 chuyên phục vụ đồ ăn sáng đa dạng từ 6h sáng",
+      "Căn tin 3 tầng phục vụ đầy đủ sáng-trưa-chiều-tối cho SV",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
     ],
   },
 
@@ -789,10 +968,11 @@ export const BUILDING_DATA = {
     accentColor: "#ca8a04",
     tagline: "Nghỉ ngơi — Nạp lại năng lượng — Kỷ niệm đẹp",
     description:
-      "KTX A là ngôi nhà thứ hai của sinh viên FPT University Đà Nẵng. Thiết kế hiện đại với tông xám trắng đặc trưng, phòng 4-6 người tiện nghi đầy đủ: điều hòa, nước nóng, bàn học, tủ cá nhân. An ninh 24/7 với camera và bảo vệ túc trực.",
+      "KTX A (Dom A) là ngôi nhà thứ hai của sinh viên FPT University Đà Nẵng. Mỗi phòng được trang bị giường tầng (kích thước 1930x900mm), tủ đồ, tủ giày, bàn học, giá phơi quần áo, cùng đèn chiếu sáng, điều hòa và bình nóng lạnh. An ninh 24/7 với camera và bảo vệ túc trực.",
     welcomeHighlights: [
       {
         icon: "🛏️",
+<<<<<<< HEAD
         stat: "500+",
         label: "Sinh viên",
         desc: "Sức chứa KTX A toàn bộ",
@@ -802,12 +982,23 @@ export const BUILDING_DATA = {
         stat: "1,100,000",
         label: "VNĐ/tháng",
         desc: "Phí KTX siêu hợp lý",
+=======
+        stat: "3 loại",
+        label: "Phòng KTX",
+        desc: "Phòng 3, 4 và 6 giường",
       },
       {
-        icon: "📶",
-        stat: "100Mbps",
-        label: "WiFi Speed",
-        desc: "Internet miễn phí 24/7",
+        icon: "💰",
+        stat: "3.4-4.6TR",
+        label: "VNĐ/kỳ (4 tháng)",
+        desc: "Học phí KTX theo kỳ",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
+      },
+      {
+        icon: "❄️",
+        stat: "Đầy đủ",
+        label: "Tiện nghi",
+        desc: "Điều hòa, nước nóng, bàn học",
       },
       {
         icon: "🔒",
@@ -825,7 +1016,7 @@ export const BUILDING_DATA = {
       },
       {
         time: "06:30 - 07:00",
-        activity: "Ăn sáng tại cantin KTX hoặc mua bánh mì",
+        activity: "Ăn sáng tại cantin hoặc mua bánh mì",
         emoji: "🥖",
         type: "meal",
       },
@@ -869,18 +1060,18 @@ export const BUILDING_DATA = {
     features: [
       {
         icon: "🛏️",
-        title: "Phòng 4-6 Người",
-        desc: "Giường tầng chắc chắn, nệm êm, tủ cá nhân có khóa",
+        title: "Phòng 3, 4, 6 Giường",
+        desc: "Giường tầng 1930x900mm, tủ đồ, tủ giày, bàn học, giá phơi đồ",
       },
       {
         icon: "❄️",
         title: "Điều Hòa & Nước Nóng",
-        desc: "Máy lạnh, bình nóng lạnh mọi phòng",
+        desc: "Điều hòa, bình nóng lạnh và đèn chiếu sáng đầy đủ",
       },
       {
         icon: "📶",
-        title: "WiFi 100Mbps",
-        desc: "Internet tốc độ cao miễn phí 24/7",
+        title: "Hạ Tầng Internet",
+        desc: "KTX hỗ trợ hạ tầng để nhà mạng lắp đặt dịch vụ cho SV",
       },
       {
         icon: "🔒",
@@ -888,60 +1079,73 @@ export const BUILDING_DATA = {
         desc: "Camera giám sát, bảo vệ",
       },
       {
+<<<<<<< HEAD
         icon: "🌳",
         title: "Môi trường",
         desc: "Không gian xanh, sạch, thoáng, gần trường",
+=======
+        icon: "💰",
+        title: "Giá Phòng Hợp Lý",
+        desc: "3 giường: 4.6TR | 4 giường: 4.2TR | 6 giường: 3.4TR/kỳ",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
-        icon: "🏋️",
-        title: "Phòng Gym",
-        desc: "Phòng tập thể dục miễn phí cho sinh viên KTX",
+        icon: "⚠️",
+        title: "Nội Quy KTX",
+        desc: "Cấm nấu ăn trong phòng — Vi phạm sẽ bị phạt 500,000đ",
       },
     ],
     funFacts: [
       "KTX A có sức chứa hơn 800 sinh viên — luôn full mỗi kỳ",
+<<<<<<< HEAD
       "Phí KTX chỉ từ 4,300,000đ/3 tháng — rẻ nhất Đà Nẵng",
       "WiFi speed trung bình 100Mbps — đủ streaming 4K",
       "KTX có phòng gym miễn phí với nhiều dụng cụ thể thao",
       "Nấu ăn trong KTX sẽ bị phạt 500,000",
+=======
+      "Phí KTX phòng 6 giường chỉ 3,400,000đ/kỳ (4 tháng) — siêu tiết kiệm",
+      "Giường tầng KTX A kích thước 1930x900mm — đủ rộng cho SV",
+      "Mỗi phòng đều có điều hòa, bình nóng lạnh — tiện nghi đầy đủ",
+      "Cấm nấu ăn trong KTX — vi phạm bị phạt 500K nên SV thường ăn cantin",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
     ],
   },
 
   "dorm-b": {
     id: "dorm-b",
     name: "Ký Túc Xá B",
-    subtitle: "Khu Vực Yên Tĩnh & Thể Thao",
+    subtitle: "Ngôi Nhà Sinh Viên",
     emoji: "🏠",
     heroGradient:
       "linear-gradient(135deg, #78350f 0%, #d97706 50%, #f59e0b 100%)",
     accentColor: "#d97706",
-    tagline: "Yên tĩnh — Tập trung — Gần sân thể thao",
+    tagline: "Tiện nghi — An toàn — Gần khu thể thao",
     description:
-      "KTX B nằm sát khu liên hợp thể thao, phù hợp cho sinh viên yêu thích vận động. Khu vực yên tĩnh hơn KTX A, có phòng study room 24/7, minimart tiện lợi, và sân bóng đá cỏ nhân tạo 1500m² ngay bên cạnh.",
+      "KTX B (Dom B) nằm gần khu thể thao, phù hợp cho sinh viên yêu thích vận động. Phòng ở trang bị giường tầng (1930x900mm), tủ đồ, tủ giày, bàn học, giá phơi quần áo, điều hòa, bình nóng lạnh và đèn chiếu sáng đầy đủ. Internet do nhà mạng lắp đặt riêng.",
     welcomeHighlights: [
       {
-        icon: "🤫",
-        stat: "Quiet",
-        label: "Zone yên tĩnh",
-        desc: "Quy định giữ trật tự từ 22:00",
+        icon: "🛏️",
+        stat: "3 loại",
+        label: "Phòng KTX",
+        desc: "Phòng 3, 4 và 6 giường",
       },
       {
-        icon: "⚽",
-        stat: "1,500m²",
-        label: "Sân bóng",
-        desc: "Cỏ nhân tạo đạt chuẩn kỹ thuật",
+        icon: "💰",
+        stat: "3.4-4.6TR",
+        label: "VNĐ/kỳ (4 tháng)",
+        desc: "Học phí KTX theo kỳ",
       },
       {
-        icon: "📖",
+        icon: "❄️",
+        stat: "Đầy đủ",
+        label: "Tiện nghi",
+        desc: "Điều hòa, nước nóng, bàn học",
+      },
+      {
+        icon: "🔒",
         stat: "24/7",
-        label: "Study Room",
-        desc: "Phòng tự học mở suốt ngày đêm",
-      },
-      {
-        icon: "🛒",
-        stat: "T1",
-        label: "Minimart",
-        desc: "Cửa hàng tiện lợi tầng trệt",
+        label: "An ninh",
+        desc: "Camera + Bảo vệ túc trực",
       },
     ],
     dailySchedule: [
@@ -953,7 +1157,7 @@ export const BUILDING_DATA = {
       },
       {
         time: "06:00 - 06:30",
-        activity: "Tắm rửa, ăn sáng tại minimart hoặc cantin",
+        activity: "Tắm rửa, ăn sáng tại cantin",
         emoji: "🪥",
         type: "personal",
       },
@@ -971,8 +1175,8 @@ export const BUILDING_DATA = {
       },
       {
         time: "19:30 - 21:30",
-        activity: "Tự học tại Study Room tầng 1 — Yên tĩnh tuyệt đối",
-        emoji: "📖",
+        activity: "Ôn bài, làm assignment, code project nhóm",
+        emoji: "💻",
         type: "study",
       },
       {
@@ -990,42 +1194,56 @@ export const BUILDING_DATA = {
     ],
     features: [
       {
-        icon: "🤫",
-        title: "Khu Yên Tĩnh",
-        desc: "Quy định giữ trật tự nghiêm ngặt từ 22:00",
+        icon: "🛏️",
+        title: "Phòng 3, 4, 6 Giường",
+        desc: "Giường tầng 1930x900mm, tủ đồ, tủ giày, bàn học, giá phơi đồ",
       },
       {
-        icon: "📖",
-        title: "Study Room 24/7",
-        desc: "Phòng học chung tầng 1, đèn sáng, bàn ghế thoải mái",
+        icon: "❄️",
+        title: "Điều Hòa & Nước Nóng",
+        desc: "Điều hòa, bình nóng lạnh và đèn chiếu sáng đầy đủ",
       },
       {
-        icon: "⚽",
-        title: "Sân Bóng 1500m²",
-        desc: "Cỏ nhân tạo, hệ thống chiếu sáng, khung lưới",
+        icon: "📶",
+        title: "Hạ Tầng Internet",
+        desc: "KTX hỗ trợ hạ tầng để nhà mạng lắp đặt dịch vụ cho SV",
       },
       {
+<<<<<<< HEAD
         icon: "🏋️",
         title: "Khu Thể Thao Đà Năng",
         desc: "Bóng rổ, cầu lông, xà đơn, xà kép, thiết bị gym",
+=======
+        icon: "🔒",
+        title: "An Ninh 24/7",
+        desc: "Camera giám sát, bảo vệ, quẹt thẻ ra vào",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
-        icon: "🛒",
-        title: "Minimart",
-        desc: "Cửa hàng tiện lợi ngay tầng trệt, mở 7h-22h",
+        icon: "💰",
+        title: "Giá Phòng Hợp Lý",
+        desc: "3 giường: 4.6TR | 4 giường: 4.2TR | 6 giường: 3.4TR/kỳ",
       },
       {
-        icon: "🍳",
-        title: "Khu Bếp Chung",
-        desc: "Bếp nấu ăn với đầy đủ dụng cụ cho sinh viên",
+        icon: "⚠️",
+        title: "Nội Quy KTX",
+        desc: "Cấm nấu ăn trong phòng — Vi phạm sẽ bị phạt 500,000đ",
       },
     ],
     funFacts: [
+<<<<<<< HEAD
       "KTX B gần sân bóng đá nhất — chỉ 30 giây đi bộ",
       "Sân bóng cỏ nhân tạo 1500m² có hệ thống chiếu sáng đêm",
       "Ai ở ktx cũng từng có ý định tập thể dục… ít nhất là 1 lần",
       "Mùa thi: đèn phòng học sáng hơn cả tương lai của bạn",
       "Wifi mạnh nhất vào lúc bạn không cần, yếu nhất khi đang nộp bài",
+=======
+      "KTX B nằm gần khu thể thao — tiện lợi cho SV yêu thích vận động",
+      "Phí KTX phòng 6 giường chỉ 3,400,000đ/kỳ (4 tháng) — siêu tiết kiệm",
+      "Giường tầng KTX B kích thước 1930x900mm — tương tự KTX A",
+      "Mỗi phòng đều có điều hòa, bình nóng lạnh — tiện nghi đầy đủ",
+      "Cấm nấu ăn trong KTX — vi phạm bị phạt 500K nên SV thường ăn cantin",
+>>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
     ],
   },
 
