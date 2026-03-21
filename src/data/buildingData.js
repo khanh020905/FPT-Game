@@ -58,7 +58,7 @@ export const BUILDING_DATA = {
       },
       {
         time: "07:30 - 09:30",
-        activity: "English Level 5 — Speaking & Debate với Mr. James (UK)",
+        activity: "English Level 5 — Speaking & Debate với giảng viên quốc tế",
         emoji: "🇬🇧",
         type: "english",
       },
@@ -70,7 +70,7 @@ export const BUILDING_DATA = {
       },
       {
         time: "09:45 - 11:45",
-        activity: "English Level 6 — Academic Writing với Ms. Sarah (USA)",
+        activity: "English Level 6 — Academic Writing với giảng viên quốc tế",
         emoji: "🇺🇸",
         type: "english",
       },
@@ -114,7 +114,7 @@ export const BUILDING_DATA = {
     englishLv56: {
       title: "English Level 5 & 6 — Với Giảng Viên Quốc Tế",
       description:
-        "Sau khi hoàn thành LUK Global (Level 1-4) tại Toà Gamma, sinh viên năm nhất tiếp tục học English Level 5 & 6 tại Toà Alpha — hoàn toàn với giảng viên bản ngữ đến từ Anh, Mỹ, Úc, Canada.",
+        "Sau khi hoàn thành LUK Global (Level 1-4) tại Toà Gamma, sinh viên năm nhất tiếp tục học English Level 5 & 6 tại Toà Alpha — với đội ngũ giảng viên Việt Nam & quốc tế đến từ Anh, Mỹ, Úc, Canada.",
       levels: [
         {
           name: "Level 5 — Summit 1",
@@ -131,34 +131,55 @@ export const BUILDING_DATA = {
       ],
       teachers: [
         {
-          name: "Mr. James Wilson",
-          country: "🇬🇧 UK",
-          specialty: "Public Speaking & Debate",
-          exp: "12 năm",
+          name: "Lilibeth",
+          country: "🌍 Quốc tế",
+          specialty: "Communication Skills",
         },
         {
-          name: "Ms. Sarah Johnson",
-          country: "🇺🇸 USA",
-          specialty: "Academic Writing",
-          exp: "8 năm",
+          name: "Mary Gale",
+          country: "🌍 Quốc tế",
+          specialty: "Academic English",
         },
         {
-          name: "Mr. David Brown",
-          country: "🇦🇺 Australia",
+          name: "Lyne",
+          country: "🌍 Quốc tế",
+          specialty: "Speaking & Listening",
+        },
+        {
+          name: "Power",
+          country: "🌍 Quốc tế",
+          specialty: "Reading & Writing",
+        },
+        {
+          name: "Tel",
+          country: "🌍 Quốc tế",
+          specialty: "Grammar & Vocabulary",
+        },
+        {
+          name: "Phung Nhan",
+          country: "🇻🇳 Việt Nam",
           specialty: "IELTS Preparation",
-          exp: "15 năm",
         },
         {
-          name: "Ms. Emily Clark",
-          country: "🇨🇦 Canada",
+          name: "May",
+          country: "🇻🇳 Việt Nam",
+          specialty: "Academic Writing",
+        },
+        {
+          name: "Trang",
+          country: "🇻🇳 Việt Nam",
+          specialty: "Public Speaking",
+        },
+        {
+          name: "Seya",
+          country: "🌍 Quốc tế",
           specialty: "Business English",
-          exp: "10 năm",
         },
       ],
       highlights: [
-        "100% giảng viên bản ngữ từ Anh, Mỹ, Úc, Canada",
-        "Lớp nhỏ 15-20 sinh viên — tương tác tối đa",
-        "Mock IELTS 7.0+ sau khi hoàn thành Level 6",
+        "Giảng viên Việt Nam & quốc tế từ Anh, Mỹ, Úc, Canada",
+        "Lớp nhỏ 25-35 sinh viên — tương tác tối đa",
+        "Có bài test đánh giá trình độ định kỳ",
         "Chứng chỉ FPT English Certificate được doanh nghiệp công nhận",
       ],
     },
@@ -263,6 +284,40 @@ export const BUILDING_DATA = {
         "Giải quyết thủ tục trong vòng 24-48 giờ",
         "Tư vấn trực tuyến qua hotline và email",
         "Phục vụ liên tục từ thứ 2 đến thứ 7",
+      ],
+    },
+    alphaEvents: {
+      title: "Sự Kiện Tại Toà Alpha",
+      description: "Toà Alpha không chỉ là nơi học tập mà còn là trung tâm tổ chức các sự kiện lớn của FPT University Đà Nẵng.",
+      categories: [
+        {
+          name: "Sự kiện học thuật & Talkshow",
+          emoji: "🎤",
+          color: "#2563eb",
+          location: "Tầng 5 — Toà Alpha",
+          activities: ["Talkshow với doanh nghiệp, khách mời", "Workshop kỹ năng (marketing, IT, design...)", "Seminar chuyên ngành"],
+        },
+        {
+          name: "Lễ chính thức (Formal Events)",
+          emoji: "🎓",
+          color: "#7c3aed",
+          location: "Hội trường Toà Alpha",
+          activities: ["Lễ khai giảng", "Lễ tốt nghiệp (Graduation)", "Lễ trao học bổng", "Các buổi ceremony lớn của trường"],
+        },
+        {
+          name: "Sự kiện sinh viên (Student Events)",
+          emoji: "🎪",
+          color: "#e11d48",
+          location: "Tầng trệt: booth, gian hàng | Hội trường: biểu diễn / thi",
+          activities: ["Club Fair — Ngày hội CLB", "Showcase / Biểu diễn", "Mini Concert / Văn nghệ", "Game Event, Cosplay"],
+        },
+        {
+          name: "Open Day — Tuyển sinh — Trải nghiệm",
+          emoji: "🌍",
+          color: "#16a34a",
+          location: "Toàn bộ Toà Alpha",
+          activities: ["Ngày hội Open Day (Alpha Global) với hàng nghìn người tham gia", "Check-in sống ảo", "Gian hàng trải nghiệm", "Tư vấn tuyển sinh"],
+        },
       ],
     },
     features: [
@@ -632,7 +687,7 @@ export const BUILDING_DATA = {
       ],
       highlights: [
         "Từ năm 2014, FPT tiên phong dạy nhạc cụ dân tộc",
-        "62% sinh viên FPT tham gia học nhạc cụ",
+        "100% sinh viên FPT tham gia học nhạc cụ",
         "46 giảng viên nhạc cụ chuyên nghiệp",
         "Biểu diễn hàng năm tại 'FPT Edu Music Festival'",
       ],

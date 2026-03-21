@@ -94,15 +94,15 @@ const IMGS = {
       cap: "Phòng KTX A — Giường tầng, bàn học, tiện nghi đầy đủ",
     },
     {
-      url: "/dorm_building.png",
+      url: "/new-img/dorm1.png",
       cap: "Ký Túc Xá FPT University — Thiết kế hiện đại",
     },
     {
-      url: "/dorm_campus_aerial.png",
+      url: "/new-img/dorm2.png",
       cap: "Toàn cảnh campus — KTX nằm trong khuôn viên",
     },
     {
-      url: "/dorm_student_life.png",
+      url: "/new-img/dorm3.png",
       cap: "Đời sống sinh viên FPT tại KTX",
     },
   ],
@@ -112,21 +112,21 @@ const IMGS = {
       cap: "Phòng KTX B — Giường tầng 1930x900mm, bàn học đầy đủ",
     },
     {
-      url: "/dorm_building.png",
+      url: "/new-img/dorm1.png",
       cap: "KTX B — Gần khu thể thao campus",
     },
     {
-      url: "/dorm_campus_aerial.png",
+      url: "/new-img/dorm2.png",
       cap: "Khuôn viên FPT University từ trên cao",
     },
     {
-      url: "/dorm_student_life.png",
+      url: "/new-img/dorm3.png",
       cap: "Sinh viên FPT tại KTX",
     },
   ],
   "main-gate": [
     {
-      url: "https://images2.thanhnien.vn/528068263637045248/2024/2/4/fptu-da-nang-02-1707012458234479740570.jpg",
+      url: "/new-img/maingate.png",
       cap: "Cổng chính FPT",
     },
   ],
@@ -218,6 +218,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
   const imgs = IMGS[buildingId] || [];
   const isG = buildingId === "gamma-tower";
   const isA = buildingId === "alpha-tower";
+  const isEY = buildingId === "event-yard";
   const P = PALETTES[buildingId] || PALETTES["alpha-tower"];
   const ac = P.accent;
 
@@ -1501,9 +1502,9 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                   >
                     {t.specialty}
                   </div>
-                  <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 4 }}>
+                  {t.exp && <div style={{ fontSize: 10, color: "#94a3b8", marginTop: 4 }}>
                     Kinh nghiệm: {t.exp}
-                  </div>
+                  </div>}
                 </div>
               ))}
             </div>
@@ -1863,6 +1864,258 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+      )}
+      {/* ═══ ALPHA: EVENTS ═══ */}
+      {isA && b.alphaEvents && (
+        <section
+          style={{
+            background: "rgba(255,255,255,.5)",
+            borderTop: "1px solid rgba(0,0,0,.04)",
+          }}
+        >
+          <div className="bSec">
+            <div
+              className="bReveal"
+              style={{ textAlign: "center", marginBottom: 48 }}
+            >
+              <div
+                className="bBdg"
+                style={{
+                  background: P.light,
+                  color: ac,
+                  border: `1px solid ${P.lightBorder}`,
+                  marginBottom: 16,
+                }}
+              >
+                🎪 SỰ KIỆN TẠI TOÀ ALPHA
+              </div>
+              <h2
+                style={{
+                  fontSize: "clamp(24px,4vw,36px)",
+                  fontWeight: 900,
+                  color: "#0f172a",
+                  marginBottom: 8,
+                }}
+              >
+                Sự Kiện <span style={{ color: ac }}>Toà Alpha</span>
+              </h2>
+              <div className="bDiv" />
+              <p
+                style={{
+                  color: "#64748b",
+                  fontSize: 14,
+                  maxWidth: 560,
+                  margin: "0 auto",
+                  lineHeight: 1.8,
+                }}
+              >
+                {b.alphaEvents.description}
+              </p>
+            </div>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: 20,
+              }}
+            >
+              {b.alphaEvents.categories.map((cat, i) => (
+                <div
+                  key={i}
+                  className="bCard bReveal"
+                  data-delay={i + 1}
+                  style={{
+                    padding: "28px 24px",
+                    borderTop: `4px solid ${cat.color}`,
+                    background: `linear-gradient(180deg,${cat.color}06,rgba(255,255,255,.95))`,
+                  }}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 14,
+                      marginBottom: 16,
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: 14,
+                        background: `${cat.color}12`,
+                        border: `2px solid ${cat.color}25`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 24,
+                        flexShrink: 0,
+                      }}
+                    >
+                      {cat.emoji}
+                    </div>
+                    <div>
+                      <div
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 800,
+                          color: "#0f172a",
+                          marginBottom: 2,
+                        }}
+                      >
+                        {cat.name}
+                      </div>
+                      <div
+                        style={{
+                          fontSize: 11,
+                          color: cat.color,
+                          fontWeight: 600,
+                        }}
+                      >
+                        📍 {cat.location}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                    {cat.activities.map((act, ai) => (
+                      <div
+                        key={ai}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: 8,
+                          fontSize: 13,
+                          color: "#475569",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        <span
+                          style={{
+                            color: cat.color,
+                            fontWeight: 700,
+                            flexShrink: 0,
+                            marginTop: 1,
+                          }}
+                        >
+                          ▸
+                        </span>
+                        {act}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      
+      {/* ═══ EVENT YARD: SUMMER INTERFEST ═══ */}
+      {isEY && b.events && b.events.summerInterfest && (
+        <section style={{ borderTop: "1px solid rgba(0,0,0,.04)" }}>
+          <div className="bSec">
+            <div className="bReveal" style={{ textAlign: "center", marginBottom: 48 }}>
+              <div className="bBdg" style={{ background: "rgba(37,99,235,.06)", color: "#2563eb", border: "1px solid rgba(37,99,235,.12)", marginBottom: 16 }}>
+                🌍 SUMMER INTERFEST
+              </div>
+              <h2 style={{ fontSize: "clamp(24px,4vw,36px)", fontWeight: 900, color: "#0f172a", marginBottom: 8 }}>
+                Ngày Hội <span style={{ color: ac }}>Giao Lưu Văn Hóa Quốc Tế</span>
+              </h2>
+              <div className="bDiv" />
+              <p style={{ color: "#64748b", fontSize: 14, maxWidth: 560, margin: "0 auto", lineHeight: 1.8 }}>
+                {b.events.summerInterfest.description}
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
+              {b.events.summerInterfest.activities.map((a, i) => (
+                <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "28px 20px", textAlign: "center", borderTop: `4px solid ${ac}` }}>
+                  <div style={{ fontSize: 36, marginBottom: 12 }}>{a.emoji}</div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", marginBottom: 8 }}>{a.name}</div>
+                  <div style={{ fontSize: 13, color: "#64748b", lineHeight: 1.6 }}>{a.desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      {/* ═══ EVENT YARD: HOI LANG ═══ */}
+      {isEY && b.events && b.events.hoiLang && (
+        <section style={{ background: "rgba(255,247,237,.4)", borderTop: "1px solid rgba(0,0,0,.04)" }}>
+          <div className="bSec">
+            <div className="bReveal" style={{ textAlign: "center", marginBottom: 48 }}>
+              <div className="bBdg" style={{ background: "rgba(225,29,72,.06)", color: "#e11d48", border: "1px solid rgba(225,29,72,.12)", marginBottom: 16 }}>
+                🏮 HỘI LÀNG FPT
+              </div>
+              <h2 style={{ fontSize: "clamp(24px,4vw,36px)", fontWeight: 900, color: "#0f172a", marginBottom: 8 }}>
+                Hội Làng <span style={{ color: "#e11d48" }}>FPT University</span>
+              </h2>
+              <div className="bDiv" />
+              <p style={{ color: "#64748b", fontSize: 14, maxWidth: 560, margin: "0 auto", lineHeight: 1.8 }}>
+                {b.events.hoiLang.description}
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+              {b.events.hoiLang.activities.map((a, i) => (
+                <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "24px 20px", display: "flex", alignItems: "flex-start", gap: 16, borderLeft: `4px solid ${"#e11d48"}` }}>
+                  <div style={{ width: 48, height: 48, borderRadius: 14, background: "rgba(225,29,72,.08)", border: "1px solid rgba(225,29,72,.15)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24, flexShrink: 0 }}>
+                    {a.emoji}
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: "#0f172a", marginBottom: 4 }}>{a.name}</div>
+                    <div style={{ fontSize: 13, color: "#64748b", lineHeight: 1.6 }}>{a.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+      {/* ═══ EVENT YARD: OTHER EVENTS ═══ */}
+      {isEY && b.events && b.events.upcomingEvents && (
+        <section style={{ borderTop: "1px solid rgba(0,0,0,.04)" }}>
+          <div className="bSec">
+            <div className="bReveal" style={{ textAlign: "center", marginBottom: 48 }}>
+              <div className="bBdg" style={{ background: P.light, color: ac, border: `1px solid ${P.lightBorder}`, marginBottom: 16 }}>
+                🎉 CÁC SỰ KIỆN KHÁC
+              </div>
+              <h2 style={{ fontSize: "clamp(24px,4vw,36px)", fontWeight: 900, color: "#0f172a", marginBottom: 8 }}>
+                Sự Kiện <span style={{ color: ac }}>FPT University</span>
+              </h2>
+              <div className="bDiv" />
+              <p style={{ color: "#64748b", fontSize: 14, maxWidth: 560, margin: "0 auto", lineHeight: 1.8 }}>
+                {b.events.description}
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
+              {b.events.upcomingEvents.filter(e => !e.name.includes("SUMMER") && !e.name.includes("HỘI LÀNG")).map((ev, i) => (
+                <div key={i} className="bCard bReveal" data-delay={i + 1} style={{ padding: "28px 20px", borderTop: `4px solid ${ev.color}`, background: `linear-gradient(180deg,${ev.color}06,rgba(255,255,255,.95))` }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
+                    <div style={{ width: 44, height: 44, borderRadius: 12, background: `${ev.color}12`, border: `2px solid ${ev.color}25`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>
+                      {ev.emoji}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: 14, fontWeight: 800, color: "#0f172a" }}>{ev.name.replace(/[^ -~À-ɏḀ-ỿ]/g, "").trim()}</div>
+                      <div style={{ fontSize: 11, color: ev.color, fontWeight: 600 }}>{ev.date}</div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 13, color: "#475569", lineHeight: 1.6 }}>{ev.speaker}</div>
+                </div>
+              ))}
+            </div>
+            {b.events.highlights && (
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 32 }}>
+                {b.events.highlights.map((h, i) => (
+                  <div key={i} className="bCard" style={{ padding: "14px 18px", display: "flex", alignItems: "center", gap: 12 }}>
+                    <div style={{ width: 28, height: 28, borderRadius: 8, background: P.light, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                      <span style={{ color: ac, fontSize: 13, fontWeight: 900 }}>✓</span>
+                    </div>
+                    <span style={{ fontSize: 13, color: "#475569", lineHeight: 1.5 }}>{h}</span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       )}
@@ -3664,7 +3917,7 @@ export default function BuildingLandingPage({ buildingId, onClose }) {
                 { n: "2014", l: "Năm bắt đầu", c: "#ea580c" },
                 { n: "46", l: "Giảng viên", c: "#d97706" },
                 { n: "5", l: "Loại nhạc cụ", c: "#ca8a04" },
-                { n: "62%", l: "SV tham gia", c: "#b45309" },
+                { n: "100%", l: "SV tham gia", c: "#b45309" },
               ].map((s) => (
                 <div
                   key={s.l}

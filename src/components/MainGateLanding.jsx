@@ -283,7 +283,7 @@ export default function MainGateLanding({ onClose }) {
               }}
             >
               <img
-                src="/fpt-campus-gate.png"
+                src="/new-img/maingate.png"
                 alt="FPT University"
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 onError={(e) => {
