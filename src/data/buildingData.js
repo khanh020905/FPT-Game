@@ -277,15 +277,9 @@ export const BUILDING_DATA = {
         desc: "Học tiếng Anh nâng cao với giảng viên bản ngữ",
       },
       {
-<<<<<<< HEAD
-        icon: "🎤",
-        title: "Sân Khấu 200-300 chỗ ngồi",
-        desc: "Tổ chức concert, đại nhạc hội hoành tráng",
-=======
         icon: "🏥",
         title: "Phòng Y Tế",
         desc: "Chăm sóc sức khỏe và sơ cứu cho sinh viên",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "🎓",
@@ -827,11 +821,6 @@ export const BUILDING_DATA = {
       },
       {
         icon: "💰",
-<<<<<<< HEAD
-        stat: "25-40K",
-        label: "Giá/suất",
-        desc: "Giá sinh viên cực kỳ hợp lý",
-=======
         stat: "17-30K",
         label: "VNĐ/suất",
         desc: "Giá cực kỳ hạt dẻ cho sinh viên",
@@ -841,7 +830,6 @@ export const BUILDING_DATA = {
         stat: "20-35K",
         label: "Trà sữa",
         desc: "Quán trà sữa siêu ngon tại T2-3",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "⏰",
@@ -895,15 +883,9 @@ export const BUILDING_DATA = {
         desc: "Bánh mì ~17K, bánh ướt ~25K, xôi ~25K, bánh mì chảo ~25K",
       },
       {
-<<<<<<< HEAD
-        icon: "💰",
-        title: "Giá Sinh Viên",
-        desc: "Cơm 25-35K, Phở/Bún 30-35K, Trà sữa 20-25K",
-=======
         icon: "🍚",
         title: "Tầng 2-3 — Cơm Trưa",
         desc: "Cơm phần đa dạng chỉ khoảng 30,000đ/phần",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "🧋",
@@ -922,28 +904,6 @@ export const BUILDING_DATA = {
       },
       {
         icon: "🤝",
-<<<<<<< HEAD
-        title: "Networking Zone",
-        desc: "Khu vực giao lưu rộng cho CLB & nhóm project",
-      },
-      {
-        icon: "❄️",
-        title: "Máy Lạnh Toàn Bộ",
-        desc: "Không gian thoáng mát, sạch sẽ quanh năm",
-      },
-      {
-        icon: "📶",
-        title: "WiFi Miễn Phí",
-        desc: "Kết nối internet tốc độ cao tại mọi khu vực.",
-      },
-    ],
-    funFacts: [
-      "Căn tin là nơi dễ gặp bạn bè nhất… kể cả khi bạn không muốn 😆",
-      "Trà sữa là đồ uống rất phổ biến với sinh viên FPT",
-      "80% câu chuyện sinh viên bắt đầu từ: “Ăn gì không?”",
-      "Giờ trưa: tìm được chỗ ngồi còn khó hơn chọn món ăn",
-      "Ngoài ăn uống, căn tin còn là nơi học nhóm phổ biến",
-=======
         title: "Giao Lưu & Kết Nối",
         desc: "Không gian rộng rãi cho sinh viên giao lưu, họp nhóm",
       },
@@ -954,7 +914,6 @@ export const BUILDING_DATA = {
       "Trà sữa tại căn tin siêu ngon, giá chỉ từ 20,000đ",
       "Tầng 1 chuyên phục vụ đồ ăn sáng đa dạng từ 6h sáng",
       "Căn tin 3 tầng phục vụ đầy đủ sáng-trưa-chiều-tối cho SV",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
     ],
   },
 
@@ -972,17 +931,6 @@ export const BUILDING_DATA = {
     welcomeHighlights: [
       {
         icon: "🛏️",
-<<<<<<< HEAD
-        stat: "500+",
-        label: "Sinh viên",
-        desc: "Sức chứa KTX A toàn bộ",
-      },
-      {
-        icon: "💰",
-        stat: "1,100,000",
-        label: "VNĐ/tháng",
-        desc: "Phí KTX siêu hợp lý",
-=======
         stat: "3 loại",
         label: "Phòng KTX",
         desc: "Phòng 3, 4 và 6 giường",
@@ -992,7 +940,6 @@ export const BUILDING_DATA = {
         stat: "3.4-4.6TR",
         label: "VNĐ/kỳ (4 tháng)",
         desc: "Học phí KTX theo kỳ",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "❄️",
@@ -1079,15 +1026,9 @@ export const BUILDING_DATA = {
         desc: "Camera giám sát, bảo vệ",
       },
       {
-<<<<<<< HEAD
-        icon: "🌳",
-        title: "Môi trường",
-        desc: "Không gian xanh, sạch, thoáng, gần trường",
-=======
         icon: "💰",
         title: "Giá Phòng Hợp Lý",
         desc: "3 giường: 4.6TR | 4 giường: 4.2TR | 6 giường: 3.4TR/kỳ",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "⚠️",
@@ -1097,17 +1038,10 @@ export const BUILDING_DATA = {
     ],
     funFacts: [
       "KTX A có sức chứa hơn 800 sinh viên — luôn full mỗi kỳ",
-<<<<<<< HEAD
-      "Phí KTX chỉ từ 4,300,000đ/3 tháng — rẻ nhất Đà Nẵng",
-      "WiFi speed trung bình 100Mbps — đủ streaming 4K",
-      "KTX có phòng gym miễn phí với nhiều dụng cụ thể thao",
-      "Nấu ăn trong KTX sẽ bị phạt 500,000",
-=======
       "Phí KTX phòng 6 giường chỉ 3,400,000đ/kỳ (4 tháng) — siêu tiết kiệm",
       "Giường tầng KTX A kích thước 1930x900mm — đủ rộng cho SV",
       "Mỗi phòng đều có điều hòa, bình nóng lạnh — tiện nghi đầy đủ",
       "Cấm nấu ăn trong KTX — vi phạm bị phạt 500K nên SV thường ăn cantin",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
     ],
   },
 
@@ -1209,15 +1143,9 @@ export const BUILDING_DATA = {
         desc: "KTX hỗ trợ hạ tầng để nhà mạng lắp đặt dịch vụ cho SV",
       },
       {
-<<<<<<< HEAD
-        icon: "🏋️",
-        title: "Khu Thể Thao Đà Năng",
-        desc: "Bóng rổ, cầu lông, xà đơn, xà kép, thiết bị gym",
-=======
         icon: "🔒",
         title: "An Ninh 24/7",
         desc: "Camera giám sát, bảo vệ, quẹt thẻ ra vào",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
       },
       {
         icon: "💰",
@@ -1231,19 +1159,11 @@ export const BUILDING_DATA = {
       },
     ],
     funFacts: [
-<<<<<<< HEAD
-      "KTX B gần sân bóng đá nhất — chỉ 30 giây đi bộ",
-      "Sân bóng cỏ nhân tạo 1500m² có hệ thống chiếu sáng đêm",
-      "Ai ở ktx cũng từng có ý định tập thể dục… ít nhất là 1 lần",
-      "Mùa thi: đèn phòng học sáng hơn cả tương lai của bạn",
-      "Wifi mạnh nhất vào lúc bạn không cần, yếu nhất khi đang nộp bài",
-=======
       "KTX B nằm gần khu thể thao — tiện lợi cho SV yêu thích vận động",
       "Phí KTX phòng 6 giường chỉ 3,400,000đ/kỳ (4 tháng) — siêu tiết kiệm",
       "Giường tầng KTX B kích thước 1930x900mm — tương tự KTX A",
       "Mỗi phòng đều có điều hòa, bình nóng lạnh — tiện nghi đầy đủ",
       "Cấm nấu ăn trong KTX — vi phạm bị phạt 500K nên SV thường ăn cantin",
->>>>>>> d8dfe87 (update: KTX A/B & Cantin landing pages - fix info, images)
     ],
   },
 
